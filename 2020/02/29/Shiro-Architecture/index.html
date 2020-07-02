@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="sunshine&#39;s blog">
+    <meta name="keyword"  content="blog, hexo-theme-snail">
+    <link rel="shortcut icon" href="/sunshine-carroll.github.io/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Shiro-Architecture - sunshine
+        
+    </title>
+
+    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/02/29/Shiro-Architecture/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/sunshine-carroll.github.io/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#Shiro" title="Shiro">Shiro</a>
+                            
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#work" title="work">work</a>
+                            
+                        </div>
+                        <h1>Shiro-Architecture</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by sunshine on
+                            2020-02-29
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">3.9k</span> and
+                                Reading Time <span class="post-count">17</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/sunshine-carroll.github.io/">Sunshine&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/sunshine-carroll.github.io/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/photography/">Photography</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="YOUR_CHINESE_BLOG_URL" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>翻译自官方文档–<a href="http://shiro.apache.org/architecture.html" target="_blank" rel="noopener">原文地址</a></p>
+<h2 id="Apache-Shiro-Architecture-（Apache-Shiro-架构"><a href="#Apache-Shiro-Architecture-（Apache-Shiro-架构" class="headerlink" title="Apache Shiro Architecture （Apache Shiro 架构)"></a>Apache Shiro Architecture （Apache Shiro 架构)</h2><p>Apache Shiro’s design goals are to simplify application security by being intuitive and easy to use. Shiro’s core design models how most people think about application security - in the context of someone (or something) interacting with an application.  </p>
+<p>Aache Shiro设计的目标是通过直觉化和简易实用设计来简化应用程序安全性开发. Shiro 核心设计模型是 在某人或某物与应用程序交互的场景下，人们对应用程序安全思维方式 </p>
+<hr>
+<p>Software applications are usually designed based on user stories. That is, you’ll often design user interfaces or service APIs based on how a user would (or should) interact with the software. For example, you might say, “If the user interacting with my application is logged in, I will show them a button they can click to view their account information. If they are not logged in, I will show a sign-up button.”</p>
+<p>应用程序软件通常基于用户故事设计。这意味着，你将在设计用户接口或服务API时经常基于一个用户将(或应该)如何和软件交互。举个例子，你可能会说”如果一个用户与我程序交互式已经登入，我将给他们展示一个可以点击查看他们账户信息的按钮，如果他们没有登入，我将展示一个注册按钮”</p>
+<hr>
+<p>This example statement indicates that applications are largely written to satisfy user requirements and needs. Even if the ‘user’ is another software system and not a human being, you still write code to reflect behavior based on who (or what) is currently interacting with your software.</p>
+<p>这个例子的陈述表明一个应用程序通常为了满足用户要求或需求而编写。甚至这个”用户”是其他软件系统而非人类时，你仍需要基于当前与你的软件系统交互的人或物表现出的行为来编写代码</p>
+<hr>
+<p>Shiro reflects these concepts in its own design. By matching what is already intuitive for software developers, Apache Shiro remains intuitive and easy to use in practically any application.</p>
+<p>Shiro 使用自身的设计来表现这些概念。通过联系对于软件开发者来说已有的直观事物，Apache Shiro 几乎可以在任意应用中保留直观性和易用性</p>
+<h2 id="Hign-Level-Overview-高层总览"><a href="#Hign-Level-Overview-高层总览" class="headerlink" title="Hign-Level Overview (高层总览)"></a>Hign-Level Overview (高层总览)</h2><p>At the highest conceptual level, Shiro’s architecture has 3 primary concepts: the <code>Subject</code>, <code>SecurityManager</code> and <code>Realms</code>. The following diagram is a high-level overview of how these components interact, and we’ll cover each concept below:</p>
+<p>在最顶层的概念层中，Shiro 架构有三个主要概念:<code>Subject</code>,<code>SecurityManager</code>和<code>Realms</code>,下图就是这些组件如何交互的一个概念层总览。我们会在下面阐述各个概念</p>
+<p><img src="/sunshine-carroll.github.io/2020/02/29/Shiro-Architecture/ShiroBasicArchitecture.png" alt="ShiroBasicArchitecture"></p>
+<hr>
+<blockquote>
+<ul>
+<li><p><strong>Subject</strong>: As we’ve mentioned in our <a href="http://shiro.apache.org/tutorial.html" target="_blank" rel="noopener">Tutorial</a>, the <code>Subject</code> is essentially a security specific ‘view’ of the the currently executing user. Whereas the word ‘User’ often implies a human being, a <code>Subject</code> can be a person, but it could also represent a 3rd-party service, daemon account, cron job, or anything similar - basically anything that is currently interacting with the software.</p>
+<p><code>Subject</code> instances are all bound to (and require) a <code>SecurityManager</code>. When you interact with a <code>Subject</code>, those interactions translate to subject-specific interactions with the <code>SecurityManager</code>.</p>
+</li>
+<li><p><strong>Subject</strong>: 就像我们在教程中提到的，<code>Subject</code>本质上就是当前执行用户的在安全领域上一个特定的视角，然而”用户”一词通常暗指人类，一个<code>Subject</code>可以是一个人，也可以表示为第三方服务，守护进程账户，定时任务或者任意相似的与当前软件交互的事物</p>
+<p><code>Subject</code>实例都和一个<code>SecurityManager</code>绑定。当你和一个<code>Subject</code>交互时，这些交互就转化为subject-specific 与<code>SecurityManager</code>交互</p>
+</li>
+<li><p><strong>SecurityManager</strong>: The <code>SecurityManager</code> is the heart of Shiro’s architecture and acts as a sort of ’umbrella’ object that coordinates its internal security components that together form an object graph. However, once the SecurityManager and its internal object graph is configured for an application, it is usually left alone and application developers spend almost all of their time with the <code>Subject</code> API.</p>
+<p>We will talk about the <code>SecurityManager</code> in detail later on, but it is important to realize that when you interact with a <code>Subject</code>, it is really the <code>SecurityManager</code> behind the scenes that does all the heavy lifting for any <code>Subject</code> security operation. This is reflected in the basic flow diagram above.</p>
+</li>
+<li><p><strong>SecurityManager</strong>: <code>SecurityManager</code> 是Shiro框架的核心并扮演像是一个协调内部组合成一副对象图景的安全组件的”保护伞”角色。 不管怎样，当<code>SecurityManager</code>和其内部的对象图景配置完成后,通常可以不管他 ，应用程序开发大部分时候都花在和<code>Subject</code> 的交互上。</p>
+<p>我们稍后会讨论<code>SecurityManager</code>的细节，但是，当你和<code>Subject</code>交互的时候，意识到在幕后<code>SecurityManager</code> 为任人一个<code>Subject</code>的安全操作做了所有的艰难操作.这也反应在上面的基本流程图上。</p>
+</li>
+<li><p><strong>Realms</strong>: Realms act as the ‘bridge’ or ‘connector’ between Shiro and your application’s security data. When it comes time to actually interact with security-related data like user accounts to perform authentication (login) and authorization (access control), Shiro looks up many of these things from one or more Realms configured for an application.</p>
+<p>In this sense a Realm is essentially a security-specific <a href="https://en.wikipedia.org/wiki/Data_access_object" target="_blank" rel="noopener">DAO</a>: it encapsulates connection details for data sources and makes the associated data available to Shiro as needed. When configuring Shiro, you must specify at least one Realm to use for authentication and/or authorization. The <code>SecurityManager</code>may be configured with multiple Realms, but at least one is required.</p>
+<p>Shiro provides out-of-the-box Realms to connect to a number of security data sources (aka directories) such as LDAP, relational databases (JDBC), text configuration sources like INI and properties files, and more. You can plug-in your own Realm implementations to represent custom data sources if the default Realms do not meet your needs.</p>
+<p>Like other internal components, the Shiro <code>SecurityManager</code> manages how Realms are used to acquire security and identity data to be represented as <code>Subject</code> instances.</p>
+</li>
+<li><p><strong>Realms</strong>: Realms 扮演者Shiro 和 你的应用程序的安全数据之间的’桥梁’或者说’连接器’的角色。当到Shrio运行到与安全相关的数据交互的时候，如用户账户去执行 认证(登录)，授权(访问控制)， Shiro 从应用程序配置好的一个或多个Realm中搜寻这些数据</p>
+<p>从这个角度，Realm 本质上是一个特定的安全DAO(Data Access Object):他封装和数据源连接的细节，并且使得相关的数据按Shiro所需的方式被Shiro使用。当配置Shiro时，你必须至少指定一个用户认证和（或）授权的Relam。<code>SecurityManager</code>可能会配置多个领域，但至少需要一个</p>
+<p>Shiro 提供一些开箱即用的Realm去和一些安全数据源建立连接，比如说LDAP(轻量级目录访问协议)，关系型数据库(JDBC)，文本配置源如ini和属性文件等等。如果默认的Realms不满足你的需求，你可以插入你自己的领域实现去表示自定义的数据源</p>
+<p>就像其他的内部组件,Shiro的 <code>SecurityManager</code>管理着如何将 Realms 获取安全和身份数据的表示为<code>Subject</code>实例</p>
+</li>
+</ul>
+</blockquote>
+<hr>
+<p>##<a href="http://shiro.apache.org/architecture.html#detailed-architecture" target="_blank" rel="noopener">Detailed Architecture</a>(详细的架构)</p>
+<p>The following diagram shows Shiro’s core architectural concepts followed by short summaries of each:</p>
+<p>下面展示了Shiro的核心架构概念，并为每一个概念有一个简短的总结</p>
+<p><img src="/sunshine-carroll.github.io/2020/02/29/Shiro-Architecture/ShiroArchitecture.png" alt="ShiroArchitecture"></p>
+<blockquote>
+<ul>
+<li><p><strong>Subject</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/subject/Subject.html" target="_blank" rel="noopener"><code>org.apache.shiro.subject.Subject</code></a>)<br>A security-specific ‘view’ of the entity (user, 3rd-party service, cron job, etc) currently interacting with the software.</p>
+</li>
+<li><p><strong>Subject</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/subject/Subject.html" target="_blank" rel="noopener"><code>org.apache.shiro.subject.Subject</code></a>)</p>
+<p>当前与软件交互的实体(用户，第三方服务，定时任务等等)的一个特定的安全’视图’</p>
+</li>
+<li><p><strong>SecurityManager</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/mgt/SecurityManager.html" target="_blank" rel="noopener">org.apache.shiro.mgt.SecurityManager</a>)<br>As mentioned above, the <code>SecurityManager</code> is the heart of Shiro’s architecture. It is mostly an ‘umbrella’ object that coordinates its managed components to ensure they work smoothly together. It also manages Shiro’s view of every application user, so it knows how to perform security operations per user.</p>
+</li>
+<li><p><strong>SecurityManager</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/mgt/SecurityManager.html" target="_blank" rel="noopener">org.apache.shiro.mgt.SecurityManager</a>)</p>
+<p>如上所述，<code>SecurityManager</code>时Shiro架构的核心.通常是协调受管组件，确保他们一起平稳的工作的’保护伞’,他管理着每一个应用程序用户的视图，因此他知道如何为每一个用户执行安全的操作</p>
+</li>
+<li><p><strong>Authenticator</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/authc/Authenticator.html" target="_blank" rel="noopener">org.apache.shiro.authc.Authenticator</a>)<br>The <code>Authenticator</code> is the component that is responsible for executing and reacting to authentication (log-in) attempts by users. When a user tries to log-in, that logic is executed by the <code>Authenticator</code>. The <code>Authenticator</code> knows how to coordinate with one or more <code>Realms</code> that store relevant user/account information. The data obtained from these <code>Realms</code> is used to verify the user’s identity to guarantee the user really is who they say they are.</p>
+</li>
+<li><p><strong>Authenticator</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/authc/Authenticator.html" target="_blank" rel="noopener">org.apache.shiro.authc.Authenticator</a>)</p>
+<p><code>Authenticator</code>是以执行和反应用户的认证（登录）为职责的组件。当一个用户试图登录时，这个逻辑就被<code>Authenticator</code>执行。<code>Authenticator</code>知道如何与存储者用户/账户信息的一个或多个<code>Realm</code>协作。由这些<code>Realms</code>维护的数据用于验证用户的身份，保证用户的确是他们所说的那一个</p>
+</li>
+<li><p><strong>Authorizer</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/authz/Authorizer.html" target="_blank" rel="noopener">org.apache.shiro.authz.Authorizer</a>)<br>The <code>Authorizer</code> is the component responsible determining users’ access control in the application. It is the mechanism that ultimately says if a user is allowed to do something or not. Like the <code>Authenticator</code>, the <code>Authorizer</code> also knows how to coordinate with multiple back-end data sources to access role and permission information. The <code>Authorizer</code> uses this information to determine exactly if a user is allowed to perform a given action.</p>
+</li>
+<li><p><code>Authorizer</code>是对确定应用程序中用户的访问控制负责的组件。这个机制最终判断一个用户允许或不允许做一些事。就像<code>Authenticator</code>，<code>Authorizer</code> 知道如何使用多个后台数据源企业访问角色和权限信息。<code>Authorizer</code>使用这些数据去正确的确定一个用户是否允许执行一个给定的行为</p>
+</li>
+<li><p><strong>SessionManager</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/session/mgt/SessionManager.html" target="_blank" rel="noopener">org.apache.shiro.session.mgt.SessionManager</a>)<br>The <code>SessionManager</code> knows how to create and manage user <code>Session</code> lifecycles to provide a robust Session experience for users in all environments. This is a unique feature in the world of security frameworks - Shiro has the ability to natively manage user Sessions in any environment, even if there is no Web/Servlet or EJB container available. By default, Shiro will use an existing session mechanism if available, (e.g. Servlet Container), but if there isn’t one, such as in a standalone application or non-web environment, it will use its built-in enterprise session management to offer the same programming experience. The <code>SessionDAO</code> exists to allow any datasource to be used to persist sessions.</p>
+</li>
+<li><p><code>SessionManager</code>知道如何创建和管理用户<code>Session</code>的生命周期并在任何环境下提供给用户一个健壮的会话体验。在安全框架的世界中这是个独特的特性–即使不在Web/Servlet或EJB容器中，Shiro天然的有在任何环境下管理用户会话的能力。如果有可以使用的会话机制(如Servlet Container)，Shiro默认会使用它,但是如果没有，就像独立的应用程序或非web环境下，他会使用他内建的企业级会话管理以提供相同的编程体验。<code>SessionDAO</code>为允许任何用于持久化会话的数据源而存在</p>
+</li>
+<li><p><strong>CacheManager</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/cache/CacheManager.html" target="_blank" rel="noopener">org.apache.shiro.cache.CacheManager</a>)<br>The <code>CacheManager</code> creates and manages <code>Cache</code> instance lifecycles used by other Shiro components. Because Shiro can access many back-end data sources for authentication, authorization and session management, caching has always been a first-class  feature in the framework to improve performance while using these data sources. Any of the modern open-source and/or enterprise caching products can be plugged in to Shiro to provide a fast and efficient user-experience.</p>
+</li>
+<li><p><strong>CacheManager</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/cache/CacheManager.html" target="_blank" rel="noopener">org.apache.shiro.cache.CacheManager</a>)</p>
+<p><code>CacheManager</code>创建和管理被其他Shiro组件使用的缓存实例的生命周期。由于Shiro 能够访问许多用户认证，授权和会话管理的后台数据，在框架中缓存通常是在使用这些数据源时提高性能的一个优秀的特性。任何一个现代的开源和（或）企业级缓存产品能够嵌入到Shiro中以提高快且高效的用户体验</p>
+</li>
+<li><p><strong>Cryptography</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/crypto/package-summary.html" target="_blank" rel="noopener">org.apache.shiro.crypto.*</a>)<br>Cryptography is a natural addition to an enterprise security framework. Shiro’s <code>crypto</code> package contains easy-to-use and understand representations of crytographic Ciphers, Hashes (aka digests) and different codec implementations. All of the classes in this package are carefully designed to be very easy to use and easy to understand. Anyone who has used Java’s native cryptography support knows it can be a challenging animal to tame. Shiro’s crypto APIs simplify the complicated Java mechanisms and make cryptography easy to use for normal mortal human beings.</p>
+</li>
+<li><p>对于一个企业级安全框架，加密是一个自然而然的功能。Shiro 的<code>crypto</code>包含易于使用和理解的密码学上的加密工具，哈希(众所周知的信息摘要算法 ),和不同的编码解码器实现.在这个包中的所有类，都为易于理解和使用而设计。任何一个用过Java原生的加密支持的人都知道,it can be a challenging animal to tame。Shiro的crypto API 简化这些复杂的Java机制并且让加密功能对正常的普通人来说使用简单。</p>
+</li>
+<li><p><strong>Realms</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/realm/Realm.html" target="_blank" rel="noopener">org.apache.shiro.realm.Realm</a>)<br>As mentioned above, Realms act as the ‘bridge’ or ‘connector’ between Shiro and your application’s security data. When it comes time to actually interact with security-related data like user accounts to perform authentication (login) and authorization (access control), Shiro looks up many of these things from one or more Realms configured for an application. You can configure as many <code>Realms</code> as you need (usually one per data source) and Shiro will coordinate with them as necessary for both authentication and authorization.</p>
+</li>
+<li><p><strong>Realms</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/realm/Realm.html" target="_blank" rel="noopener">org.apache.shiro.realm.Realm</a>)</p>
+<p>如上所述，Realm 扮演的Shiro和你应用程序的安全数据的’桥梁’或’连接器’。当到Shrio运行到与安全相关的数据交互的时候，如用户账户去执行 认证(登录)，授权(访问控制)， Shiro 从应用程序配置好的一个或多个Realm中搜寻这些数据。你可以按你的需要的Realm数来配置Realm(通常每个数据源一个Realm)并且Shiro会按需为认证和授权协调他们</p>
+</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="The-SecurityManager"><a href="#The-SecurityManager" class="headerlink" title="The SecurityManager"></a>The <code>SecurityManager</code></h2><p>Because Shiro’s API encourages a <code>Subject</code>-centric programming approach, most application developers will rarely, if ever, interact with the <code>SecurityManager</code>directly (framework developers however  sometimes find it useful). Even so, it is still important to know how the <code>SecurityManager</code> functions, especially when configuring one for an application.</p>
+<p>由于 Shiro 的API鼓励一个以<code>Subject</code>为中心的编程方式，大多数应用程序开发者将很少的，与<code>SecurityManager</code>交互(框架开发者却有时认为这是非常有用的)。即使如此，知道<code>SecurityManager</code>的功能依旧是重要的,尤其是在配置一个应用程序的时候</p>
+<h2 id="Design"><a href="#Design" class="headerlink" title="Design"></a><a href="http://shiro.apache.org/architecture.html#design" target="_blank" rel="noopener">Design</a></h2><p>As stated previously, the application’s <code>SecurityManager</code> performs security operations and manages state for <em>all</em> application users. In Shiro’s default <code>SecurityManager</code> implementations, this includes:</p>
+<p>如前所述,应用程序的<code>SecurityManager</code>执行安全操作并且为所有应用程序用户管理状态。在Shiro默认的<code>SecurityManager</code>实现中他包含:</p>
+<ul>
+<li>Authentication  认证</li>
+<li>Authorization  授权</li>
+<li>Session Management 会话管理</li>
+<li>Cache Management 缓存管理</li>
+<li><a href="http://shiro.apache.org/realm.html" target="_blank" rel="noopener">Realm</a> coordination 领域协作</li>
+<li>Event propagation 事件传递</li>
+<li>“Remember Me” Services ‘记住我’ 服务</li>
+<li>Subject creation 创建Subject</li>
+<li>Logout and more. 登出 等等</li>
+</ul>
+<p>But this is a lot of functionality to try to manage in a single component. And, making these things flexible and customizable would be very difficult if everything were lumped into a single implementation class.</p>
+<p>但是有大量的功能尝试放在单个组件中。并且，如果把所有的东西集中在单个实现类中，让这些功能变得灵活和可自定义将会变得非常困难。</p>
+<p>To simplify configuration and enable flexible configuration/pluggability, Shiro’s implementations are all highly modular in design - so modular in fact, that the SecurityManager implementation (and its class-hierarchy) does not do much at all. Instead, the <code>SecurityManager</code> implementations mostly act as a lightweight ‘container’ component, delegating almost all behavior to nested/wrapped components. This ‘wrapper’ design is reflected in the detailed architecture diagram above.</p>
+<p>为了简化配置并能够灵活的配置化/插件化，Shiro的实现在设计上都高度的模块化。事实上由于如此的模块化，<code>SecurityManager</code> 的实现(和他的类层次结构)没有做太多的事情。反而,<code>SecurityManager</code>的实现扮演者轻量级’容器’组件,将大部分行为委托给内嵌的/包装的的组件.这个’包装器’的设计反应在上面的detailed architecture图中</p>
+<p>While the components actually execute the logic, the <code>SecurityManager</code> implementation knows how and when to coordinate the components for the correct behavior.</p>
+<p>当组件实际执行逻辑时，<code>SecurityManager</code>知道如何以及何时协调这些组件来表现正确的行为</p>
+<p>The <code>SecurityManager</code> implementations and the components are also JavaBeans compatible, which allows you (or a configuration mechanism) to easily customize the pluggable components via standard JavaBeans accessor/mutator methods (get<em>/set</em>). This means the Shiro’s architectural modularity can translate into very easy configuration for custom behavior.</p>
+<p><code>SecurityManager</code>的实现和组件都是JavaBeans兼容的,能够允许你(或其他配置机制)通过标准JavaBeans的访问器/修改器方法(get/set)来简洁的自定义这些可插入的组件。这意味着 Shiro的架构模块能否变化非常简易的配置来自定义行为。</p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/sunshine-carroll.github.io/2020/02/26/电子书通道/" data-toggle="tooltip" data-placement="top" title="电子书通道">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <hr>
+                <div id="blog_comments"></div>
+
+<!--
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+-->
+<!--
+<link rel="stylesheet" href="/css/gitment.css">
+<script type="text/javascript" src="/js/gitment.js"></script>
+-->
+
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+
+<!--
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+-->
+
+<script>
+const myTheme = {
+  render(state, instance) {
+    const container = document.createElement('div')
+    container.lang = "en-US"
+    container.className = 'gitment-container gitment-root-container'
+    
+     // your custom component
+    container.appendChild(instance.renderSomething(state, instance))
+    
+    container.appendChild(instance.renderHeader(state, instance))
+    container.appendChild(instance.renderComments(state, instance))
+    container.appendChild(instance.renderEditor(state, instance))
+    //container.appendChild(instance.renderFooter(state, instance))
+    return container
+  },
+  renderSomething(state, instance) {
+    const container = document.createElement('div')
+    container.lang = "en-US"
+    container.className = 'hello_visitor'
+    if (state.user.login) {
+      container.innerText = `Hello ${state.user.login}, Welcome to comment system`
+    }
+    return container
+  }
+}
+
+
+const gitment = new Gitment({
+    id: 'Sat Feb 29 2020 19:36:04 GMT+0800', // optional
+    owner: "sunshine-carroll",
+    repo: "sunshine-carroll.github.io",
+    oauth: {
+      client_id: "8895df271bbbcbad4ed1",
+      client_secret: "ccc414232347145b6ca3d9af201ee7d42446aba6",
+    },
+    theme: myTheme,
+    // ...
+    // For more available options, check out the documentation below
+  })
+  
+  gitment.render('blog_comments')
+  // or
+  // gitment.render(document.getElementById('comments'))
+  // or
+  // document.body.appendChild(gitment.render())
+</script>
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <hr>
+                <div id="lv-container" data-id="city" data-uid="MTAyMC80NzQ3MS8yMzk3MQ==">
+                    <script type="text/javascript">
+                   (function(d, s) {
+                       var j, e = d.getElementsByTagName(s)[0];
+
+                       if (typeof LivereTower === 'function') { return; }
+
+                       j = d.createElement(s);
+                       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                       j.async = true;
+
+                       e.parentNode.insertBefore(j, e);
+                   })(document, 'script');
+                    </script>
+                <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Apache-Shiro-Architecture-（Apache-Shiro-架构"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Apache Shiro Architecture （Apache Shiro 架构)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Hign-Level-Overview-高层总览"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Hign-Level Overview (高层总览)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#The-SecurityManager"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">The SecurityManager</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Design"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Design</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/sunshine-carroll.github.io/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#Shiro" title="Shiro">Shiro</a>
+                        
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#work" title="work">work</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://sunshine-carroll.github.io" target="_blank">Sunshine&#39;s Blog</a></li>
+                    
+                        <li><a href="#" target="_blank">Sunshine&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunshine-carroll" target="_blank">Sunshine&#39;s Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "sunshine-carroll";
+    var disqus_identifier = "https://sunshine-carroll.github.io/2020/02/29/Shiro-Architecture/";
+    var disqus_url = "https://sunshine-carroll.github.io/2020/02/29/Shiro-Architecture/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunshine-carroll">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Gang Du">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; sunshine 2020 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/sunshine-carroll.github.io/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/sunshine-carroll.github.io/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/sunshine-carroll.github.io/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/sunshine-carroll.github.io/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunshine-carroll.github.io/sunshine-carroll.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/sunshine-carroll.github.io/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot; ,&quot;rgb(157,211,250)&quot; ,&quot;rgb(255,0,0)&quot; ,&quot;rgb(242,153,29)&quot; ,&quot;rgb(23,204,16)&quot; ,&quot;rgb(222,0,0)&quot; ,&quot;rgb(22,36,92)&quot; ,&quot;rgb(127,24,116)&quot; ,&quot;rgb(119,195,79)&quot; ,&quot;rgb(4,77,34)&quot; ,&quot;rgb(122,2,60)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>
