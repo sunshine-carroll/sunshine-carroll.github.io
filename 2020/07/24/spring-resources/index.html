@@ -125,7 +125,7 @@
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">907</span> and
+                                Words <span class="post-count">918</span> and
                                 Reading Time <span class="post-count">3</span> Minutes
                             </span>
                             <div class="blank_box"></div>
@@ -187,21 +187,14 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunshine-carroll.github.io/photography/">Photography</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
                         </li>
                         
                     
@@ -216,6 +209,13 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/photography/">Photography</a>
                         </li>
                         
                     
@@ -274,10 +274,10 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>本文主要参考于Spring官方文档中spring-core resources 部分，加上自身的见解，由于水平有限，如有不足之处欢迎交流</p>
-<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>在编程中，有时需要访问位于不同地方的资源，这些资源可能在文件系统，网络环境，或一个web应用等环境中。然而对于使用这些资源的客户端程序员来说，他们更加关心的是资源的内容，资源是否存在，让这些客户端代码去关心如何去获取这些资源只能无端增加客户端代码的复杂性。分散实现核心职责的注意力。spring-core 中的resources部分，体现了Spring对资源的处理方式。</p>
-<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><p>Bruce Eckel 把对象认为是<code>问题空间</code>中的元素及其<code>解空间</code>的表示-We refer to the elements in the <code>problem space</code> and their representations in the <code>solution space</code> as “objects.”面向对象的设计可以从<code>问题空间</code>入手，发现<code>问题空间</code>中存在的概念和元素</p>
-<p>资源概念自然是Spring资源处理机制的核心概念之一，<code>Resource</code>接口抽象了资源的行为，这些见名知义的行为(方法)是使用资源的人通常关心的功能。</p>
+                <p>本文主要参考于Spring官方文档中spring-core resources 部分，加上自身的见解，水平有限，如有不足之处欢迎在下方评论交流。</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>&emsp;&emsp;在编程中，有时需要访问位于不同地方的资源，这些资源可能在文件系统，网络环境，或一个web应用等环境中。然而对于使用这些资源的客户端程序员来说，他们更加关心的是资源的内容，资源是否存在，让这些客户端代码去关心如何去获取这些资源只能无端增加客户端代码的复杂性。分散实现核心职责的注意力。spring-core 中的resources部分，体现了Spring对资源的处理方式。</p>
+<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><p>&emsp;&emsp;Bruce Eckel 把对象认为是<code>问题空间</code>中的元素及其<code>解空间</code>的表示-We refer to the elements in the <code>problem space</code> and their representations in the <code>solution space</code> as “objects.”面向对象的设计可以从<code>问题空间</code>入手，发现<code>问题空间</code>中存在的概念和元素。</p>
+<p>&emsp;&emsp;资源概念自然是Spring资源处理机制的核心概念之一，Spring <code>Resource</code>接口抽象了资源的行为，这些见名知义的行为(方法)是使用资源的人通常关心的功能。</p>
 <img src="/sunshine-carroll.github.io/2020/07/24/spring-resources/resource.png" alt="resource" style="zoom: 67%;">
 
 <h3 id="e-g"><a href="#e-g" class="headerlink" title="e.g"></a>e.g</h3><p>举个小例子，下面是Spring 加载free marker配置的代码片段</p>
