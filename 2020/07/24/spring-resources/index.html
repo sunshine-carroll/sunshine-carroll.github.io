@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          鸽巢原理 - sunshine
+          spring-resources - sunshine
         
     </title>
 
-    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/02/02/鸽巢原理/">
+    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/07/24/spring-resources/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -90,7 +90,7 @@
     header.intro-header{
         
             
-                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('')
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/default.jpg')
                 /*post*/
             
         
@@ -112,23 +112,21 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/sunshine-carroll.github.io/tags/#discrete mathmatics" title="discrete mathmatics">discrete mathmatics</a>
-                            
-                              <a class="tag" href="/sunshine-carroll.github.io/tags/#counting" title="counting">counting</a>
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#Spring-core" title="Spring-core">Spring-core</a>
                             
                         </div>
-                        <h1>鸽巢原理</h1>
+                        <h1>spring-resources</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by sunshine on
-                            2020-02-02
+                            2020-07-24
                         </span>
 
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">644</span> and
-                                Reading Time <span class="post-count">2</span> Minutes
+                                Words <span class="post-count">907</span> and
+                                Reading Time <span class="post-count">3</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -276,29 +274,80 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="鸽巢原理"><a href="#鸽巢原理" class="headerlink" title="鸽巢原理"></a>鸽巢原理</h2><p>​        如果有$k+1$个或更多的物体放入k个盒子，则至少有一个盒子包含2个或更多的物体。</p>
-<p>证明：<br>            假设没有一个盒子中物体大于1个，那么总物体数≤1×k=k个,和总共有k+1个物体矛盾。</p>
-<hr>
-<h2 id="广义鸽巢原理"><a href="#广义鸽巢原理" class="headerlink" title="广义鸽巢原理"></a>广义鸽巢原理</h2><p>​            如果$N$个物体放入$K$个盒子，那么至少一个盒子包含了$\lceil\frac{N}{K}\rceil$个物体。</p>
-<p>证明：<br>            假如没有一个盒子的物体数超过$\lceil\frac{N}{K}\rceil$,那么总物体数最多有<br>$$<br>k（\lceil\frac{N}{K}\rceil-1）&lt;k（\frac{N}{K}+1-1）=N<br>$$<br>​            这和总物体个数为N互相矛盾</p>
-<hr>
-<h2 id="n-2-1-个任意实数的子序列问题"><a href="#n-2-1-个任意实数的子序列问题" class="headerlink" title="$n^2+1$个任意实数的子序列问题"></a>$n^2+1$个任意实数的子序列问题</h2><p>​        每个由$n^2+1$个不同实数构成的序列都包含着一个长为n+1的严格递增子序列或者严格递减子序列。</p>
-<p>证明：<br>            设$a_1,a_2,\cdots,a_{n^2+1}$是$n^2+1$个不同实数构成的序列，对与序列中的每一个项$a_k$都有一个有序对$(i_k,d_k)$，$i_k$表示从$a_k$开始最长递增子序列的长度,$d_k$表示从$a_k$开始最长递减子序列的长度.<br>            如果每个由$n^2+1$个不同实数构成的序列不存在一个长为n+1的严格递增子序列或者严格递减子序列，那么子序列的长度最多为n，有序对$(i_k,d_k)$有$n^2$种可能，但一共有$n+1$个有序对，那么必定存在$a_s$,$a_j$$s&lt;j$,使得$(i_s,d_s)=(i_j,d_j)$,     因为序列中实数的个数是不同的，所以$a_s&lt;a_j$或$a_s&gt;a_j$<br>            如果$a_s&lt;a_j$,那么从$a_j$开始长度为$i_j$的严格递增子序列中加上$a_s$就构成的从$a_s$开始长度为$i_j+1=i_s+1$的严格递增子序列，这个与从$a_s$开始最长严格递增子序列为$i_s$矛盾。<br>            同理，如果$a_s&gt;a_j$,那么从$a_j$开始长度为$d_j$的严格递减子序列中加上$a_s$就构成的从$a_s$开始长度为$d_j+1=d_s+1$的严格递减子序列，这个与从$a_s$开始最长严格递减子序列为$d_s$矛盾。</p>
-<hr>
-<h2 id="拉姆齐数"><a href="#拉姆齐数" class="headerlink" title="拉姆齐数"></a>拉姆齐数</h2><p>​        拉姆齐数是$R(m,n)$（m,n是大于等于2的正整数）表示，如果一个晚会上两个人两两是朋友或敌人，那么在一个晚会上使得m个人两两是朋友，或n个人两两是敌人所需的最小人数。</p>
+                <p>本文主要参考于Spring官方文档中spring-core resources 部分，加上自身的见解，由于水平有限，如有不足之处欢迎交流</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>在编程中，有时需要访问位于不同地方的资源，这些资源可能在文件系统，网络环境，或一个web应用等环境中。然而对于使用这些资源的客户端程序员来说，他们更加关心的是资源的内容，资源是否存在，让这些客户端代码去关心如何去获取这些资源只能无端增加客户端代码的复杂性。分散实现核心职责的注意力。spring-core 中的resources部分，体现了Spring对资源的处理方式。</p>
+<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><p>Bruce Eckel 把对象认为是<code>问题空间</code>中的元素及其<code>解空间</code>的表示-We refer to the elements in the <code>problem space</code> and their representations in the <code>solution space</code> as “objects.”面向对象的设计可以从<code>问题空间</code>入手，发现<code>问题空间</code>中存在的概念和元素</p>
+<p>资源概念自然是Spring资源处理机制的核心概念之一，<code>Resource</code>接口抽象了资源的行为，这些见名知义的行为(方法)是使用资源的人通常关心的功能。</p>
+<img src="/sunshine-carroll.github.io/2020/07/24/spring-resources/resource.png" alt="resource" style="zoom: 67%;">
+
+<h3 id="e-g"><a href="#e-g" class="headerlink" title="e.g"></a>e.g</h3><p>举个小例子，下面是Spring 加载free marker配置的代码片段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line"><span class="keyword">package</span> org.springframework.ui.freemarker;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FreeMarkerConfigurationFactory</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setConfigLocation</span><span class="params">(Resource resource)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.configLocation = resource;</span><br><span class="line">   &#125;</span><br><span class="line">		</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Configuration <span class="title">createConfiguration</span><span class="params">()</span> <span class="keyword">throws</span> IOException, TemplateException </span>&#123;</span><br><span class="line">          <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具有<code>FreeMarkerConfigurationFactory</code>类型的对象只需要设置配置资源的就能够读取资源内容创建配置对象而不用关心配置文件在哪，同时客户端代码也能提供不同形式的配置获取方式并不用关心资源如何被解析</p>
+<h2 id="ResourceLoader"><a href="#ResourceLoader" class="headerlink" title="ResourceLoader"></a>ResourceLoader</h2><p>有了资源的抽象后,客户端代码可以不用关心资源的加载，但是资源也不能无中生有。Spring把这份职责交给了<code>ResourceLoader</code></p>
+<img src="/sunshine-carroll.github.io/2020/07/24/spring-resources/resource_loader.png" alt="resource" style="zoom: 67%;">
+
+<p>这个一个典型的工厂方法设计模式,<code>getResource</code>方法的String参数作为一个<code>信使对象</code>，描述了创建资源的信息。这样的工厂方法的案例还有javascript 中 document.createElement(input)。</p>
+<p>在Spring中所有的ApplicationContext都实现了ResourceLoader接口</p>
+<h3 id="getResource方法参数的格式"><a href="#getResource方法参数的格式" class="headerlink" title="getResource方法参数的格式"></a>getResource方法参数的格式</h3><p>Spring <code>ResourceLoader</code>的实现，约定getResource方法参数的格式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[prefix] &lt;path&gt;</span><br></pre></td></tr></table></figure>
+
+<p>prefix 前缀</p>
+<p>path 表示路径</p>
+<table>
+<thead>
+<tr>
+<th align="center">prefix</th>
+<th align="center">explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">classpath:</td>
+<td align="center">从类路径加载</td>
+</tr>
+<tr>
+<td align="center">file:</td>
+<td align="center">从文件系统加载</td>
+</tr>
+<tr>
+<td align="center">https:</td>
+<td align="center">从网络中加载</td>
+</tr>
+<tr>
+<td align="center">jar:</td>
+<td align="center">从jar包中加载</td>
+</tr>
+<tr>
+<td align="center">war:</td>
+<td align="center">从tomcat的war包中加载</td>
+</tr>
+<tr>
+<td align="center">(none)</td>
+<td align="center">取决于ApplicationContext的实现</td>
+</tr>
+</tbody></table>
+<h2 id="ResourceLoaderAware"><a href="#ResourceLoaderAware" class="headerlink" title="ResourceLoaderAware"></a>ResourceLoaderAware</h2><p>Spring提供一系列的名为<code>*Aware</code>的回调接口,使得<code>Bean</code>可以告诉<code>IOC容器</code>需要什么样的依赖,这样容器在创建<code>Bean</code>的时候会尽量满足这些依赖。实现<code>ResourceLoaderAware</code>接口的Bean被容器识别为<code>ResourceLoaderAware</code>类型，并调用setResourceLoader方法，<code>Bean</code>可以通过这个方法访问容器的<code>ResourceLoader</code></p>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p>了解一个框架的使用方式和原理最直接有效的方式是去看官方文档，内容全面。可以减少发生不知名错误出现的概率，这些错误可能难以在搜索引擎中找到解决方式。更多内容请看Spring官方提供的文档。包括但不限于:</p>
+<ul>
+<li>Spring 内建的<code>Resource</code>，如<code>URLResource</code>，<code>ClassPathResource</code>等</li>
+<li>不同的<code>ApplicationContext</code>默认加载什么类型的<code>Resource</code></li>
+<li><code>FileSystemApplicationContext</code>和其余<code>ApplicationContext</code>在加载文件系统中绝对路径和相对路径资源的区别</li>
+<li>classpath*: 这样的前缀在什么样的场景使用，并且不应该如何使用</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://docs.spring.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/core.html#resources" target="_blank" rel="noopener">Spring Reference</a></li>
+<li><a href="https://lingcoder.github.io/OnJava8/#/" target="_blank" rel="noopener">On Java 8</a></li>
+<li>四人帮 设计模式</li>
+</ul>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/sunshine-carroll.github.io/2020/02/26/文档通道/" data-toggle="tooltip" data-placement="top" title="文档通道">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/sunshine-carroll.github.io/2020/02/01/计数的基础/" data-toggle="tooltip" data-placement="top" title="计数的基础">Next Post &rarr;</a>
+                        <a href="/sunshine-carroll.github.io/2020/02/29/Shiro-Architecture/" data-toggle="tooltip" data-placement="top" title="Shiro-Architecture">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -379,7 +428,7 @@ const myTheme = {
 
 
 const gitment = new Gitment({
-    id: 'Sun Feb 02 2020 16:56:41 GMT+0800', // optional
+    id: 'Fri Jul 24 2020 14:18:58 GMT+0800', // optional
     owner: "sunshine-carroll",
     repo: "sunshine-carroll.github.io",
     oauth: {
@@ -441,7 +490,7 @@ const gitment = new Gitment({
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#鸽巢原理"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">鸽巢原理</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#广义鸽巢原理"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">广义鸽巢原理</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#n-2-1-个任意实数的子序列问题"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">$n^2+1$个任意实数的子序列问题</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#拉姆齐数"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">拉姆齐数</span></a></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Resource"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Resource</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#e-g"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">e.g</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ResourceLoader"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">ResourceLoader</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#getResource方法参数的格式"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">getResource方法参数的格式</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ResourceLoaderAware"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">ResourceLoaderAware</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Others"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Others</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#参考资料"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">参考资料</span></a></li></ol>
             
           
           </div>
@@ -463,9 +512,7 @@ const gitment = new Gitment({
                     <h5><a href="/sunshine-carroll.github.io/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/sunshine-carroll.github.io/tags/#discrete mathmatics" title="discrete mathmatics">discrete mathmatics</a>
-                        
-                          <a class="tag" href="/sunshine-carroll.github.io/tags/#counting" title="counting">counting</a>
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#Spring-core" title="Spring-core">Spring-core</a>
                         
                     </div>
                 </section>
@@ -498,8 +545,8 @@ const gitment = new Gitment({
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "sunshine-carroll";
-    var disqus_identifier = "https://sunshine-carroll.github.io/2020/02/02/%E9%B8%BD%E5%B7%A2%E5%8E%9F%E7%90%86/";
-    var disqus_url = "https://sunshine-carroll.github.io/2020/02/02/%E9%B8%BD%E5%B7%A2%E5%8E%9F%E7%90%86/";
+    var disqus_identifier = "https://sunshine-carroll.github.io/2020/07/24/spring-resources/";
+    var disqus_url = "https://sunshine-carroll.github.io/2020/07/24/spring-resources/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
