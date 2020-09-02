@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="sunshine&#39;s blog">
+    <meta name="keyword"  content="blog, hexo-theme-snail">
+    <link rel="shortcut icon" href="/sunshine-carroll.github.io/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          索引和散列 - sunshine
+        
+    </title>
+
+    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/08/28/索引和散列/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/default.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/sunshine-carroll.github.io/img/signature/sunshine.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#database" title="database">database</a>
+                            
+                        </div>
+                        <h1>索引和散列</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by sunshine on
+                            2020-08-28
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">1.1k</span> and
+                                Reading Time <span class="post-count">4</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/sunshine-carroll.github.io/">Sunshine&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/sunshine-carroll.github.io/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="YOUR_CHINESE_BLOG_URL" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="基本的索引类型"><a href="#基本的索引类型" class="headerlink" title="基本的索引类型"></a>基本的索引类型</h3><ol>
+<li>​    基于值的顺序排序（将实数集的公理推广到对象集合，等价关系，确定相等性和比较的概念相当于java的equals() 和 Comparator,并使用对象上的）</li>
+<li>散列索引</li>
+</ol>
+<h3 id="评价索引方式的几个标准"><a href="#评价索引方式的几个标准" class="headerlink" title="评价索引方式的几个标准"></a>评价索引方式的几个标准</h3><ol>
+<li>访问类型（全表扫描，点查询，范围查询）</li>
+<li>访问时间 （随着规模的变化）</li>
+<li>插入时间</li>
+<li>删除时间</li>
+<li>空间开销</li>
+</ol>
+<p>###B+树索引</p>
+<p>##特点</p>
+<ol>
+<li>在数据插入和删除的情况下任能保持执行效率</li>
+<li>采用平衡树的结构，树根到树叶的每条路径长度都相同</li>
+<li>会增加文件插入和删除的性能开销和空间开销，但是对于更新频率较高的文件来说也是可以接受的</li>
+</ol>
+<hr>
+<p>##B+树索引结构</p>
+<h3 id="叶子结点"><a href="#叶子结点" class="headerlink" title="叶子结点"></a>叶子结点</h3><p>​        许多包含n-1个搜索码值$K_1,K_2,K_3,..,K_n-1$和n个指针$P_1,P_2,…,P_n$。每个结点中的搜索码值排序存放<br>允许叶子结点最小的值的个数为$⎡\frac{n-1}{2}⎤$，最多的值的个数为n-1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tuple&lt;K,P&gt;[n-1]  + P</span><br></pre></td></tr></table></figure>
+
+<p><img src="/sunshine-carroll.github.io/2020/08/28/%E7%B4%A2%E5%BC%95%E5%92%8C%E6%95%A3%E5%88%97/leaf-of-B+Tree.png" alt="leaf-of-B+Tree"></p>
+<p>example</p>
+<p><img src="/sunshine-carroll.github.io/2020/08/28/%E7%B4%A2%E5%BC%95%E5%92%8C%E6%95%A3%E5%88%97/leaf-of-B+tree-example.png"></p>
+<hr>
+<h3 id="非叶结点"><a href="#非叶结点" class="headerlink" title="非叶结点"></a>非叶结点</h3><p>​    非叶结点的结构和叶子结点相同，但是结点只指向树中的结点，最多包含n个指针，最少包含$⎡\frac{n}{2}⎤$个指针</p>
+<p><img src="/sunshine-carroll.github.io/2020/08/28/%E7%B4%A2%E5%BC%95%E5%92%8C%E6%95%A3%E5%88%97/B+tree-example.png" alt="B+tree-example"></p>
+<hr>
+<h3 id="B-树的查询"><a href="#B-树的查询" class="headerlink" title="B+树的查询"></a>B+树的查询</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">function find(value V)&#123;</span><br><span class="line">	set C &#x3D; root node;</span><br><span class="line">	while (C is not leaf)&#123;</span><br><span class="line">		set i &#x3D; smallest number that V &lt;&#x3D; C.K[i];</span><br><span class="line">		if(i not exist )&#123;</span><br><span class="line">				set P[m] &#x3D; last non-null pointer of the node C;</span><br><span class="line">				set C &#x3D; C.P[m];</span><br><span class="line">		&#125;else&#123;</span><br><span class="line">				if(V &#x3D; C.K[i])&#123;</span><br><span class="line">					set &#x3D; C.P[i+1];</span><br><span class="line">				&#125;else&#123;</span><br><span class="line">					set &#x3D; C.P[i];</span><br><span class="line">				&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	set i &#x3D; least value such that K[i] &#x3D; V</span><br><span class="line">	if(i exist)</span><br><span class="line">		return (C,i)</span><br><span class="line">	else return null</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">procedure printAll(value V)&#123;</span><br><span class="line">	set done &#x3D; false;</span><br><span class="line">	set (L,i) &#x3D; find(V);</span><br><span class="line">	if(L,i) &#x3D;&#x3D; null return;</span><br><span class="line">	while(done or L &#x3D;&#x3D; null)&#123;</span><br><span class="line">			while(i &gt; number of keys in L or L.K[i]&gt;V)&#123;</span><br><span class="line">					print L.P[i];</span><br><span class="line">					set i &#x3D; i+1;</span><br><span class="line">			&#125;</span><br><span class="line">			if(i &gt; number of keys in L)</span><br><span class="line">				L &#x3D; L.P[n];</span><br><span class="line">			else</span><br><span class="line">				set done &#x3D; true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="B-树的更新"><a href="#B-树的更新" class="headerlink" title="B+树的更新"></a>B+树的更新</h3><h2 id="多玛访问"><a href="#多玛访问" class="headerlink" title="多玛访问"></a>多玛访问</h2><h3 id="多个单码索引"><a href="#多个单码索引" class="headerlink" title="多个单码索引"></a>多个单码索引</h3><p>假设有关系<br>$$<br>instrucor(id,name,dept_name,salary)<br>$$</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">ID</span> <span class="keyword">from</span> instructor <span class="keyword">where</span> dept_name = <span class="string">'Finance'</span> <span class="keyword">and</span> salary = <span class="number">80000</span></span><br></pre></td></tr></table></figure>
+
+<p>处理这个查询的方式</p>
+<ol>
+<li>利用dept_name 索引  找出金融系的教员，从这些记录中在找出工资等于 80000 的教员</li>
+<li>利用salary 索引  找出工资等于 8000 的教员，从这些记录中找出金融系的教员</li>
+<li>分别使用两个索引找出满足条件的教员，然后在取交集</li>
+</ol>
+<p>导致出现糟糕情况的情型</p>
+<ol>
+<li><p>金融系的记录太多</p>
+</li>
+<li><p>工资为80000的教员太多</p>
+</li>
+<li><p>但是金融系中工资为80000的特别少</p>
+<p>为了的到很小的一个结果，必须扫描大量记录</p>
+</li>
+</ol>
+<h3 id="多玛索引"><a href="#多玛索引" class="headerlink" title="多玛索引"></a>多玛索引</h3><h2 id="静态散列"><a href="#静态散列" class="headerlink" title="静态散列"></a>静态散列</h2><h3 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h3><p>$$<br>bucket = hashing(key)<br>$$</p>
+<h3 id="理想的散列函数分布特性"><a href="#理想的散列函数分布特性" class="headerlink" title="理想的散列函数分布特性"></a>理想的散列函数分布特性</h3><ol>
+<li>分布均匀  从所有可能的搜索码值的集合中应该为每个桶分配相同数量的搜索码值</li>
+<li>分布随机 不管搜索码值的分布实际是什么样的（指数分布,均匀分布，正态分布…),每个桶分配到的搜索码值数应该相同</li>
+</ol>
+<h3 id="桶溢出处理"><a href="#桶溢出处理" class="headerlink" title="桶溢出处理"></a>桶溢出处理</h3><p>导致溢出的原因</p>
+<ol>
+<li>桶不足  $n_b &gt; \frac{n_r}{n_f}$</li>
+<li>偏斜.  多个记录具有相同搜索码，散列函数分布不均</li>
+</ol>
+<p>处理方式</p>
+<p>溢出桶（适合数据库）</p>
+<p>线性探测函数（适合编译器，和汇编器的符号表）</p>
+<h2 id="动态散列"><a href="#动态散列" class="headerlink" title="动态散列"></a>动态散列</h2><h3 id="🛠相同类似原理的其他工具"><a href="#🛠相同类似原理的其他工具" class="headerlink" title="🛠相同类似原理的其他工具"></a>🛠相同类似原理的其他工具</h3><ol>
+<li>redis 字典（映射，map）的实现(有个渐进再散列)</li>
+<li>HashMap&lt;K,V&gt;（java 8 开始用了红黑树）</li>
+</ol>
+<p>##位图索引</p>
+<p>##各种索引技术的比较表</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">索引顺序文件</th>
+<th align="center">B+tree</th>
+<th align="center">散列</th>
+<th align="center">位图</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">索引类型</td>
+<td align="center">顺序索引</td>
+<td align="center">顺序索引</td>
+<td align="center">散列索引</td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">访问时间</td>
+<td align="center">比B+tree慢，随着数据的变大，查询性能，和数据顺序扫描变慢</td>
+<td align="center">随着数据插入和删除依旧能查询性能</td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">插入时间</td>
+<td align="center">链表的插入</td>
+<td align="center">维护B+tree结构的额外时间，结点的分离和合并</td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">删除时间</td>
+<td align="center">链表的删除</td>
+<td align="center">维护B+tree结构的额外时间，结点的分离和合并</td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">空间开销</td>
+<td align="center">比B+tree 少</td>
+<td align="center">空间开销较大</td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">适合的场景</td>
+<td align="center">点查询，范围查询</td>
+<td align="center">点查询，范围查询</td>
+<td align="center">点查询</td>
+<td align="center">多码上的点查询</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">不适合场景</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">范围查询</td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody></table>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/sunshine-carroll.github.io/2020/08/28/关系代数/" data-toggle="tooltip" data-placement="top" title="关系代数">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/sunshine-carroll.github.io/2020/07/29/Semantic-Versioning/" data-toggle="tooltip" data-placement="top" title="Semantic Versioning">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <hr>
+                <div id="blog_comments"></div>
+
+<!--
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+-->
+<!--
+<link rel="stylesheet" href="/css/gitment.css">
+<script type="text/javascript" src="/js/gitment.js"></script>
+-->
+
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+
+<!--
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+-->
+
+<script>
+const myTheme = {
+  render(state, instance) {
+    const container = document.createElement('div')
+    container.lang = "en-US"
+    container.className = 'gitment-container gitment-root-container'
+    
+     // your custom component
+    container.appendChild(instance.renderSomething(state, instance))
+    
+    container.appendChild(instance.renderHeader(state, instance))
+    container.appendChild(instance.renderComments(state, instance))
+    container.appendChild(instance.renderEditor(state, instance))
+    //container.appendChild(instance.renderFooter(state, instance))
+    return container
+  },
+  renderSomething(state, instance) {
+    const container = document.createElement('div')
+    container.lang = "en-US"
+    container.className = 'hello_visitor'
+    if (state.user.login) {
+      container.innerText = `Hello ${state.user.login}, Welcome to comment system`
+    }
+    return container
+  }
+}
+
+
+const gitment = new Gitment({
+    id: 'Fri Aug 28 2020 14:33:38 GMT+0800', // optional
+    owner: "sunshine-carroll",
+    repo: "sunshine-carroll.github.io",
+    oauth: {
+      client_id: "8895df271bbbcbad4ed1",
+      client_secret: "ccc414232347145b6ca3d9af201ee7d42446aba6",
+    },
+    theme: myTheme,
+    // ...
+    // For more available options, check out the documentation below
+  })
+  
+  gitment.render('blog_comments')
+  // or
+  // gitment.render(document.getElementById('comments'))
+  // or
+  // document.body.appendChild(gitment.render())
+</script>
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <hr>
+                <div id="lv-container" data-id="city" data-uid="MTAyMC80NzQ3MS8yMzk3MQ==">
+                    <script type="text/javascript">
+                   (function(d, s) {
+                       var j, e = d.getElementsByTagName(s)[0];
+
+                       if (typeof LivereTower === 'function') { return; }
+
+                       j = d.createElement(s);
+                       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                       j.async = true;
+
+                       e.parentNode.insertBefore(j, e);
+                   })(document, 'script');
+                    </script>
+                <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#基本概念"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">基本概念</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基本的索引类型"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">基本的索引类型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#评价索引方式的几个标准"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">评价索引方式的几个标准</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#叶子结点"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">叶子结点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#非叶结点"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">非叶结点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#B-树的查询"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">B+树的查询</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#B-树的更新"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">B+树的更新</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#多玛访问"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">多玛访问</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#多个单码索引"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">多个单码索引</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#多玛索引"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">多玛索引</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#静态散列"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">静态散列</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#散列函数"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">散列函数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#理想的散列函数分布特性"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">理想的散列函数分布特性</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#桶溢出处理"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">桶溢出处理</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#动态散列"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">动态散列</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#🛠相同类似原理的其他工具"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">🛠相同类似原理的其他工具</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/sunshine-carroll.github.io/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#database" title="database">database</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://sunshine-carroll.github.io" target="_blank">Sunshine&#39;s Blog</a></li>
+                    
+                        <li><a href="#" target="_blank">Sunshine&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunshine-carroll" target="_blank">Sunshine&#39;s Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "sunshine-carroll";
+    var disqus_identifier = "https://sunshine-carroll.github.io/2020/08/28/%E7%B4%A2%E5%BC%95%E5%92%8C%E6%95%A3%E5%88%97/";
+    var disqus_url = "https://sunshine-carroll.github.io/2020/08/28/%E7%B4%A2%E5%BC%95%E5%92%8C%E6%95%A3%E5%88%97/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunshine-carroll">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Gang Du">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; sunshine 2020 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/sunshine-carroll.github.io/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/sunshine-carroll.github.io/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/sunshine-carroll.github.io/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/sunshine-carroll.github.io/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunshine-carroll.github.io/sunshine-carroll.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/sunshine-carroll.github.io/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot; ,&quot;rgb(157,211,250)&quot; ,&quot;rgb(255,0,0)&quot; ,&quot;rgb(242,153,29)&quot; ,&quot;rgb(23,204,16)&quot; ,&quot;rgb(222,0,0)&quot; ,&quot;rgb(22,36,92)&quot; ,&quot;rgb(127,24,116)&quot; ,&quot;rgb(119,195,79)&quot; ,&quot;rgb(4,77,34)&quot; ,&quot;rgb(122,2,60)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>

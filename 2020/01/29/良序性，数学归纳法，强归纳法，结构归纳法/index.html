@@ -97,7 +97,7 @@
     }
     
     #signature{
-        background-image: url('/sunshine-carroll.github.io/img/signature/dusign.png');
+        background-image: url('/sunshine-carroll.github.io/img/signature/sunshine.png');
     }
     
 </style>
@@ -189,6 +189,13 @@
 
                         
                         <li>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -197,20 +204,6 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/categories/">Categories</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunshine-carroll.github.io/photography/">Photography</a>
                         </li>
                         
                     
@@ -276,17 +269,16 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="1正整数集合上的公理（Axioms-for-Positive-Integers）"><a href="#1正整数集合上的公理（Axioms-for-Positive-Integers）" class="headerlink" title="1正整数集合上的公理（Axioms for Positive Integers）"></a>1正整数集合上的公理（Axioms for Positive Integers）</h2><ol>
+                <h2 id="正整数集合上的公理（Axioms-for-Positive-Integers）"><a href="#正整数集合上的公理（Axioms-for-Positive-Integers）" class="headerlink" title="正整数集合上的公理（Axioms for Positive Integers）"></a>正整数集合上的公理（Axioms for Positive Integers）</h2><ol>
 <li>数1是正整数</li>
 <li>如果n是正整数那么n+1(n的后继也是正整数)</li>
 <li>每个大于1的正整数都是一个正整数的后继</li>
 <li>良序性(The Well-Ordering Property):正整数集合的每个非空子集都有一个最小元</li>
 </ol>
-<h2 id="2介绍-introduction"><a href="#2介绍-introduction" class="headerlink" title="2介绍(introduction)"></a>2介绍(introduction)</h2><p>良序性公理—&gt;数学归纳法—&gt;强归纳法—&gt;结构归纳法</p>
-<h3 id="2-1数学归纳法"><a href="#2-1数学归纳法" class="headerlink" title="2.1数学归纳法"></a>2.1数学归纳法</h3><h4 id="2-1-1描述"><a href="#2-1-1描述" class="headerlink" title="2.1.1描述"></a>2.1.1描述</h4><p>​        很多命题都断言，某个性质对所有有正整数来说都为真。数学归纳法是证明这类命题的一个有效证明方法。首先证明命题对于正整数1成立。然后证明这个命题如果对于一个正整数成立，那么对于下一个正整数也必然成立。这证明方法基于下面这个推理规则。</p>
-<script type="math/tex; mode=display">
-∀n∈Z^*,\ \ \ \ (P(1)∧(∀k∈Z^*,P(k)→P(k+1))  →  ∀nP(n)</script><p>也就是说对于任意正整数n 如果$P(1)$且$∀k∈Z^*,P(k)→P(k+1)$,那么∀nP(n)也成立。</p>
-<h4 id="2-1-2可以使用使用数学归纳法证明的命题"><a href="#2-1-2可以使用使用数学归纳法证明的命题" class="headerlink" title="2.1.2可以使用使用数学归纳法证明的命题"></a>2.1.2可以使用使用数学归纳法证明的命题</h4><ol>
+<h2 id="介绍-introduction"><a href="#介绍-introduction" class="headerlink" title="介绍(introduction)"></a>介绍(introduction)</h2><p>良序性公理–&gt;数学归纳法–&gt;强归纳法–&gt;结构归纳法</p>
+<h3 id="数学归纳法"><a href="#数学归纳法" class="headerlink" title="数学归纳法"></a>数学归纳法</h3><p>####描述</p>
+<p>​        很多命题都断言，某个性质对所有有正整数来说都为真。数学归纳法是证明这类命题的一个有效证明方法。首先证明命题对于正整数1成立。然后证明这个命题如果对于一个正整数成立，那么对于下一个正整数也必然成立。这证明方法基于下面这个推理规则。<br>$$<br>∀n∈Z^<em>,\ \ \ \ (P(1)∧(∀k∈Z^</em>,P(k)→P(k+1))  →  ∀nP(n)<br>$$<br>也就是说对于任意正整数n 如果$P(1)$且$∀k∈Z^*,P(k)→P(k+1)$,那么∀nP(n)也成立。</p>
+<h4 id="可以使用使用数学归纳法证明的命题"><a href="#可以使用使用数学归纳法证明的命题" class="headerlink" title="可以使用使用数学归纳法证明的命题"></a>可以使用使用数学归纳法证明的命题</h4><ol>
 <li><p>对于一个无限长的多米诺骨牌，每张多米诺骨牌都直立着，如果第一个多米诺骨牌倒了，并且如果一张多米诺骨牌倒了，下一张多米诺骨牌也会倒，那么所有的多米诺骨牌都会倒。</p>
 </li>
 <li><p>前n个正整数之和为$\frac{n(n-1)}{2}$</p>
@@ -301,18 +293,20 @@
 <p>的论域不同，具体看一下高等数学书就知道了</p>
 </li>
 </ol>
-<h4 id="2-1-3扩展"><a href="#2-1-3扩展" class="headerlink" title="2.1.3扩展"></a>2.1.3扩展</h4><p>​        在逻辑学中，通过推理规则从前提导出结论的叫演绎推理，寻找结论来支持证据的叫归纳推理，数学证明包括使用了数学归纳法的证明都是演绎推理。这个是术语的冲突。</p>
-<p>​        数学归纳法的基础步骤不一定要从1开始，有时候需要证明对于任意的$n&gt;=b,P(n)$为真,其中n，b是整数，b可以中正数负数或0</p>
+<h4 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h4><p>​        在逻辑学中，通过推理规则从前提导出结论的叫演绎推理，寻找结论来支持证据的叫归纳推理，数学证明包括使用了数学归纳法的证明都是演绎推理。这个是术语的冲突。</p>
+<p>​        数学归纳法的基础步骤不一定要从1开始，有时候需要证明对于任意的$n&gt;=b,P(n)$为真,其中n，b是整数，b可以是正数负数或0</p>
 <p>​        有时候数学归纳法不能直接证明一个结论，但是可以证明一个更广的结论，从而得到需要证明的结论，这个方法叫归纳载入</p>
-<h3 id="2-2强归纳法"><a href="#2-2强归纳法" class="headerlink" title="2.2强归纳法"></a>2.2强归纳法</h3><h4 id="2-2-1描述"><a href="#2-2-1描述" class="headerlink" title="2.2.1描述"></a>2.2.1描述</h4><p>​        强归纳法可以使用在直接使用数学归纳法不容易证明的命题上。他的基础步骤和数学归纳法相同，首先证明$P(1)$为真，归纳步骤不同，归纳步骤需要证明对于任意不大于k的正整数 j ,$P(j)$为真，那么$P(k+1)$也为真。表示为逻辑语句就是</p>
-<script type="math/tex; mode=display">
-∀n∈Z^*,\ \ \ \ (P(1)∧(∀k∈Z^*,P(1)∧P(2)∧..∧P(k-1)∧P(k)→P(k+1))  →  ∀nP(n)</script><h4 id="2-2-2强归纳法可以证明的一些命题"><a href="#2-2-2强归纳法可以证明的一些命题" class="headerlink" title="2.2.2强归纳法可以证明的一些命题"></a>2.2.2强归纳法可以证明的一些命题</h4><ol>
+<h3 id="强归纳法"><a href="#强归纳法" class="headerlink" title="强归纳法"></a>强归纳法</h3><h4 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h4><p>​        强归纳法可以使用在直接使用数学归纳法不容易证明的命题上。他的基础步骤和数学归纳法相同，首先证明$P(1)$为真，归纳步骤不同，归纳步骤需要证明对于任意不大于k的正整数 j ,$P(j)$为真，那么$P(k+1)$也为真。表示为逻辑语句就是<br>$$<br>∀n∈Z^<em>,\ \ \ \ (P(1)∧(∀k∈Z^</em>,P(1)∧P(2)∧..∧P(k-1)∧P(k)→P(k+1))  →  ∀nP(n)<br>$$</p>
+<h4 id="强归纳法可以证明的一些命题"><a href="#强归纳法可以证明的一些命题" class="headerlink" title="强归纳法可以证明的一些命题"></a>强归纳法可以证明的一些命题</h4><ol>
 <li>每个正整数都可以写成素数的乘积</li>
 <li>具有n条边的简单多边形能够被三角形化为n-2分三角形，n是大于等于3的整数</li>
 <li>$\sqrt2$是无理数(第一个被发现的无理数就是$\sqrt2$,希帕索斯也因此被丢进了爱琴海)</li>
 <li>任意正整数n都可以写成2的不同次幂的和</li>
 </ol>
-<h4 id="2-3结构归纳法"><a href="#2-3结构归纳法" class="headerlink" title="2.3结构归纳法"></a>2.3结构归纳法</h4><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h2 id="正确性证明"><a href="#正确性证明" class="headerlink" title="正确性证明"></a>正确性证明</h2><h3 id="良序性-The-Well-Ordering-Property-—-gt-数学归纳法"><a href="#良序性-The-Well-Ordering-Property-—-gt-数学归纳法" class="headerlink" title="良序性(The Well-Ordering Property) —&gt; 数学归纳法"></a>良序性(The Well-Ordering Property) —&gt; 数学归纳法</h3><p>​        先看良序性公理的陈述，正整数集合的每个非空子集都有一个最小元。需要证明的是<br>对于任意正整数n 如果$P(1)$且$∀k∈Z^*,P(k)→P(k+1)$ 能够推出∀nP(n)。</p>
+<h4 id="结构归纳法"><a href="#结构归纳法" class="headerlink" title="结构归纳法"></a>结构归纳法</h4><p>##应用</p>
+<p>##正确性证明</p>
+<p>###良序性(The Well-Ordering Property) –&gt; 数学归纳法</p>
+<p>​        先看良序性公理的陈述，正整数集合的每个非空子集都有一个最小元。需要证明的是<br>对于任意正整数n 如果$P(1)$且$∀k∈Z^*,P(k)→P(k+1)$ 能够推出∀nP(n)。</p>
 <hr>
 <p>Proof 1:</p>
 <p>​        首先先注意到有两个前提，第一个是P(1) ≡ T ,</p>
@@ -328,7 +322,7 @@
 <p>​        首先我们希望在对于任意正整数n 如果$P(1)$和$∀k∈Z^*,P(k)→P(k+1)$都为真的前提下，证明$∀nP(n)$也为真.这是直接证明的一个例子。</p>
 <p>​        随后我们发现$∀nP(n)$  等价于S为空,这一步将证明$∀nP(n)$ 转换为证明 S 为空集。为了证明这一点，我们假设S非空，并通过他来得到一个矛盾式(即永远为假的命题)。即P(m)为真并且P(m)为假的矛盾，这是归谬证明法的一个例子。</p>
 <p>后面得到了S非空为假，即S为空为真，因为S为空→$∀nP(n)$，S为空，于是$∀nP(n)$ 为真，这个是假言推理的一个例子。</p>
-<h3 id="数学归纳法—-gt-结构归纳法"><a href="#数学归纳法—-gt-结构归纳法" class="headerlink" title="数学归纳法—&gt;结构归纳法"></a>数学归纳法—&gt;结构归纳法</h3>
+<h3 id="数学归纳法–-gt-结构归纳法"><a href="#数学归纳法–-gt-结构归纳法" class="headerlink" title="数学归纳法–&gt;结构归纳法"></a>数学归纳法–&gt;结构归纳法</h3>
                 
                 <hr>
                 <!-- Pager -->
@@ -479,7 +473,7 @@ const gitment = new Gitment({
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1正整数集合上的公理（Axioms-for-Positive-Integers）"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1正整数集合上的公理（Axioms for Positive Integers）</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2介绍-introduction"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2介绍(introduction)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-1数学归纳法"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">2.1数学归纳法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-1-1描述"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">2.1.1描述</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-1-2可以使用使用数学归纳法证明的命题"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">2.1.2可以使用使用数学归纳法证明的命题</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-1-3扩展"><span class="toc-nav-number">2.1.3.</span> <span class="toc-nav-text">2.1.3扩展</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-2强归纳法"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2.2强归纳法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-2-1描述"><span class="toc-nav-number">2.2.1.</span> <span class="toc-nav-text">2.2.1描述</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-2-2强归纳法可以证明的一些命题"><span class="toc-nav-number">2.2.2.</span> <span class="toc-nav-text">2.2.2强归纳法可以证明的一些命题</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-3结构归纳法"><span class="toc-nav-number">2.2.3.</span> <span class="toc-nav-text">2.3结构归纳法</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#应用"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">应用</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#正确性证明"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">正确性证明</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#良序性-The-Well-Ordering-Property-—-gt-数学归纳法"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">良序性(The Well-Ordering Property) —&gt; 数学归纳法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数学归纳法—-gt-结构归纳法"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">数学归纳法—&gt;结构归纳法</span></a></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#正整数集合上的公理（Axioms-for-Positive-Integers）"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">正整数集合上的公理（Axioms for Positive Integers）</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#介绍-introduction"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">介绍(introduction)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数学归纳法"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">数学归纳法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#可以使用使用数学归纳法证明的命题"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">可以使用使用数学归纳法证明的命题</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#扩展"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">扩展</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#强归纳法"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">强归纳法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#描述"><span class="toc-nav-number">2.2.1.</span> <span class="toc-nav-text">描述</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#强归纳法可以证明的一些命题"><span class="toc-nav-number">2.2.2.</span> <span class="toc-nav-text">强归纳法可以证明的一些命题</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#结构归纳法"><span class="toc-nav-number">2.2.3.</span> <span class="toc-nav-text">结构归纳法</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数学归纳法–-gt-结构归纳法"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">数学归纳法–&gt;结构归纳法</span></a></li></ol></li></ol>
             
           
           </div>

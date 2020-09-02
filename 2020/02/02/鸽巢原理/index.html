@@ -97,7 +97,7 @@
     }
     
     #signature{
-        background-image: url('/sunshine-carroll.github.io/img/signature/dusign.png');
+        background-image: url('/sunshine-carroll.github.io/img/signature/sunshine.png');
     }
     
 </style>
@@ -127,8 +127,8 @@
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">152</span> and
-                                Reading Time <span class="post-count">1</span> Minutes
+                                Words <span class="post-count">644</span> and
+                                Reading Time <span class="post-count">2</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -189,6 +189,13 @@
 
                         
                         <li>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -197,20 +204,6 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/categories/">Categories</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunshine-carroll.github.io/photography/">Photography</a>
                         </li>
                         
                     
@@ -280,12 +273,10 @@
 <p>证明：<br>            假设没有一个盒子中物体大于1个，那么总物体数≤1×k=k个,和总共有k+1个物体矛盾。</p>
 <hr>
 <h2 id="广义鸽巢原理"><a href="#广义鸽巢原理" class="headerlink" title="广义鸽巢原理"></a>广义鸽巢原理</h2><p>​            如果$N$个物体放入$K$个盒子，那么至少一个盒子包含了$\lceil\frac{N}{K}\rceil$个物体。</p>
-<p>证明：<br>            假如没有一个盒子的物体数超过$\lceil\frac{N}{K}\rceil$,那么总物体数最多有</p>
-<script type="math/tex; mode=display">
-k（\lceil\frac{N}{K}\rceil-1）<k（\frac{N}{K}+1-1）=N</script><p>​            这和总物体个数为N互相矛盾</p>
+<p>证明：<br>            假如没有一个盒子的物体数超过$\lceil\frac{N}{K}\rceil$,那么总物体数最多有<br>$$<br>k（\lceil\frac{N}{K}\rceil-1）&lt;k（\frac{N}{K}+1-1）=N<br>$$<br>​            这和总物体个数为N互相矛盾</p>
 <hr>
 <h2 id="n-2-1-个任意实数的子序列问题"><a href="#n-2-1-个任意实数的子序列问题" class="headerlink" title="$n^2+1$个任意实数的子序列问题"></a>$n^2+1$个任意实数的子序列问题</h2><p>​        每个由$n^2+1$个不同实数构成的序列都包含着一个长为n+1的严格递增子序列或者严格递减子序列。</p>
-<p>证明：<br>            设$a<em>1,a_2,\cdots,a</em>{n^2+1}$是$n^2+1$个不同实数构成的序列，对与序列中的每一个项$a_k$都有一个有序对$(i_k,d_k)$，$i_k$表示从$a_k$开始最长递增子序列的长度,$d_k$表示从$a_k$开始最长递减子序列的长度.<br>            如果每个由$n^2+1$个不同实数构成的序列不存在一个长为n+1的严格递增子序列或者严格递减子序列，那么子序列的长度最多为n，有序对$(i_k,d_k)$有$n^2$种可能，但一共有$n+1$个有序对，那么必定存在$a_s$,$a_j$$s<j$,使得$(i_s,d_s)=(i_j,d_j)$, 因为序列中实数的个数是不同的，所以$a_s<a_j$或$a_s>a_j$<br>            如果$a_s<a_j$,那么从$a_j$开始长度为$i_j$的严格递增子序列中加上$a_s$就构成的从$a_s$开始长度为$i_j+1=i_s+1$的严格递增子序列，这个与从$a_s$开始最长严格递增子序列为$i_s$矛盾。<br>            同理，如果$a_s&gt;a_j$,那么从$a_j$开始长度为$d_j$的严格递减子序列中加上$a_s$就构成的从$a_s$开始长度为$d_j+1=d_s+1$的严格递减子序列，这个与从$a_s$开始最长严格递减子序列为$d_s$矛盾。</a_j$,那么从$a_j$开始长度为$i_j$的严格递增子序列中加上$a_s$就构成的从$a_s$开始长度为$i_j+1=i_s+1$的严格递增子序列，这个与从$a_s$开始最长严格递增子序列为$i_s$矛盾。<br></j$,使得$(i_s,d_s)=(i_j,d_j)$,></p>
+<p>证明：<br>            设$a_1,a_2,\cdots,a_{n^2+1}$是$n^2+1$个不同实数构成的序列，对与序列中的每一个项$a_k$都有一个有序对$(i_k,d_k)$，$i_k$表示从$a_k$开始最长递增子序列的长度,$d_k$表示从$a_k$开始最长递减子序列的长度.<br>            如果每个由$n^2+1$个不同实数构成的序列不存在一个长为n+1的严格递增子序列或者严格递减子序列，那么子序列的长度最多为n，有序对$(i_k,d_k)$有$n^2$种可能，但一共有$n+1$个有序对，那么必定存在$a_s$,$a_j$$s&lt;j$,使得$(i_s,d_s)=(i_j,d_j)$,     因为序列中实数的个数是不同的，所以$a_s&lt;a_j$或$a_s&gt;a_j$<br>            如果$a_s&lt;a_j$,那么从$a_j$开始长度为$i_j$的严格递增子序列中加上$a_s$就构成的从$a_s$开始长度为$i_j+1=i_s+1$的严格递增子序列，这个与从$a_s$开始最长严格递增子序列为$i_s$矛盾。<br>            同理，如果$a_s&gt;a_j$,那么从$a_j$开始长度为$d_j$的严格递减子序列中加上$a_s$就构成的从$a_s$开始长度为$d_j+1=d_s+1$的严格递减子序列，这个与从$a_s$开始最长严格递减子序列为$d_s$矛盾。</p>
 <hr>
 <h2 id="拉姆齐数"><a href="#拉姆齐数" class="headerlink" title="拉姆齐数"></a>拉姆齐数</h2><p>​        拉姆齐数是$R(m,n)$（m,n是大于等于2的正整数）表示，如果一个晚会上两个人两两是朋友或敌人，那么在一个晚会上使得m个人两两是朋友，或n个人两两是敌人所需的最小人数。</p>
 

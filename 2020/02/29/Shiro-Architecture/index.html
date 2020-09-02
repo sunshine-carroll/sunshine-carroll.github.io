@@ -97,7 +97,7 @@
     }
     
     #signature{
-        background-image: url('/sunshine-carroll.github.io/img/signature/dusign.png');
+        background-image: url('/sunshine-carroll.github.io/img/signature/sunshine.png');
     }
     
 </style>
@@ -189,6 +189,13 @@
 
                         
                         <li>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -197,20 +204,6 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/categories/">Categories</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunshine-carroll.github.io/photography/">Photography</a>
                         </li>
                         
                     
@@ -276,7 +269,7 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>翻译自官方文档—<a href="http://shiro.apache.org/architecture.html" target="_blank" rel="noopener">原文地址</a></p>
+                <p>翻译自官方文档–<a href="http://shiro.apache.org/architecture.html" target="_blank" rel="noopener">原文地址</a></p>
 <h2 id="Apache-Shiro-Architecture-（Apache-Shiro-架构"><a href="#Apache-Shiro-Architecture-（Apache-Shiro-架构" class="headerlink" title="Apache Shiro Architecture （Apache Shiro 架构)"></a>Apache Shiro Architecture （Apache Shiro 架构)</h2><p>Apache Shiro’s design goals are to simplify application security by being intuitive and easy to use. Shiro’s core design models how most people think about application security - in the context of someone (or something) interacting with an application.  </p>
 <p>Aache Shiro设计的目标是通过直觉化和简易实用设计来简化应用程序安全性开发. Shiro 核心设计模型是 在某人或某物与应用程序交互的场景下，人们对应用程序安全思维方式 </p>
 <hr>
@@ -319,7 +312,8 @@
 </ul>
 </blockquote>
 <hr>
-<h2 id="Detailed-Architecture-详细的架构"><a href="#Detailed-Architecture-详细的架构" class="headerlink" title="Detailed Architecture(详细的架构)"></a><a href="http://shiro.apache.org/architecture.html#detailed-architecture" target="_blank" rel="noopener">Detailed Architecture</a>(详细的架构)</h2><p>The following diagram shows Shiro’s core architectural concepts followed by short summaries of each:</p>
+<p>##<a href="http://shiro.apache.org/architecture.html#detailed-architecture" target="_blank" rel="noopener">Detailed Architecture</a>(详细的架构)</p>
+<p>The following diagram shows Shiro’s core architectural concepts followed by short summaries of each:</p>
 <p>下面展示了Shiro的核心架构概念，并为每一个概念有一个简短的总结</p>
 <p><img src="/sunshine-carroll.github.io/2020/02/29/Shiro-Architecture/ShiroArchitecture.png" alt="ShiroArchitecture"></p>
 <blockquote>
@@ -345,7 +339,7 @@
 </li>
 <li><p><strong>SessionManager</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/session/mgt/SessionManager.html" target="_blank" rel="noopener">org.apache.shiro.session.mgt.SessionManager</a>)<br>The <code>SessionManager</code> knows how to create and manage user <code>Session</code> lifecycles to provide a robust Session experience for users in all environments. This is a unique feature in the world of security frameworks - Shiro has the ability to natively manage user Sessions in any environment, even if there is no Web/Servlet or EJB container available. By default, Shiro will use an existing session mechanism if available, (e.g. Servlet Container), but if there isn’t one, such as in a standalone application or non-web environment, it will use its built-in enterprise session management to offer the same programming experience. The <code>SessionDAO</code> exists to allow any datasource to be used to persist sessions.</p>
 </li>
-<li><p><code>SessionManager</code>知道如何创建和管理用户<code>Session</code>的生命周期并在任何环境下提供给用户一个健壮的会话体验。在安全框架的世界中这是个独特的特性—即使不在Web/Servlet或EJB容器中，Shiro天然的有在任何环境下管理用户会话的能力。如果有可以使用的会话机制(如Servlet Container)，Shiro默认会使用它,但是如果没有，就像独立的应用程序或非web环境下，他会使用他内建的企业级会话管理以提供相同的编程体验。<code>SessionDAO</code>为允许任何用于持久化会话的数据源而存在</p>
+<li><p><code>SessionManager</code>知道如何创建和管理用户<code>Session</code>的生命周期并在任何环境下提供给用户一个健壮的会话体验。在安全框架的世界中这是个独特的特性–即使不在Web/Servlet或EJB容器中，Shiro天然的有在任何环境下管理用户会话的能力。如果有可以使用的会话机制(如Servlet Container)，Shiro默认会使用它,但是如果没有，就像独立的应用程序或非web环境下，他会使用他内建的企业级会话管理以提供相同的编程体验。<code>SessionDAO</code>为允许任何用于持久化会话的数据源而存在</p>
 </li>
 <li><p><strong>CacheManager</strong> (<a href="http://shiro.apache.org/static/current/apidocs/org/apache/shiro/cache/CacheManager.html" target="_blank" rel="noopener">org.apache.shiro.cache.CacheManager</a>)<br>The <code>CacheManager</code> creates and manages <code>Cache</code> instance lifecycles used by other Shiro components. Because Shiro can access many back-end data sources for authentication, authorization and session management, caching has always been a first-class  feature in the framework to improve performance while using these data sources. Any of the modern open-source and/or enterprise caching products can be plugged in to Shiro to provide a fast and efficient user-experience.</p>
 </li>
@@ -542,7 +536,7 @@ const gitment = new Gitment({
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Apache-Shiro-Architecture-（Apache-Shiro-架构"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Apache Shiro Architecture （Apache Shiro 架构)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Hign-Level-Overview-高层总览"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Hign-Level Overview (高层总览)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Detailed-Architecture-详细的架构"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Detailed Architecture(详细的架构)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#The-SecurityManager"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">The SecurityManager</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Design"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Design</span></a></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Apache-Shiro-Architecture-（Apache-Shiro-架构"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Apache Shiro Architecture （Apache Shiro 架构)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Hign-Level-Overview-高层总览"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Hign-Level Overview (高层总览)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#The-SecurityManager"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">The SecurityManager</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Design"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Design</span></a></li></ol>
             
           
           </div>

@@ -97,7 +97,7 @@
     }
     
     #signature{
-        background-image: url('/sunshine-carroll.github.io/img/signature/dusign.png');
+        background-image: url('/sunshine-carroll.github.io/img/signature/sunshine.png');
     }
     
 </style>
@@ -112,9 +112,9 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/sunshine-carroll.github.io/tags/#discrete mathmatics" title="discrete mathmatics">discrete mathmatics</a>
-                            
                               <a class="tag" href="/sunshine-carroll.github.io/tags/#counting" title="counting">counting</a>
+                            
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#discrete mathematics" title="discrete mathematics">discrete mathematics</a>
                             
                         </div>
                         <h1>计数的基础</h1>
@@ -189,6 +189,13 @@
 
                         
                         <li>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -197,20 +204,6 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/categories/">Categories</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunshine-carroll.github.io/photography/">Photography</a>
                         </li>
                         
                     
@@ -276,57 +269,33 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="乘积规则"><a href="#乘积规则" class="headerlink" title="乘积规则"></a>乘积规则</h2><p>当一个过程由独立的任务组成时可以使用乘积规则。<br>假设一个过程可以被分解为两个任务。如果完成第一个任务的方式有$n_1$种并且对于每个完成第一个任务的方式，完成第二个任务的方式有$n_2$种，那么完成这个过程有$n_1n_2$种方式。</p>
+                <p>##乘积规则</p>
+<p>当一个过程由独立的任务组成时可以使用乘积规则。<br>假设一个过程可以被分解为两个任务。如果完成第一个任务的方式有$n_1$种并且对于每个完成第一个任务的方式，完成第二个任务的方式有$n_2$种，那么完成这个过程有$n_1n_2$种方式。</p>
 <h2 id="THE-PRODUCT-RULE"><a href="#THE-PRODUCT-RULE" class="headerlink" title="THE PRODUCT RULE"></a>THE PRODUCT RULE</h2><p>​        The product rule applies when a procedure is made up of separate tasks.<br>        Suppose that a procedure can be broken down into a sequence of two tasks. If there are $n_1$ ways to do the ﬁrst task and for each of these ways of doing the ﬁrst task, there are $n_2$ ways to do the second task, then there are$n_1n_2$ ways to do the procedure.</p>
 <hr>
 <h2 id="求和法则"><a href="#求和法则" class="headerlink" title="求和法则"></a>求和法则</h2><p>​        如果一个任务能被$n_1$中方式的一种或$n_2$种方式中的一种完成。在$n_1$种方式的集合中没有一个与$n_2$种方式的集合中的元素相同。那么一共有$n_1+n_2$种方式完成这个任务</p>
-<h2 id="THE-SUM-RULE"><a href="#THE-SUM-RULE" class="headerlink" title="THE SUM RULE"></a>THE SUM RULE</h2><p>​        If a task can be done either in one of $n_1$ ways or in one of $n_2$ ways, where none of the set of $n_1$ ways is the same as any of the set of $n_2$ ways, then there are $n_1+n_2$  ways to do the task.</p>
+<p>##THE SUM RULE</p>
+<p>​        If a task can be done either in one of $n_1$ ways or in one of $n_2$ ways, where none of the set of $n_1$ ways is the same as any of the set of $n_2$ ways, then there are $n_1+n_2$  ways to do the task.</p>
 <hr>
 <h2 id="减法法则-两个集合的容斥原理"><a href="#减法法则-两个集合的容斥原理" class="headerlink" title="减法法则(两个集合的容斥原理)"></a>减法法则(两个集合的容斥原理)</h2><p>​        如果一个任务能用$n_1$种方式或$n_2$种方式的其中一种完成，那么完成这个任务的总方法数为$n_1+n_2$减去这两类方法中相同的方法数</p>
-<h2 id="THE-SUBTRACTION-RULE"><a href="#THE-SUBTRACTION-RULE" class="headerlink" title="THE SUBTRACTION RULE"></a>THE SUBTRACTION RULE</h2><p>If a task can be done in either $n_1$ ways or $n_2$ ways, then the number of ways to do the task is $n_1 + n_2$ minus the number of ways to do the task that are common to the two different ways.</p>
-<script type="math/tex; mode=display">
-| A_1∪A_2 | = | A_1 | + | A_2 | − | A_1 ∩ A_2 |</script><hr>
-<h2 id="除法法则"><a href="#除法法则" class="headerlink" title="除法法则"></a>除法法则</h2><p>​        如果一个任务能使用一个有n种方式完成,其中对于每一种方式w，在n种方式中都有d个方式和w方式一样。那么完成这个任务有方法数为$\frac{n}{d}$ </p>
+<h2 id="THE-SUBTRACTION-RULE"><a href="#THE-SUBTRACTION-RULE" class="headerlink" title="THE SUBTRACTION RULE"></a>THE SUBTRACTION RULE</h2><p>If a task can be done in either $n_1$ ways or $n_2$ ways, then the number of ways to do the task is $n_1 + n_2$ minus the number of ways to do the task that are common to the two different ways.<br>$$<br>| A_1∪A_2 | = | A_1 | + | A_2 | − | A_1 ∩ A_2 |<br>$$</p>
+<hr>
+<p>##除法法则</p>
+<p>​        如果一个任务能使用一个有n种方式完成,其中对于每一种方式w，在n种方式中都有d个方式和w方式一样。那么完成这个任务有方法数为$\frac{n}{d}$ </p>
 <p>用集合语言描述:<br>        If the ﬁnite set A is the union of n pairwise disjoint subsets each with d elements, then $n = \frac{| A |}{d}$.<br>        如果一个有限集A是n个互斥的集合的并集,其中每个集合都有d个元素，那么$n = \frac{| A |}{d}$</p>
 <p>用函数语言描述:<br>        If f is a function from A to B where A and B are ﬁnite sets, and that for every value $y ∈ B$ there are exactly d values $x ∈ A$ such that $f (x) = y$ (in which case, we say that f is d-to-one), then$｜B｜= \frac{| A |}{d}$.</p>
 <p>​        如果 f 是一个A到B的函数，A，B都为有限集,对于任意一个$y ∈ B$都有d个$x ∈ A$ 使得$f (x) = y$(在这种情况下，我们称f是d到1的),那么$｜B｜= \frac{| A |}{d}$</p>
-<h2 id="The-Division-Rule"><a href="#The-Division-Rule" class="headerlink" title="The Division Rule"></a>The Division Rule</h2><p>​        There are $\frac{n}{d}$ ways to do a task if it can be done using a procedure that can be carried out in n ways, and for every way w, exactly d of the n ways correspond to way w.</p>
+<p>##The Division Rule</p>
+<p>​        There are $\frac{n}{d}$ ways to do a task if it can be done using a procedure that can be carried out in n ways, and for every way w, exactly d of the n ways correspond to way w.</p>
 <h2 id="一些结论"><a href="#一些结论" class="headerlink" title="一些结论"></a>一些结论</h2><ol>
-<li><p>从m元素集合到n元素集合有多少个函数————$n^m$</p>
+<li><p>从m元素集合到n元素集合有多少个函数——–$n^m$</p>
 <p>为任意一个元素x属于m指派一个元素y属于n有n种方式，有m个元素要指派，指派第一个有n种方式，在指派第一个元素后指派第二个元素有$n×n$种方式,以此类推一共有$n^m$种方式</p>
 </li>
-<li><p>从m元素集合到n元素集合有多少个一对一函数————$n(n-1)(n-2)\cdots(n-m+1)$ 其中$m≤n$否则不可能存在一对一函数.</p>
+<li><p>从m元素集合到n元素集合有多少个一对一函数——–$n(n-1)(n-2)\cdots(n-m+1)$ 其中$m≤n$否则不可能存在一对一函数.</p>
 <p>指派第一个有n种方式，在指派第一个元素后指派第二个元素有$n×(n-1)$种方式,以此类推一共有$n(n-1)(n-2)\cdots(n-m+1)$种方式</p>
 </li>
-<li><p>从m元素集合到n元素集合有多少个部分函数——-$(n+1)^m$</p>
-<script type="math/tex; mode=display">
-\begin{pmatrix}
-m\\0
-\end{pmatrix}×1^mn^0+
-\begin{pmatrix}
-m\\1
-\end{pmatrix}
-×1^{m-1}n^{1}+\dots+
-\begin{pmatrix}
-m\\m
-\end{pmatrix}
-×1^{0}n^{m}=(1+n)^m</script><p>二项式定理如下</p>
-<script type="math/tex; mode=display">
-(x+y)^n=\sum_{j=0}^{n}\begin{pmatrix}
-n\\j
-\end{pmatrix}x^{n-j}y^j
-=
-\begin{pmatrix}
-n\\0
-\end{pmatrix}×x^ny^0+
-\begin{pmatrix}
-n\\1
-\end{pmatrix}
-×x^{n-1}y^{1}+\dots+
-\begin{pmatrix}
-n\\n
-\end{pmatrix}
-×x^{0}y^{n}</script><p>当x为1,y为n,n为m时，就是m元素集合到n元素集合部分函数数量的表达式</p>
+<li><p>从m元素集合到n元素集合有多少个部分函数—–$(n+1)^m$<br>$$<br>\begin{pmatrix}<br>m\0<br>\end{pmatrix}×1^mn^0+<br>\begin{pmatrix}<br>m\1<br>\end{pmatrix}<br>×1^{m-1}n^{1}+\dots+<br>\begin{pmatrix}<br>m\m<br>\end{pmatrix}<br>×1^{0}n^{m}=(1+n)^m<br>$$<br>二项式定理如下<br>$$<br>(x+y)^n=\sum_{j=0}^{n}\begin{pmatrix}<br>n\j</p>
+<h1 id="end-pmatrix-x-n-j-y-j"><a href="#end-pmatrix-x-n-j-y-j" class="headerlink" title="\end{pmatrix}x^{n-j}y^j"></a>\end{pmatrix}x^{n-j}y^j</h1><p>\begin{pmatrix}<br>n\0<br>\end{pmatrix}×x^ny^0+<br>\begin{pmatrix}<br>n\1<br>\end{pmatrix}<br>×x^{n-1}y^{1}+\dots+<br>\begin{pmatrix}<br>n\n<br>\end{pmatrix}<br>×x^{0}y^{n}<br>$$<br>当x为1,y为n,n为m时，就是m元素集合到n元素集合部分函数数量的表达式</p>
 </li>
 </ol>
 
@@ -484,7 +453,7 @@ const gitment = new Gitment({
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#乘积规则"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">乘积规则</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#THE-PRODUCT-RULE"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">THE PRODUCT RULE</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#求和法则"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">求和法则</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#THE-SUM-RULE"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">THE SUM RULE</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#减法法则-两个集合的容斥原理"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">减法法则(两个集合的容斥原理)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#THE-SUBTRACTION-RULE"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">THE SUBTRACTION RULE</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#除法法则"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">除法法则</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#The-Division-Rule"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">The Division Rule</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一些结论"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">一些结论</span></a></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#THE-PRODUCT-RULE"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">THE PRODUCT RULE</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#求和法则"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">求和法则</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#减法法则-两个集合的容斥原理"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">减法法则(两个集合的容斥原理)</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#THE-SUBTRACTION-RULE"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">THE SUBTRACTION RULE</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一些结论"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">一些结论</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#end-pmatrix-x-n-j-y-j"><span class="toc-nav-number"></span> <span class="toc-nav-text">\end{pmatrix}x^{n-j}y^j</span></a>
             
           
           </div>
@@ -506,9 +475,9 @@ const gitment = new Gitment({
                     <h5><a href="/sunshine-carroll.github.io/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/sunshine-carroll.github.io/tags/#discrete mathmatics" title="discrete mathmatics">discrete mathmatics</a>
-                        
                           <a class="tag" href="/sunshine-carroll.github.io/tags/#counting" title="counting">counting</a>
+                        
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#discrete mathematics" title="discrete mathematics">discrete mathematics</a>
                         
                     </div>
                 </section>
