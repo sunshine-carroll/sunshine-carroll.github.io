@@ -164,14 +164,14 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                            <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/about/">About</a>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
                         </li>
                         
                     
@@ -274,9 +274,93 @@
 
     
 
+    
+
+    
+
 
 
 <!-- Main Content -->
+
+    
+
+        <div class="post-preview">
+
+            <a href="/sunshine-carroll.github.io/2020/09/09/bean-scope/">
+                <h2 class="post-title">
+                    bean-scope
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    ##Overview
+
+
+
+Scope
+Description
+
+
+
+singleton
+(Default) Scopes a single bean definition to a single object instance for each Spring IoC container.
+
+
+prototype
+Scopes a single bean definition to any ......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by sunshine on
+                    2020-09-09
+                </p>
+                <div class="tags">
+                    
+                      <a href="/sunshine-carroll.github.io/tags/#Ioc容器" title="Ioc容器">Ioc容器</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/sunshine-carroll.github.io/2020/09/04/查询处理(二)/">
+                <h2 class="post-title">
+                    查询处理(二)
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    代价度量影响一次查询执行的代价有很多，磁盘读取，CPU执行，并行/分布式数据库系统中的通信代价等。有些代价难以度量，并且并非主要代价，这里使用磁盘搜索次数和传送磁盘块数来度量查询执行计划的代价。假设磁盘子系统传输一个磁盘块的时间为$t_s$,一次磁盘搜索的时间为$t_T$。
+选择运算的代价估计考虑所有元组都存在单一文件关系上的一个选择运算。
+注意一般$B^+$树非叶节点小于总结点数的1%，$......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by sunshine on
+                    2020-09-04
+                </p>
+                <div class="tags">
+                    
+                      <a href="/sunshine-carroll.github.io/tags/#查询处理" title="查询处理">查询处理</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
 
     
 
@@ -330,6 +414,9 @@ mysql查询执行计划mysql 的查询执行计划展示mysql如何去执行sql�
                     FAQ
 hexo 如何连接站内博客
 
+1[link_name](&#123;% post_link artical_filename artical_title(可选) %&#125;)
+
+中文乱码问题
 ...
                 </div>
             </a>
@@ -354,7 +441,7 @@ hexo 如何连接站内博客
 
         <div class="post-preview">
 
-            <a href="/sunshine-carroll.github.io/2020/08/31/查询处理( 一 )/">
+            <a href="/sunshine-carroll.github.io/2020/08/31/查询处理(一)/">
                 <h2 class="post-title">
                     查询处理(一)
                 </h2>
@@ -364,10 +451,13 @@ hexo 如何连接站内博客
                 <div class="post-content-preview">
                     查询处理简介查询处理是从数据库提取数据时涉及的一系列活动。将高层数据库语言表示的查询语句翻译成能在文件系统物理层上使用的表达式。
 步骤如图所示
-![steps-in-qyerp-processing](./2020-08-31-查询处理( 一 )/steps-in-qyerp-processing.png)
+
 
 首先语法分析器和翻译器将一条高层数据库语言表达的查询语句转化为关系代数表达式。
-优......
+优化器使用得到的关系代数表达式以及有关数据的统计生成查询执行计划。
+执行引起根据查询执行计划到存储的数据中找寻并返回执行结构。
+
+简单的说就是语法分析和翻译→优化 →......
                 </div>
             </a>
             
@@ -574,85 +664,6 @@ Apache Shiro Architecture （Apache Shiro 架构)Apache Shiro’s design goals a
 
     
 
-    
-
-        <div class="post-preview">
-
-            <a href="/sunshine-carroll.github.io/2020/02/26/电子书通道/">
-                <h2 class="post-title">
-                    电子书通道
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    Java
-On Java 8 [^1]
-Effective Java 3 
-
-[^1]: 相当于《Thinking in Java》的第五版，是一本讲语言基础的经典入门书
-...
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by sunshine on
-                    2020-02-26
-                </p>
-                <div class="tags">
-                    
-                      <a href="/sunshine-carroll.github.io/tags/#resources" title="resources">resources</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/sunshine-carroll.github.io/2020/02/26/文档通道/">
-                <h2 class="post-title">
-                    文档通道
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    ##持久层
-
-Mybatis[^1]     中文地址
-Mybatis-Plus[^2] 可中英切换
-
-版本控制
-项目构建,依赖管理工具
-
-##消息机制
-hexo
-[^1]:    MyBatis is a first class persistence framework with support for custom SQL, stored procedures and advanced......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by sunshine on
-                    2020-02-26
-                </p>
-                <div class="tags">
-                    
-                      <a href="/sunshine-carroll.github.io/tags/#resources" title="resources">resources</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
 
 
 <!-- Pager -->
@@ -710,17 +721,21 @@ hexo
     <div class="tags">
         
             
-            <a href="/sunshine-carroll.github.io/tags/#resources" title="resources" rel="2">resources</a>
-            
-        
-            
             <a href="/sunshine-carroll.github.io/tags/#discrete mathmatics" title="discrete mathmatics" rel="2">discrete mathmatics</a>
             
         
             
+            <a href="/sunshine-carroll.github.io/tags/#counting" title="counting" rel="2">counting</a>
+            
         
             
-            <a href="/sunshine-carroll.github.io/tags/#counting" title="counting" rel="2">counting</a>
+        
+            
+            <a href="/sunshine-carroll.github.io/tags/#resources" title="resources" rel="2">resources</a>
+            
+        
+            
+        
             
         
             
@@ -736,9 +751,7 @@ hexo
             
         
             
-        
-            
-            <a href="/sunshine-carroll.github.io/tags/#查询处理" title="查询处理" rel="2">查询处理</a>
+            <a href="/sunshine-carroll.github.io/tags/#查询处理" title="查询处理" rel="3">查询处理</a>
             
         
             
@@ -839,6 +852,14 @@ hexo
     <ul>
       
         <li>
+          <a href="/sunshine-carroll.github.io/2020/09/09/bean-scope/">bean-scope</a>
+        </li>
+      
+        <li>
+          <a href="/sunshine-carroll.github.io/2020/09/04/%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86(%E4%BA%8C)/">查询处理(二)</a>
+        </li>
+      
+        <li>
           <a href="/sunshine-carroll.github.io/2020/08/31/mysql%E6%9F%A5%E8%AF%A2%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/">mysql查询执行计划</a>
         </li>
       
@@ -847,15 +868,7 @@ hexo
         </li>
       
         <li>
-          <a href="/sunshine-carroll.github.io/2020/08/31/%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86(%20%E4%B8%80%20)/">查询处理(一)</a>
-        </li>
-      
-        <li>
-          <a href="/sunshine-carroll.github.io/2020/08/28/%E5%85%B3%E7%B3%BB%E4%BB%A3%E6%95%B0/">关系代数</a>
-        </li>
-      
-        <li>
-          <a href="/sunshine-carroll.github.io/2020/08/28/%E7%B4%A2%E5%BC%95%E5%92%8C%E6%95%A3%E5%88%97/">索引和散列</a>
+          <a href="/sunshine-carroll.github.io/2020/08/31/%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86(%E4%B8%80)/">查询处理(一)</a>
         </li>
       
     </ul>
@@ -884,7 +897,7 @@ hexo
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/08/">August 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/07/">July 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/02/">February 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/01/">January 2020</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/08/">August 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/07/">July 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/02/">February 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/01/">January 2020</a><span class="archive-list-count">1</span></li></ul>
     </div>
 
         <hr>
@@ -895,29 +908,29 @@ hexo
     <div class="widget">
       <ul>
         
-          <a href="categories/#resources"><li>resources</li></a>
+          <a href="categories/#discrete mathmatics"><li>discrete mathmatics</li></a>
         
           <a href="categories/#sunshine"><li>sunshine</li></a>
         
-          <a href="categories/#discrete mathmatics"><li>discrete mathmatics</li></a>
+          <a href="categories/#resources"><li>resources</li></a>
         
-          <a href="categories/#database"><li>database</li></a>
+          <a href="categories/#Shiro"><li>Shiro</li></a>
         
           <a href="categories/#discrete mathematics"><li>discrete mathematics</li></a>
+        
+          <a href="categories/#database"><li>database</li></a>
         
           <a href="categories/#Spring"><li>Spring</li></a>
         
           <a href="categories/#hexo"><li>hexo</li></a>
         
-          <a href="categories/#Shiro"><li>Shiro</li></a>
-        
           <a href="categories/#version control"><li>version control</li></a>
         
           <a href="categories/#discrete mathmatics"><li>discrete mathmatics</li></a>
         
-          <a href="categories/#proof"><li>proof</li></a>
-        
           <a href="categories/#Architecture"><li>Architecture</li></a>
+        
+          <a href="categories/#proof"><li>proof</li></a>
         
           <a href="categories/#counting"><li>counting</li></a>
         
@@ -1119,7 +1132,7 @@ hexo
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot; ,&quot;rgb(157,211,250)&quot; ,&quot;rgb(255,0,0)&quot; ,&quot;rgb(242,153,29)&quot; ,&quot;rgb(23,204,16)&quot; ,&quot;rgb(222,0,0)&quot; ,&quot;rgb(22,36,92)&quot; ,&quot;rgb(127,24,116)&quot; ,&quot;rgb(119,195,79)&quot; ,&quot;rgb(4,77,34)&quot; ,&quot;rgb(122,2,60)&quot;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🌾&#34;,&#34;🍀&#34;,&#34;don&#39;t give up&#34;,&#34;🍂&#34;,&#34;🌻&#34;,&#34;try it again&#34;,&#34;🍃&#34;,&#34;never say die&#34;,&#34;🌵&#34;,&#34;🌿&#34;,&#34;🌴&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34; ,&#34;rgb(157,211,250)&#34; ,&#34;rgb(255,0,0)&#34; ,&#34;rgb(242,153,29)&#34; ,&#34;rgb(23,204,16)&#34; ,&#34;rgb(222,0,0)&#34; ,&#34;rgb(22,36,92)&#34; ,&#34;rgb(127,24,116)&#34; ,&#34;rgb(119,195,79)&#34; ,&#34;rgb(4,77,34)&#34; ,&#34;rgb(122,2,60)&#34;]'></script>
         
 
         <!-- background effects end -->
@@ -1129,21 +1142,6 @@ hexo
     
         <script src="/js/ribbonDynamic.js"></script>
     
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 
 </html>

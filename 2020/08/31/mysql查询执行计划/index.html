@@ -125,8 +125,8 @@
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">1.4k</span> and
-                                Reading Time <span class="post-count">5</span> Minutes
+                                Words <span class="post-count">2.2k</span> and
+                                Reading Time <span class="post-count">8</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -187,14 +187,14 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                            <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/about/">About</a>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
                         </li>
                         
                     
@@ -355,9 +355,50 @@
 <p>select 标志，在一个查询中一次select的序列号。如果一行参照其他行的合并结果,id的值可以为null。在这种情形下，table列会显示类似<br>$$<br>&lt;unionM,N&gt;<br>$$<br>格式的值来表示该行参照的合并的其他行的id值M,N</p>
 </li>
 <li><p>select_type(none)</p>
+<p>select的类型。 更多见下。</p>
+</li>
+<li><p><code>table</code>(<code>table_name</code>)</p>
+<p>输出行所参照的表的名称，也可以是以下值之一：</p>
 <ul>
-<li><p>select的类型.</p>
-<table>
+<li>&lt;unionM,N&gt; 该行所参照的和并行的id值M,N。</li>
+<li>&lt;derivedN&gt; 该行所参照的派生表结果的行的id值N。 举个例子 一个派生表可能是来自from子句中的子查询。</li>
+<li>&lt;subqueryN&gt; 该行所参照的物化子查询结果的行的id值N。</li>
+</ul>
+</li>
+<li><p><code>partitions</code>(<code>partitions</code>)</p>
+<p>查询中，记录匹配的分区。非分区表的是，该值为NULL。</p>
+</li>
+<li><p><code>type</code> (<code>access_type</code>)</p>
+<p>连接类型。</p>
+</li>
+<li><p><code>possible_keys</code>(<code>possible_keys</code>)</p>
+<p><code>possible_keys</code>指示mysql可以选择用来寻找表中的行的索引。</p>
+</li>
+<li><p><code>key</code>(<code>key</code>)</p>
+<p>mysql实际选择的索引。</p>
+</li>
+<li><p><code>key_len</code>(<code>key_length</code>)</p>
+<p>由于key的存储格式，一个可以允许NULL的列key的长度比NOT NULL的key的长度大一。</p>
+</li>
+<li><p><code>ref</code>(<code>rows</code>)</p>
+<p>展示哪些行或常量与key列中索引名比较，以便从表中寻找行。</p>
+<p>如果值为func,则使用的值是某个函数的结果。</p>
+<p>要查看是哪个函数，可以在EXPLAIN后面使用SHOW warning来查看扩展的EXPLAIN输出。</p>
+</li>
+<li><p><code>rows</code>(<code>rows</code>)</p>
+<p>指示Mysql认为在执行查询是必须检查的行数。</p>
+<p>对InnoDB表，这个值是个估计值，可能不会经常确切</p>
+</li>
+<li><p><code>filtered</code>(<code>filtered</code>)</p>
+<p>指示一个估计的百分值，这个百分值表示通过表条件筛选出的行站表的总行数的百分比。</p>
+<p>最大值为100，表示没有发生行的筛选。rows展示了需要受检的行数的估计，rows*filtered表示</p>
+<p>与下一个表进行连接运算的行数</p>
+</li>
+<li><p><code>Extra</code>(<code>none</code>)</p>
+<p>mysql解析查询的额外信息</p>
+</li>
+</ul>
+<h2 id="select-type的解释"><a href="#select-type的解释" class="headerlink" title="select_type的解释"></a><code>select_type</code>的解释</h2><table>
 <thead>
 <tr>
 <th>select_type Value</th>
@@ -366,151 +407,141 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>SIMPLE</td>
-<td>None</td>
-<td>简单的SELECT(不使用UNION 或 subqueries )<br>Simple SELECT (not using UNION or subqueries)</td>
+<td><code>SIMPLE</code></td>
+<td><code>None</code></td>
+<td>简单的<code>SELECT</code>(不使用<code>UNION</code> 或 <code>subqueries</code> )<br>Simple <code>SELECT</code> (not using <code>UNION</code> or <code>subqueries</code>)</td>
 </tr>
 <tr>
-<td>PRIMARY</td>
-<td>None</td>
-<td>外部查询 <br>Outermost SELECT</td>
+<td><code>PRIMARY</code></td>
+<td><code>None</code></td>
+<td>外部查询 <br>Outermost <code>SELECT</code></td>
 </tr>
 <tr>
-<td>UNION</td>
-<td>None</td>
-<td>UNION 中第二个及之后的SELECT <br>Second or later SELECT statement in a UNION</td>
+<td><code>UNION</code></td>
+<td><code>None</code></td>
+<td><code>UNION</code> 中第二个及之后的<code>SELECT </code><br>Second or later <code>SELECT</code> statement in a <code>UNION</code></td>
 </tr>
 <tr>
-<td>DEPENDENT UNION</td>
-<td>dependent (true)</td>
-<td>UNION 中第二个及之后的SELECT,依赖外查询 <br>Second or later SELECT statement in a UNION, dependent on outer query</td>
+<td><code>DEPENDENT UNION</code></td>
+<td><code>dependent</code> (true)</td>
+<td>UNION 中第二个及之后的SELECT,依赖外查询 <br>Second or later <code>SELECT</code> statement in a <code>UNION</code>, dependent on outer query</td>
 </tr>
 <tr>
-<td>UNION RESULT</td>
-<td>union_result</td>
-<td>UNION 的结果 <br>Result of a UNION.</td>
+<td><code>UNION RESULT</code></td>
+<td><code>union_result</code></td>
+<td><code>UNION</code> 的结果 <br>Result of a <code>UNION</code>.</td>
 </tr>
 <tr>
-<td>SUBQUERY</td>
-<td>None</td>
-<td>子查询中的第一个SELECT <br>First SELECT in subquery</td>
+<td><code>SUBQUERY</code></td>
+<td><code>None</code></td>
+<td>子查询中的第一个<code>SELECT</code> <br>First <code>SELECT</code> in <code>subquery</code></td>
 </tr>
 <tr>
-<td>DEPENDENT SUBQUERY</td>
-<td>dependent (true)</td>
-<td>子查询中的第一个SELECT,依赖外查询<br>First SELECT in subquery, dependent on outer query</td>
+<td><code>DEPENDENT SUBQUERY</code></td>
+<td><code>dependent</code> (true)</td>
+<td>子查询中的第一个<code>SELECT</code>,依赖外查询<br>First <code>SELECT</code> in <code>subquery</code>, dependent on outer query</td>
 </tr>
 <tr>
-<td>DERIVED</td>
-<td>None</td>
+<td><code>DERIVED</code></td>
+<td><code>None</code></td>
 <td>派生表 <br>Derived table</td>
 </tr>
 <tr>
-<td>DEPENDENT DERIVED</td>
-<td>dependent (true)</td>
+<td><code>DEPENDENT DERIVED</code></td>
+<td><code>dependent</code> (true)</td>
 <td>依赖其他表的派生表<br> Derived table dependent on another table</td>
 </tr>
 <tr>
-<td>MATERIALIZED</td>
-<td>materialized_from_subquery</td>
-<td>物化视图查询 Materialized subquery</td>
+<td><code>MATERIALIZED</code></td>
+<td><code>materialized_from_subquery</code></td>
+<td>物化视图查询 <code>Materialized subquery</code></td>
 </tr>
 <tr>
-<td>UNCACHEABLE SUBQUERY</td>
-<td>cacheable (false)</td>
+<td><code>UNCACHEABLE SUBQUERY</code></td>
+<td><code>cacheable</code> (false)</td>
 <td>一个子查询其结果无法被缓存并且对于外查询的每一行字查询结果都需要重新估计 <br>A subquery for which the result cannot be cached and must be re-evaluated for each row of the outer query</td>
 </tr>
 <tr>
-<td>UNCACHEABLE UNION</td>
-<td>cacheable (false)</td>
-<td>UNION 中第二个及以上的不可缓存的子查询<br>select The second or later select in a UNION that belongs to an uncacheable subquery (see UNCACHEABLE SUBQUERY)</td>
+<td><code>UNCACHEABLE UNION</code></td>
+<td><code>cacheable</code> (false)</td>
+<td><code>UNION</code> 中第二个及以上的不可缓存的子查询<br>select The second or later select in a <code>UNION</code> that belongs to an uncacheable subquery (see <code>UNCACHEABLE SUBQUERY</code>)</td>
 </tr>
 </tbody></table>
-</li>
-</ul>
-</li>
-<li><p>table(table_name)</p>
-<p>输出行所参照的表的名称，也可以是以下值之一：</p>
-<ul>
-<li>&lt;unionM,N&gt; 该行所参照的和并行的id值M,N。</li>
-<li>&lt;derivedN&gt; 该行所参照的派生表结果的行的id值N。 举个例子 一个派生表可能是来自from子句中的子查询。</li>
-<li>&lt;subqueryN&gt; 该行所参照的物化子查询结果的行的id值N。</li>
-</ul>
-</li>
-<li><p>partitions(partitions)</p>
-<p>查询中，记录匹配的分区。非分区表的是，该值为NULL。</p>
-</li>
-<li><p>type (access_type)</p>
-<p>连接类型。</p>
-</li>
-<li><p>possible_keys(possible_keys)</p>
-<p>possible_keys指示mysql可以选择用来寻找表中的行的索引。</p>
-</li>
-<li><p>key(key)</p>
-<p>mysql实际选择的索引。</p>
-</li>
-<li><p>key_len(key_length)</p>
-<p>由于key的存储格式，一个可以允许NULL的列key的长度比NOT NULL的key的长度大一。</p>
-</li>
-<li><p>ref(rows)</p>
-<p>展示哪些行或常量与key列中索引名比较，以便从表中寻找行。</p>
-<p>如果值为func,则使用的值是某个函数的结果。</p>
-<p>要查看是哪个函数，可以在EXPLAIN后面使用SHOW warning来查看扩展的EXPLAIN输出。</p>
-</li>
-<li><p>rows(rows)</p>
-<p>指示Mysql认为在执行查询是必须检查的行数。</p>
-<p>对InnoDB表，这个值是个估计值，可能不会经常确切</p>
-</li>
-<li><p>filtered(filtered)</p>
-<p>指示一个估计的百分值，这个百分值表示通过表条件筛选出的行站表的总行数的百分比。</p>
-<p>最大值为100，表示没有发生行的筛选。rows展示了需要受检的行数的估计，rows*filtered表示</p>
-<p>与下一个表进行连接运算的行数</p>
-</li>
-<li><p>Extra(none)</p>
-<p>mysql解析查询的额外信息</p>
-</li>
-</ul>
 <h2 id="连接类型的解释"><a href="#连接类型的解释" class="headerlink" title="连接类型的解释"></a>连接类型的解释</h2><p>查询执行计划中type行展示表是如何连接的。下面从最优到最劣列举连接类型</p>
 <ul>
-<li><p>system</p>
+<li><p><code>system</code></p>
 <p>只有一行的表(= system table)。 是const连接类型的特殊情形</p>
 </li>
-<li><p>const</p>
+<li><p><code>const</code></p>
 <p>做多只能匹配到一行的表，并且会在查询执行一开始就读区。因为只有一行，其他优化器可以将这一行中的列中的值视为常量。</p>
 <p>由于只读一次，const表非常快</p>
 <p>当将主键或惟一索引的所有部分与常量值进行比较时，将使用const（点查询）</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> a_table <span class="keyword">where</span> primary_key = <span class="string">'a_key_value'</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> a_table <span class="keyword">where</span> candidate_key = <span class="string">'a_candidate_key_value'</span>; //注意码在数据库中是属性集</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>eq_ref</p>
-<p>对于每个由先前的表得到的混合的行，该表的一行都需要读取。</p>
+<li><p><code>eq_ref</code></p>
+<p>对于每个由先前的表得到的组合的行，都需要读取该表的一行。除了<code>system</code> 和 <code>const</code>,这是最可行的连接类型，当索引是<code>PRIMARY KEY</code>或<code>UNIQUE NOT NULL</code>索引并且索引的索引部分都被连接使用时，会使用<code>eq_ref</code>连接类型</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table,other_table <span class="keyword">WHERE</span> ref_table.key_column=other_table.column;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table,other_table <span class="keyword">WHERE</span> ref_table.key_column_part1=other_table.column</span><br><span class="line"></span><br><span class="line"><span class="keyword">AND</span> ref_table.key_column_part2=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>ref</p>
+<li><p><code>ref</code></p>
+<p>对于每个由先前的表得到的组合的行，匹配所有索引值的行都会读取一次。当使用key的最左前缀或key不是<code>PRIMARY KEY</code>或``UNIQUE`时，连接使用ref类型(换句话说，只要连接不能通过基于key值，找到单个行)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table <span class="keyword">WHERE</span> key_column=expr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table,other_table <span class="keyword">WHERE</span> ref_table.key_column=other_table.column;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table,other_table <span class="keyword">WHERE</span> ref_table.key_column_part1=oth</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>fulltext</code></p>
+<p>执行连接时使用了全文索引</p>
+</li>
+<li><p><code>ref_or_null</code></p>
+<p>这个连接类型类似<code>ref</code>，不同的是<code>ref_or_null</code>连接类型会额外搜索一次null值，这种连接类型优化最常用于解决子查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table <span class="keyword">WHERE</span> key_column=expr <span class="keyword">OR</span> key_column <span class="keyword">IS</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+
+<p>自己尝试了一下，当列标记为非空后，不会使用ref_or_null</p>
+</li>
+<li><p><code>index_merge</code></p>
+<p>此连接类型指示使用索引合并优化。在本例中，输出行中的key列包含所使用的索引列表，而key_len包含所使用索引的最长键部分列表。</p>
+</li>
+<li><p><code>unique_subquery</code></p>
+<p>这种类型在如下格式的一些in子查询中替换<code>eq_ref</code>:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value IN (<span class="keyword">SELECT</span> primary_key <span class="keyword">FROM</span> single_table <span class="keyword">WHERE</span> some_expr)</span><br></pre></td></tr></table></figure>
+
+<p><code>unique_subquery</code>只是为了更好的性能替换了子查询的索引搜索方法</p>
+</li>
+<li><p><code>index_subquery</code></p>
+<p><code>index_subquery</code>类似于<code>unique_subquery</code>。替换 in 子查询，但是符合以下格式的子查询中的非唯一索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value IN (<span class="keyword">SELECT</span> key_column <span class="keyword">FROM</span> single_table <span class="keyword">WHERE</span> some_expr)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>range</code></p>
+<p>只有给定范围内的行被检索,使用索引去选择行，此时<code>key</code>中显示使用的索引<code>key_len</code>显示已使用的最长的key部分。<code>ref</code>显示NULL。</p>
+<p>当使用=、&lt;&gt;、&gt;、&gt;=、&lt;、&lt;=、is NULL、&lt;=&gt;、BETWEEN、LIKE或IN()操作符将键列与常量进行比较时，可以使用range。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name <span class="keyword">WHERE</span> key_column = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name <span class="keyword">WHERE</span> key_column <span class="keyword">BETWEEN</span> <span class="number">10</span> <span class="keyword">and</span> <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name <span class="keyword">WHERE</span> key_column <span class="keyword">IN</span> (<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name <span class="keyword">WHERE</span> key_part1 = <span class="number">10</span> <span class="keyword">AND</span> key_part2 <span class="keyword">IN</span> (<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>);</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ul>
 <ul>
-<li><p>fulltext</p>
-<p>执行连接时使用了全文索引</p>
+<li><p><code>index</code></p>
+<p>这种类型除了索引树被扫描之外类似于<code>ALL</code>。以两种形式发生:</p>
+<ul>
+<li>如在在这个索引在此查询中时覆盖索引并且能用于满足所有要求的数据，只有索引树被扫描。<code>Extra</code>列会显示<code>Using index</code>。由于索引数据大小通常小于表数据，仅扫描索引树通常比<code>ALL</code>快。</li>
+<li>一次全表扫描执行时使用索引并以索引序来读取数据，<code>Using index</code> 不会出现在<code>Extra</code> 行中。</li>
+</ul>
 </li>
-<li><p>ref_or_null</p>
-</li>
-<li><p>index_merge</p>
-</li>
-<li><p>unique_subquery</p>
-</li>
-<li><p>index_subquery</p>
-</li>
-<li><p>range</p>
-</li>
-<li><p>index</p>
-</li>
-<li><p>ALL</p>
+<li><p><code>ALL</code></p>
+<p>对于每个由先前的表得到的组合的行，都会执行全表扫描。如果第一个表没有被标记为<code>const</code>通常不是很好，并且在所有的其他场景下，都非常糟糕。我们可以通过添加索引来避免<code>ALL</code></p>
 </li>
 </ul>
+<h2 id="Extra信息"><a href="#Extra信息" class="headerlink" title="Extra信息"></a><code>Extra</code>信息</h2><p>​    详见官方文档,随着遇到的情况，会更新一些内容</p>
+<p>##Summary</p>
+<p>###理论和实际</p>
+<p>在<code>查询处理(一)</code>中，抽象的表达了高级数据库查询语言有数据库解析翻译，优化，执行最终返回数据的过程，并大致的对什么是查询执行计划做了一个简单的解释</p>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/sunshine-carroll.github.io/2020/09/04/查询处理(二)/" data-toggle="tooltip" data-placement="top" title="查询处理(二)">&larr; Previous Post</a>
+                    </li>
                     
                     
                     <li class="next">
@@ -657,7 +688,7 @@ const gitment = new Gitment({
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#mysql查询执行计划"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">mysql查询执行计划</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#输出格式"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">输出格式</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#连接类型的解释"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">连接类型的解释</span></a></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#mysql查询执行计划"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">mysql查询执行计划</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#输出格式"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">输出格式</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#select-type的解释"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">select_type的解释</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#连接类型的解释"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">连接类型的解释</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Extra信息"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Extra信息</span></a></li></ol>
             
           
           </div>
@@ -949,7 +980,7 @@ const gitment = new Gitment({
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot; ,&quot;rgb(157,211,250)&quot; ,&quot;rgb(255,0,0)&quot; ,&quot;rgb(242,153,29)&quot; ,&quot;rgb(23,204,16)&quot; ,&quot;rgb(222,0,0)&quot; ,&quot;rgb(22,36,92)&quot; ,&quot;rgb(127,24,116)&quot; ,&quot;rgb(119,195,79)&quot; ,&quot;rgb(4,77,34)&quot; ,&quot;rgb(122,2,60)&quot;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🌾&#34;,&#34;🍀&#34;,&#34;don&#39;t give up&#34;,&#34;🍂&#34;,&#34;🌻&#34;,&#34;try it again&#34;,&#34;🍃&#34;,&#34;never say die&#34;,&#34;🌵&#34;,&#34;🌿&#34;,&#34;🌴&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34; ,&#34;rgb(157,211,250)&#34; ,&#34;rgb(255,0,0)&#34; ,&#34;rgb(242,153,29)&#34; ,&#34;rgb(23,204,16)&#34; ,&#34;rgb(222,0,0)&#34; ,&#34;rgb(22,36,92)&#34; ,&#34;rgb(127,24,116)&#34; ,&#34;rgb(119,195,79)&#34; ,&#34;rgb(4,77,34)&#34; ,&#34;rgb(122,2,60)&#34;]'></script>
         
 
         <!-- background effects end -->
@@ -959,21 +990,6 @@ const gitment = new Gitment({
     
         <script src="/js/ribbonDynamic.js"></script>
     
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 
 </html>
