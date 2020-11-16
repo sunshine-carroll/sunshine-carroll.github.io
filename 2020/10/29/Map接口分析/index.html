@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="sunshine&#39;s blog">
+    <meta name="keyword"  content="blog, hexo-theme-snail">
+    <link rel="shortcut icon" href="/sunshine-carroll.github.io/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Map接口分析 - sunshine
+        
+    </title>
+
+    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/10/29/Map接口分析/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/default.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/sunshine-carroll.github.io/img/signature/sunshine.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#collections" title="collections">collections</a>
+                            
+                        </div>
+                        <h1>Map接口分析</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by sunshine on
+                            2020-10-29
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.4k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/sunshine-carroll.github.io/">Sunshine&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/sunshine-carroll.github.io/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="YOUR_CHINESE_BLOG_URL" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p><code>Map</code>,在数学中时映射的意思，</p>
+<p>为了便于理解与表述，我们通过一个简单的Map模型来分析,这个模型由一些作者和笔者看过的作品构成</p>
+<p>$$<br>\begin{align}<br>&amp;f:author→book \<br>唐家三少&amp;｜余华 \ |Jostein Gaarder \tag {author}\<br>斗罗大陆&amp;｜活着 \ |苏菲的世界\tag {book}\<br>\end{align}<br>$$</p>
+<h2 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h2><p>从$f:author→book$中可以看出一个映射(Map)可以由一个个由<code>[余华-活着)]</code>这样的条目(Entry)组成。因此Map<code>有一个内部接口</code>Entry，</p>
+<p>这个接口定义了Map实现中的内部类entry的类型，内部类作用之一就是在面对概念宽泛，或者说复杂的类型建模的时候，去识别复杂类型中内部的类型(不管你对这个类型的认识程度)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// ···</span></span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">  	<span class="function">K <span class="title">getKey</span><span class="params">()</span></span>;</span><br><span class="line">  	<span class="function">V get <span class="title">Value</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">V <span class="title">setValue</span><span class="params">(V value)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//··· some static methods</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ···</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Map以及Entry中的泛型参数中的K是Map中键的类型(author),V是值的类型(book)，Entry 类型的行为并不多,举个例子 对于【唐家三少-斗罗大陆】这样一个条目，我们可能会想要获取他的作者唐家三少(getKey),或者获取作品(getValue)，或者替换作品为天珠变(setValue),以及与一个Entry比较是否相等。在这里要注意的是不管是简单类型或者复杂类型，都有其等价性，我们甚至可以认为。【唐家三少-斗罗大陆】和【banana-apple】是等价的，他们同是语言的符号。hashCode() 和 equals()是相关的(当然也可以实现成无关)，一般对于任意两个对象a,b 如果a,b等价，那么他们的hashCode()返回也应该一样。</p>
+<p>等价性是建立在某种前提上的，我们可以认为人不可以踏入同一条河流两次，因为河水是流动的，也可以认为人可以踏入同一条河流中两次，因为只关心河流的地理位置，有兴趣可以看看下面这个拓展</p>
+<blockquote>
+<p>🍀 关于equals 和 hashCode 的详细解释以及对容器类库中容器行为的影响可以参考<a href="https://lingcoder.gitee.io/onjava8/#/book/Appendix-Understanding-equals-and-hashCode?id=%E9%99%84%E5%BD%95%E7%90%86%E8%A7%A3equals%E5%92%8Chashcode%E6%96%B9%E6%B3%95" target="_blank" rel="noopener">On java 8-理解equals和hashcode方法 </a>或者Effective Java 第<a href="https://jiapengcai.gitbooks.io/effective-java/content/di-3-zhang-dui-suo-you-dui-xiang-du-tong-yong-de-fang-fa/di-10-tiao-ff1a-fu-gai-equals-fang-fa-shi-qing-zun-shou-tong-yong-yue-ding.html" target="_blank" rel="noopener">10,11</a>条建议<br></p>
+</blockquote>
+<h2 id="Map的行为"><a href="#Map的行为" class="headerlink" title="Map的行为"></a>Map的行为</h2><p>随着Java语言的发展，类库的完善，新特性的增加Map接口的行为也越来越丰富。我们在使用一个类型的时候，通常只关心该类型对外表现的行为，并且不太会涉及到这个类型的所有行为。这些内容有时候会是十分复杂的，不管是了解一个类型还是去设计一个类型，过早的涉及这些复杂性是不太有必要的，而且可能会迷失在这些复杂性中。举个例子，一个服装设计师在小的时候可能对服装的设计一窍不通，服装是怎么制作的，该怎么设计，但是他能对服装给人提供的遮衣蔽体，修身等功能建立起认识，随着学习和进修慢慢了解到服装设计纠结是什么。Java类库中实现Map接口的类型有很多,HashMap，LinkedHashMap,TreeMap等等，他们各自的实现和行为都有不同，但是他们的共同特征都是Map，有时候将行为和实现拆分的看可以很好的去认识一个类库，框架。Map接口一共定义了25个行为(方法),这25种行为可以划分为6个类别。</p>
+<blockquote>
+<p>🍀 有时候对象的特征是直观的,但是行为却有很多，这些行为说出来挺容易理解，全部记住也没必要。正如之前的模型，很容易在脑海中留下印象并复述内容。map描述的25种行为都可以应用在模型中，但是让人凭空说却挺麻烦。举个别的例子说整数，整数大家小时候就认识，但是整数能表现的行为却很多。整数可以进行模指数运算(这在RSA加密算法有关键的作用，而RSA加密算法是数据在通过Https安全传输时的一个重要环节)，可以判断整数是否为梅森素数，网络中有一个庞大的分布式系统<a href="https://www.mersenne.org/" target="_blank" rel="noopener">gimps</a> EFF关于奖金设立的规定，任何一位新梅森素数的发现者都将获得3000美元的研究发现奖。</p>
+</blockquote>
+<p>下面是Java8中 java.Util.Map 接口的部分内容，这里省略了具体的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// Query Operations 查询对象内部的状态的操作</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// Modification Operations 改变对象内部状态的操作</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// Bulk Operations 批量操作</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// views 返回视图</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// Comparison and hashing 比较和散列</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">//Defaultable methods 默认方法</span></span><br><span class="line">  ···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Query-Operations"><a href="#Query-Operations" class="headerlink" title="Query Operations"></a>Query Operations</h3><p>查询操作，一个查询操作仅仅返回并且不会修改对象的状态。一个无状态对象是线程安全的，一个不会修改对象状态的方法也是线程安全的，不会导致对象处于不一致的状态下(理由就很简单，因为根本不改变状态)。</p>
+<blockquote>
+<p>🍀 查询操作时线程安全的，但是对查询出来的对象的操作却不一定是线程安全的。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// Query Operations 查询对象内部的状态的操作</span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">containsKey</span><span class="params">(Object key)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">containsValue</span><span class="params">(Object value)</span></span>;</span><br><span class="line">	<span class="function">V <span class="title">get</span><span class="params">(Object key)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>java 1.8 Map接口 一共有5个query 方法，查看map的大小，判断map是否为空，是否存在某个key，是否存在某个value，获取key对应的value。这些方法的功能见名知意，从功能性上考虑对于各个map的实现，这些接口大同小异。有时侯一些小差异容易导致意想不到的问题，如抛出NullPointException的抛出。在HashMap中 get 方法允许参数为null,但在TreeMap的一些情况下，不允许为空。这些不是本文的主旨，具体的还请看方法文档</p>
+<blockquote>
+<p>🍀 TreeMap 会在使用自然序，或者Comparator不允许空键的时候抛出NullPointException</p>
+</blockquote>
+<h3 id="Modification-Operations"><a href="#Modification-Operations" class="headerlink" title="Modification Operations"></a>Modification Operations</h3><p>修改操作，被Map接口划分为修改操作只有两个put(向map中放入一个条目)，remove(根据键移除一个条目)。事实上下面属于Bulk类别的操作也会修改内部的状态(其实还有defaultable方法 后面会提)。Map接口的设计者把他们按照操作对象的数量细分了。修改操作是对应查询操作的,一个修改操作不一定是线程安全的，在使用修改操作是需要考虑其Map实现的线程安全性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function">V <span class="title">put</span><span class="params">(K key, V value)</span></span>;</span><br><span class="line">	<span class="function">V <span class="title">remove</span><span class="params">(Object key)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bulk-Operations"><a href="#Bulk-Operations" class="headerlink" title="Bulk Operations"></a>Bulk Operations</h2><p>Bulk(n : 大多数，大部分；大块) 操作，操作的对象不止Map中的一个条目。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; m)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>clear()就是清空Map, putAll 能将另一个Map中的条目合并到这个条目</p>
+<h2 id="Views"><a href="#Views" class="headerlink" title="Views"></a>Views</h2><p>视图: 对外展示Map的视图，这些Map内部状态发生变化时，会反应在这些视图中，Map接口规定可以通过这些视图去移除(不能添加)Map的内部元素。因此在迭代这些Map，或者视图的时候，如果通过视图或者map的方法修改了Map，就会抛出ConcurrentModificationException。如果要避免抛出这个异常，可以拷贝一份视图，然后做别的操作。</p>
+<blockquote>
+<p>❗️这里的视图和一些地方说的不一样，这里指对象对外返回的内部状态。一些地方把返回的不能改变内部状态的对象叫视图，能改变内部状态的叫句柄。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function">Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">Collection&lt;V&gt; <span class="title">values</span><span class="params">()</span></span>;</span><br><span class="line">	Set&lt;Map.Entry&lt;K, V&gt;&gt; entrySet();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🍀 有时候我们需要返回的视图能够实时的反应内部状态，但不允许使用者能够通过视图来修改内部状态。关于一个对象应该如何对外展示内部的状态，可以参考《Java并发编程实战》中的对象发布和溢出部分。</p>
+</blockquote>
+<h2 id="Defaultable-methods"><a href="#Defaultable-methods" class="headerlink" title="Defaultable methods"></a>Defaultable methods</h2><p>可以默认实现的方法。在以前Java的容器类库中，一种通用的设计方式是定义接口，在接口中描述行为，然后使用抽象类来实现这个接口，如果某个方法可以通过组合对象中其他方法或者使用对象的内部状态来实现，那么这些实现会编写在这个抽象类中，以达到代码复用等一些目的。但是有些方法其实不需要直接操作对象的内部状态，Java8 接口允许 default 修饰的方法带有方法体，Map接口定义了一些 Defaultable 方法 他们组合上述的方法，然后加上一些控制执行流程，在不直接改变对象内部行为的情况表现自己的行为。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">getOrDefault</span><span class="params">(Object key, V defaultValue)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">forEach</span><span class="params">(BiConsumer&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V&gt; action)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">replaceAll</span><span class="params">(BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; function)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">putIfAbsent</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object key, Object value)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">replace</span><span class="params">(K key, V oldValue, V newValue)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">replace</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">computeIfAbsent</span><span class="params">(K key,</span></span></span><br><span class="line"><span class="function"><span class="params">            Function&lt;? <span class="keyword">super</span> K, ? extends V&gt; mappingFunction)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">computeIfPresent</span><span class="params">(K key,</span></span></span><br><span class="line"><span class="function"><span class="params">            BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">compute</span><span class="params">(K key,</span></span></span><br><span class="line"><span class="function"><span class="params">            BiFunction&lt;? <span class="keyword">super</span> K, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> V <span class="title">merge</span><span class="params">(K key, V value,</span></span></span><br><span class="line"><span class="function"><span class="params">            BiFunction&lt;? <span class="keyword">super</span> V, ? <span class="keyword">super</span> V, ? extends V&gt; remappingFunction)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//···</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/sunshine-carroll.github.io/2020/10/13/Spring-AOP/" data-toggle="tooltip" data-placement="top" title="Spring AOP">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <hr>
+                <div id="blog_comments"></div>
+
+<!--
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+-->
+<!--
+<link rel="stylesheet" href="/css/gitment.css">
+<script type="text/javascript" src="/js/gitment.js"></script>
+-->
+
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+
+<!--
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+-->
+
+<script>
+const myTheme = {
+  render(state, instance) {
+    const container = document.createElement('div')
+    container.lang = "en-US"
+    container.className = 'gitment-container gitment-root-container'
+    
+     // your custom component
+    container.appendChild(instance.renderSomething(state, instance))
+    
+    container.appendChild(instance.renderHeader(state, instance))
+    container.appendChild(instance.renderComments(state, instance))
+    container.appendChild(instance.renderEditor(state, instance))
+    //container.appendChild(instance.renderFooter(state, instance))
+    return container
+  },
+  renderSomething(state, instance) {
+    const container = document.createElement('div')
+    container.lang = "en-US"
+    container.className = 'hello_visitor'
+    if (state.user.login) {
+      container.innerText = `Hello ${state.user.login}, Welcome to comment system`
+    }
+    return container
+  }
+}
+
+
+const gitment = new Gitment({
+    id: 'Thu Oct 29 2020 10:19:27 GMT+0800', // optional
+    owner: "sunshine-carroll",
+    repo: "sunshine-carroll.github.io",
+    oauth: {
+      client_id: "8895df271bbbcbad4ed1",
+      client_secret: "ccc414232347145b6ca3d9af201ee7d42446aba6",
+    },
+    theme: myTheme,
+    // ...
+    // For more available options, check out the documentation below
+  })
+  
+  gitment.render('blog_comments')
+  // or
+  // gitment.render(document.getElementById('comments'))
+  // or
+  // document.body.appendChild(gitment.render())
+</script>
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <hr>
+                <div id="lv-container" data-id="city" data-uid="MTAyMC80NzQ3MS8yMzk3MQ==">
+                    <script type="text/javascript">
+                   (function(d, s) {
+                       var j, e = d.getElementsByTagName(s)[0];
+
+                       if (typeof LivereTower === 'function') { return; }
+
+                       j = d.createElement(s);
+                       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                       j.async = true;
+
+                       e.parentNode.insertBefore(j, e);
+                   })(document, 'script');
+                    </script>
+                <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Entry"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Entry</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Map的行为"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Map的行为</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Query-Operations"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Query Operations</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Modification-Operations"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">Modification Operations</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Bulk-Operations"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Bulk Operations</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Views"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Views</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Defaultable-methods"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Defaultable methods</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/sunshine-carroll.github.io/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#collections" title="collections">collections</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://sunshine-carroll.github.io" target="_blank">Sunshine&#39;s Blog</a></li>
+                    
+                        <li><a href="#" target="_blank">Sunshine&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunshine-carroll" target="_blank">Sunshine&#39;s Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "sunshine-carroll";
+    var disqus_identifier = "https://sunshine-carroll.github.io/2020/10/29/Map%E6%8E%A5%E5%8F%A3%E5%88%86%E6%9E%90/";
+    var disqus_url = "https://sunshine-carroll.github.io/2020/10/29/Map%E6%8E%A5%E5%8F%A3%E5%88%86%E6%9E%90/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunshine-carroll">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Gang Du">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; sunshine 2020 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/sunshine-carroll.github.io/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/sunshine-carroll.github.io/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/sunshine-carroll.github.io/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/sunshine-carroll.github.io/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunshine-carroll.github.io/sunshine-carroll.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/sunshine-carroll.github.io/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🌾&#34;,&#34;🍀&#34;,&#34;don&#39;t give up&#34;,&#34;🍂&#34;,&#34;🌻&#34;,&#34;try it again&#34;,&#34;🍃&#34;,&#34;never say die&#34;,&#34;🌵&#34;,&#34;🌿&#34;,&#34;🌴&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34; ,&#34;rgb(157,211,250)&#34; ,&#34;rgb(255,0,0)&#34; ,&#34;rgb(242,153,29)&#34; ,&#34;rgb(23,204,16)&#34; ,&#34;rgb(222,0,0)&#34; ,&#34;rgb(22,36,92)&#34; ,&#34;rgb(127,24,116)&#34; ,&#34;rgb(119,195,79)&#34; ,&#34;rgb(4,77,34)&#34; ,&#34;rgb(122,2,60)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>
