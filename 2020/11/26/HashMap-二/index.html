@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          Spring cloud 概览 - sunshine
+          HashMap(二) - sunshine
         
     </title>
 
-    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/09/10/Spring-cloud-组件概览/">
+    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/11/26/HashMap-二/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -112,21 +112,21 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/sunshine-carroll.github.io/tags/#overview" title="overview">overview</a>
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#collections" title="collections">collections</a>
                             
                         </div>
-                        <h1>Spring cloud 概览</h1>
-                        <h2 class="subheading"></h2>
+                        <h1>HashMap(二)</h1>
+                        <h2 class="subheading">结构</h2>
                         <span class="meta">
                             Posted by sunshine on
-                            2020-09-10
+                            2020-11-26
                         </span>
 
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">65</span> and
-                                Reading Time <span class="post-count">1</span> Minutes
+                                Words <span class="post-count">784</span> and
+                                Reading Time <span class="post-count">2</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -267,21 +267,43 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>博客逐渐完善中</p>
-<h2 id="overview"><a href="#overview" class="headerlink" title="overview"></a>overview</h2><p>微服务架构是一种新常态，可以构建小型的，独立的,随时可以运行的应用程序，它的可以带来强大的可伸缩性，并使代码更具适应性。</p>
-<h2 id="Spring-Cloud-Gateway"><a href="#Spring-Cloud-Gateway" class="headerlink" title="Spring Cloud Gateway"></a>Spring Cloud Gateway</h2>
+                <p>水平有限，如有错误之处，欢迎评论交流</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>HashMap(一) 中简单介绍了直接寻址法和散列寻址法，并介绍了链接法解决散列冲突的散列表，和HashMap中在某些条件下会使用了红黑树作为散列表的槽位。这篇博客介绍HashMap中的数据结构</p>
+<h2 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h2><p>HashMap中使用一个Node数组维护散列表结构</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMap</span>&lt;<span class="title">k</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;, <span class="title">Cloneable</span>, <span class="title">Serializable</span></span>&#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">	<span class="keyword">transient</span> Node&lt;K,V&gt;[] table;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>数组的每一个位置在HashMap中被称为bin或者bucket</p>
+<p>##Node&lt;K,V&gt; 和TreeNode&lt;K,V&gt;</p>
+<img src="/sunshine-carroll.github.io/2020/11/26/HashMap-%E4%BA%8C/node.png" alt="node" style="zoom:50%;">
+
+<h3 id="Node-lt-K-V-gt"><a href="#Node-lt-K-V-gt" class="headerlink" title="Node&lt;K,V&gt;"></a>Node&lt;K,V&gt;</h3><p>我们知道Map接口中，有一个内部接口叫Entry,表示映射当中的条目。Node类除了实现了接口Entry之外，还是HashMap使用链接法解决散列冲突时链表的结点，他维护一个指向下一个结点的引用，是一个单链表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure chained-address-delete(T,x)</span><br><span class="line">	delete x from  list T[h(x.key)]</span><br></pre></td></tr></table></figure>
+
+<p>上面是在算法导论中提到的链接法解决散列冲突的散列表的删除算法，算法导论中建议散列表的槽使用双链表实现，算法的输入是散列表和要被删除的结点，其理由是认为如果使用双链表，删除算法的时间复杂度就是$O(1)$,如需要将x前驱的后继改成x的后继，后继的前驱改成x的前驱就行了，避免单链表的搜索。但是对于HashMap的使用者来说，删除结点只是输入泛型类型K,并不直接输入结点，依旧需要在链表中搜索对应结点，个人认为这是HashMap使用单链表的原因。</p>
+<h3 id="TreeNode-lt-K-V-gt"><a href="#TreeNode-lt-K-V-gt" class="headerlink" title="TreeNode&lt;K,V&gt;"></a>TreeNode&lt;K,V&gt;</h3><p>TreeNode直接继承LinkedHashMap.Entry间接继承自HashMap.Node . 因此可以作为常规结点扩展，也可以作为链式结点扩展。</p>
+<p>TreeNode包含了红黑树结点结构中的所有元素，parent指向父结点或者null,left指向左孩子或者null,right指向右孩子或者null,red表明结点是否为红色。</p>
+<p>红黑树是满足下列红黑性质的二叉搜索树(null是黑色的，null也算结点)</p>
+<blockquote>
+<ol>
+<li>所有结点不是红色的就是黑色的</li>
+<li>根结点是黑色的</li>
+<li>叶子结点是黑色的</li>
+<li>如果一个结点是红色的，那么他的左右孩子是黑色的</li>
+<li>任意一个红黑树的结点，从该结点出发到叶子结点的所有的简单路径上具有相同的黑色结点数</li>
+</ol>
+</blockquote>
+<p>可以通过上面的性质证明 红黑树的结点数n与高度h满足下面关系(这里只是介绍，可以参阅算法导论)<br>$$<br>h≤2\ lg\ (n+1)<br>$$<br>红黑树任意一条从根结点到叶子结点的简单路径长度不可能大于另一条的两倍。</p>
+<h2 id="getNode-and-putVal"><a href="#getNode-and-putVal" class="headerlink" title="getNode and putVal"></a>getNode and putVal</h2><p>在对于一个map来说，get,put 是其基本的方法，其他如getOrDefault 等方法直接或间接的依赖get,put方法。</p>
+<p>getNode方法和putVal方法</p>
+
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/sunshine-carroll.github.io/2020/09/10/领域驱动设计架构/" data-toggle="tooltip" data-placement="top" title="领域驱动设计架构">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/sunshine-carroll.github.io/2020/09/09/事务-一/" data-toggle="tooltip" data-placement="top" title="事务(一)">Next Post &rarr;</a>
+                        <a href="/sunshine-carroll.github.io/2020/11/25/HashMap-一/" data-toggle="tooltip" data-placement="top" title="HashMap(一)">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -362,7 +384,7 @@ const myTheme = {
 
 
 const gitment = new Gitment({
-    id: 'Thu Sep 10 2020 14:05:55 GMT+0800', // optional
+    id: 'Thu Nov 26 2020 12:09:11 GMT+0800', // optional
     owner: "sunshine-carroll",
     repo: "sunshine-carroll.github.io",
     oauth: {
@@ -424,7 +446,7 @@ const gitment = new Gitment({
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Spring-Cloud-Gateway"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Spring Cloud Gateway</span></a></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Table"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Table</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Node-lt-K-V-gt"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">Node&lt;K,V&gt;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#TreeNode-lt-K-V-gt"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">TreeNode&lt;K,V&gt;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#getNode-and-putVal"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">getNode and putVal</span></a></li></ol>
             
           
           </div>
@@ -446,7 +468,7 @@ const gitment = new Gitment({
                     <h5><a href="/sunshine-carroll.github.io/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/sunshine-carroll.github.io/tags/#overview" title="overview">overview</a>
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#collections" title="collections">collections</a>
                         
                     </div>
                 </section>
@@ -479,8 +501,8 @@ const gitment = new Gitment({
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "sunshine-carroll";
-    var disqus_identifier = "https://sunshine-carroll.github.io/2020/09/10/Spring-cloud-%E7%BB%84%E4%BB%B6%E6%A6%82%E8%A7%88/";
-    var disqus_url = "https://sunshine-carroll.github.io/2020/09/10/Spring-cloud-%E7%BB%84%E4%BB%B6%E6%A6%82%E8%A7%88/";
+    var disqus_identifier = "https://sunshine-carroll.github.io/2020/11/26/HashMap-%E4%BA%8C/";
+    var disqus_url = "https://sunshine-carroll.github.io/2020/11/26/HashMap-%E4%BA%8C/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
