@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="sunshine&#39;s blog">
+    <meta name="keyword"  content="blog, hexo-theme-snail">
+    <link rel="shortcut icon" href="/sunshine-carroll.github.io/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          红黑树 - sunshine
+        
+    </title>
+
+    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/11/17/红黑树/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/sunshine-carroll.github.io/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/sunshine-carroll.github.io/img/signature/sunshine.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#tree" title="tree">tree</a>
+                            
+                        </div>
+                        <h1>红黑树</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by sunshine on
+                            2020-11-17
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.3k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/sunshine-carroll.github.io/">Sunshine&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/sunshine-carroll.github.io/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                        </li>
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="YOUR_CHINESE_BLOG_URL" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>红黑树是一种二叉搜索树，它在每个结点上加上一个存储位表示树的颜色红或者黑。虽然随机构建二叉搜索树的期望高度是$O(lgn)$，二叉搜索的基本操作search,insert,delete,predecessor,successor,maximum,minimum 的运行时间是$O(h)$（h是树高），但是二叉搜索树并不一定总是随机构建的，而且随着插入和删除，树高的变化复杂。在最坏情形下，二叉搜索树的查找的时间复杂度和链表的一样。红黑树可以保证在最话情形下基本动态集合操作的时间复杂度是$O(lgn)$</p>
+<h2 id="红黑树的性质"><a href="#红黑树的性质" class="headerlink" title="红黑树的性质"></a>红黑树的性质</h2><h3 id="结点"><a href="#结点" class="headerlink" title="结点"></a>结点</h3><p>红黑树的结点除了left，right,p,key四个属性之外，还有第五个属性color，它可以是red,或者black。如果一个结点没有子结点，或者父结点，那么结点指针属性的值为NIL。这里把NIL看作红黑树的叶子结点,把带有key的结点看作红黑树的内部结点。</p>
+<h3 id="红黑性质"><a href="#红黑性质" class="headerlink" title="红黑性质"></a>红黑性质</h3><ol>
+<li>每个结点或者是红色或者是黑色，没有其他颜色</li>
+<li>根结点是黑色的</li>
+<li>叶子结点是黑色的</li>
+<li>如果一个结点是红色的，那么该结点的两个子结点是黑色的</li>
+<li>对于每个结点，该结点到后代叶子结点的每一条简单路径均有相同的黑色结点</li>
+</ol>
+<blockquote>
+<p>🍀 算法导论中定义T.nil，表示公用的叶子结点，因为红黑树叶子结点除了其color属性，其余属性都不重要。类似面向对象语言中的惯用法，定义空对象来代替null。</p>
+</blockquote>
+<h3 id="黑高"><a href="#黑高" class="headerlink" title="黑高"></a>黑高</h3><blockquote>
+<p>从某个结点出发(不包含该结点),到叶子结点的任意一条简单路径上的黑色结点数。由于红黑树的性质，对于每个结点，该结点到后代叶子结点的每一条简单路径均有相同的黑色结点。所以一个结点的黑高时确定的，红黑树的黑高定义为根结点的黑高</p>
+</blockquote>
+<h3 id="引理1"><a href="#引理1" class="headerlink" title="引理1"></a>引理1</h3><blockquote>
+<p>一颗具有n个结点的红黑树，其高度最多为2lg(n+1)。 </p>
+</blockquote>
+<p>证明：</p>
+<p>先证明任意一颗以x为根的子树至少包含$2^{bh(x)}-1$个内部结点。这里用p表示内部结点树</p>
+<p>基础步骤: x是叶子结点(NIL)的时候，$bh(x) = 0,p=0 .\  y&lt;=2^0-1成立$</p>
+<p>归纳步骤: 如果$x_1,x_2$是红黑树子树的根结点,x是$x_1,x_2$的父结点 $p_1 &lt;= 2^{bh(x_1)}-1$,,$p_2 &lt;= 2^{bh(x_2)}-1$</p>
+<p>根结点的黑高为$bh(x)$，x每个子结点的黑高为$bh(x)$(当该子结点为红)或者$bh(x)-1$(当该子结点为黑)<br>$$<br>\begin{align}<br>p&amp;=p_1+p_2+1\<br>&amp;≤2^{bh(x_1)}-1 + 2^{bh(x_2)}-1+1 \<br>&amp;≤2^{bh(x)-1}-1+2^{bh(x)-1}-1+1 \tag{这步也没看懂，后面看}\<br>&amp;=2^{bh(x)}-1<br>\end{align}<br>$$<br>所以任意一颗以x为根的子树至少包含$2^{bh(x)}-1$个内部结点</p>
+<p>根据性质4，如果一个结点为红，那么该结点的两个子结点为黑。考虑红黑树从根结点到叶子结点的任意一条简单路径，根结点，叶子结点必定为黑色，如果该简单路径有n个红色结点，那么至少有n个黑色结点。所以红黑树的树高$h≤2bh(x)$</p>
+<p>所以<br>$$<br>\begin{align}<br>n&amp;≥2^{h/2}-1\<br>h&amp;≤2lg(n+1)<br>\end{align}<br>$$</p>
+<h2 id="二叉搜索树的旋转"><a href="#二叉搜索树的旋转" class="headerlink" title="二叉搜索树的旋转"></a>二叉搜索树的旋转</h2><p>下面描述能够保持二叉搜索树性质的局部操作，左旋和右旋。<br></p>
+<p>下图是左旋右旋的转化图，左旋的时候其中$\alpha,\beta,\gamma$是任意子树，x,y为二叉搜索树中的结点，x可以为二叉搜索树中任意右孩子不为NIL的结点(如果x的右孩子是NIL,那么旋转后，y成为x的父结点，违反二叉搜索树的基本性质)，右旋的时候，y应该是二叉搜索树中任意一个左孩子不为NIL的结点</p>
+<p><img src="/sunshine-carroll.github.io/2020/11/17/%E7%BA%A2%E9%BB%91%E6%A0%91/rotate.png" alt="rotate"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">procedure left-rotate(T,x)</span><br><span class="line">	y &#x3D; x.right </span><br><span class="line">	x.right &#x3D; y.left </span><br><span class="line">	if y.left !&#x3D; NIL </span><br><span class="line">		y.left.p &#x3D;  x</span><br><span class="line">	y.p &#x3D; x.p</span><br><span class="line">	if x.p &#x3D;&#x3D; NIL </span><br><span class="line">		T.root &#x3D; y</span><br><span class="line">	else if x &#x3D;&#x3D; x.p.left</span><br><span class="line">		x.p.left &#x3D; y</span><br><span class="line">	else</span><br><span class="line">		x.p.right &#x3D; y</span><br><span class="line">	x.p &#x3D; y</span><br><span class="line">	y.left &#x3D; x</span><br></pre></td></tr></table></figure>
+
+<p>第2行 找到x的右结点y 。第3～5行处理beta，首先修改x的右结点为beta,然后根据beta是不是NIL,处理是否修改beta的父结点。第6行处理y的父结点。第7到12行根据x与x.p的关系做相应处理，最后两行分别修改x的父结点为y,y的左子树为x</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">procedure right-rotate(T,y)</span><br><span class="line">	x &#x3D; y.left</span><br><span class="line">	y.left &#x3D; x.right</span><br><span class="line">	if x.right !&#x3D; NIL</span><br><span class="line">		x.right.p &#x3D; y</span><br><span class="line">	x.p &#x3D; y.p</span><br><span class="line">	if y.p &#x3D; NIL</span><br><span class="line">		T.root &#x3D; x</span><br><span class="line">	else if y &#x3D;&#x3D; y.p.left</span><br><span class="line">		y.p.left &#x3D; x</span><br><span class="line">	else </span><br><span class="line">		y.p.right &#x3D; y</span><br><span class="line">	y.p &#x3D; x</span><br><span class="line">	x.left &#x3D; y</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="红黑树的插入"><a href="#红黑树的插入" class="headerlink" title="红黑树的插入"></a>红黑树的插入</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">procedure rb-insert(T,z)</span><br><span class="line">	y &#x3D; NIL</span><br><span class="line">	x &#x3D; T.root</span><br><span class="line">	while x !&#x3D; NIL</span><br><span class="line">		y &#x3D; x</span><br><span class="line">		if z.key ≤ x.key</span><br><span class="line">				x &#x3D; x.left</span><br><span class="line">		else</span><br><span class="line">				x &#x3D; x.right</span><br><span class="line">	if y &#x3D; NIL</span><br><span class="line">		T.root &#x3D; z</span><br><span class="line">	else if z.key &lt; y.key</span><br><span class="line">		y.left &#x3D; z</span><br><span class="line">	else</span><br><span class="line">		y.right &#x3D; z</span><br><span class="line">	z.left &#x3D; NIL</span><br><span class="line">	z.right &#x3D; NIL</span><br><span class="line">	z.color &#x3D; red</span><br><span class="line">	rb-insert-fixup(T,z)</span><br></pre></td></tr></table></figure>
+
+<h2 id="插入结点时红黑性质的维护"><a href="#插入结点时红黑性质的维护" class="headerlink" title="插入结点时红黑性质的维护"></a>插入结点时红黑性质的维护</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">procedure rb-insert-fixup(T,z)</span><br><span class="line">	while z.p.color &#x3D;&#x3D; red</span><br><span class="line">		if z.p &#x3D; z.p.p.left</span><br><span class="line">			y &#x3D; y.p.p.right</span><br><span class="line">			if y.color &#x3D;&#x3D; red</span><br><span class="line">				z.p.color &#x3D; black</span><br><span class="line">				y.color &#x3D; black</span><br><span class="line">				z.p.p.color &#x3D; red</span><br><span class="line">				z &#x3D; z.p.p</span><br><span class="line">			else </span><br><span class="line">				if z &#x3D; z.p.right</span><br><span class="line">					z &#x3D; z.p</span><br><span class="line">					left-rotate(T,z)</span><br><span class="line">				z.p.color &#x3D; black</span><br><span class="line">				z.p.p.color &#x3D; red</span><br><span class="line">				right-rotate(T,z.p.p)</span><br><span class="line">	else</span><br><span class="line">		y &#x3D; z.p.p.left</span><br><span class="line">		if y.color &#x3D;&#x3D; red</span><br><span class="line">			z.p.color &#x3D; black</span><br><span class="line">			y.color &#x3D; black</span><br><span class="line">			z.p.p.color &#x3D;  red</span><br><span class="line">			z &#x3D; z.p.p</span><br><span class="line">		else </span><br><span class="line">			if z &#x3D; z.p.left </span><br><span class="line">				 z &#x3D; z.p</span><br><span class="line">				 right-rotate(T,z)</span><br><span class="line">      z.p.color &#x3D; black</span><br><span class="line">      z.p.p.color &#x3D; red</span><br><span class="line">      left-rotate(T,z.p.p)</span><br><span class="line">	T.root.color &#x3D; black</span><br></pre></td></tr></table></figure>
+
+
+
+<p>证明 $rb-insert-fixup(T,z)$ 在每次循环之前都满足下面三个循环不变式，并且循环结束后，树T保持红黑性质</p>
+<ul>
+<li>结点z时红色的              $(1)$</li>
+<li>如果z.p是根结点，那么z.p是黑色的         $(2)$</li>
+<li>如果有任何红黑性质被破坏，则做多只有一条被破坏，或者是性质2.或者是性质4。性质2被破坏的原因是，z是根结点且是红色结点，如果性质4被破坏那么是因为z，z.p都是红色的 。         $(3)$</li>
+</ul>
+<blockquote>
+<p>🍀 由于整个插入算法不会插入非红黑色之外的结点，叶子结点是NIL黑色的，性质1，3显然成立</p>
+</blockquote>
+<p>证明</p>
+<p>证明循环不变式为真可以分两步，一是证明循环开始前，循环不变式为真，执行s之后，循环不变式为真。</p>
+<ul>
+<li><p>开始前</p>
+<p>在调用新插入的结点总是红色的。条件$(1)$成立</p>
+<p>如果z.p为根，由于在调用$rb-insert-fixup(T,z)$ 之前，z.p是不变的，所以条件$(2)$成立</p>
+<p>如果红黑树的性质2 根结点是黑色的 被违反，那么只可能是因为插入的红色结点z是根结点。这个时候</p>
+<p>如果违反了性质4，由于z结点的左右子结点都是NIL黑色的，那么只可能是z.p是红色的。</p>
+<p>插入红色结点不会改变任意路径的黑高，所以性质5是成立的</p>
+<p>所以条件$(3)$成立</p>
+</li>
+<li><p>循环结束后</p>
+<p>循环在z.p.color == black 时终止，此时不可能是性质4被破坏，那么被破坏的性质只能是性质2，算法的最后修复这个问题。</p>
+<p>所以在循环结束后树T维护红黑性质</p>
+</li>
+<li><p>循环执行时:</p>
+<p>这里可以分6中情况，按照z的父结点是祖父结点的左结点还是右结点可以分为两类对称3中情况。算法导论讨论了z的父结点是祖父结点的左孩子。这里讨论z的父结点是祖父结点的右孩子，当然没有算法导论完美，导论的图更全，建议看算法导论。</p>
+<ul>
+<li>当z的叔结点y(也就是z.p的兄弟结点)为红色时，将z.p和y都着色为黑色，并把祖父接点着色为红维护性质5(祖父结点必定是黑色的否则就违反性质4)，然后z指向z.p.p进行下一次迭代</li>
+<li>当z的叔结点为黑色,且z是父结点的左结点，对z.p进行一次右旋(这个操作不会多违反一个性质)变成下面一种情况</li>
+<li>当z的叔结点为黑色，且z时父结点的右结点，将z.p着色为黑色，讲z.p.p着色为红色，然后对z.p.p做一次左旋</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>🍀 假设有下述一段程序，循环不变式是指每次执行程序段S时都保持为真的断言。或者说如果霍尔三元组$(p \and condition){s}p$为真时，那么这里$p$就是下述程序段的循环不变式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">while condition</span><br><span class="line">	S</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2>
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/sunshine-carroll.github.io/2020/11/25/HashMap-一/" data-toggle="tooltip" data-placement="top" title="HashMap(一)">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/sunshine-carroll.github.io/2020/11/16/二叉搜索树/" data-toggle="tooltip" data-placement="top" title="二叉搜索树">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <hr>
+                <div id="blog_comments"></div>
+
+<!--
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+-->
+<!--
+<link rel="stylesheet" href="/css/gitment.css">
+<script type="text/javascript" src="/js/gitment.js"></script>
+-->
+
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+
+<!--
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+-->
+
+<script>
+const myTheme = {
+  render(state, instance) {
+    const container = document.createElement('div')
+    container.lang = "en-US"
+    container.className = 'gitment-container gitment-root-container'
+    
+     // your custom component
+    container.appendChild(instance.renderSomething(state, instance))
+    
+    container.appendChild(instance.renderHeader(state, instance))
+    container.appendChild(instance.renderComments(state, instance))
+    container.appendChild(instance.renderEditor(state, instance))
+    //container.appendChild(instance.renderFooter(state, instance))
+    return container
+  },
+  renderSomething(state, instance) {
+    const container = document.createElement('div')
+    container.lang = "en-US"
+    container.className = 'hello_visitor'
+    if (state.user.login) {
+      container.innerText = `Hello ${state.user.login}, Welcome to comment system`
+    }
+    return container
+  }
+}
+
+
+const gitment = new Gitment({
+    id: 'Tue Nov 17 2020 15:26:06 GMT+0800', // optional
+    owner: "sunshine-carroll",
+    repo: "sunshine-carroll.github.io",
+    oauth: {
+      client_id: "8895df271bbbcbad4ed1",
+      client_secret: "ccc414232347145b6ca3d9af201ee7d42446aba6",
+    },
+    theme: myTheme,
+    // ...
+    // For more available options, check out the documentation below
+  })
+  
+  gitment.render('blog_comments')
+  // or
+  // gitment.render(document.getElementById('comments'))
+  // or
+  // document.body.appendChild(gitment.render())
+</script>
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <hr>
+                <div id="lv-container" data-id="city" data-uid="MTAyMC80NzQ3MS8yMzk3MQ==">
+                    <script type="text/javascript">
+                   (function(d, s) {
+                       var j, e = d.getElementsByTagName(s)[0];
+
+                       if (typeof LivereTower === 'function') { return; }
+
+                       j = d.createElement(s);
+                       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                       j.async = true;
+
+                       e.parentNode.insertBefore(j, e);
+                   })(document, 'script');
+                    </script>
+                <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+                </div>
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#红黑树的性质"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">红黑树的性质</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#结点"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">结点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#红黑性质"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">红黑性质</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#黑高"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">黑高</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#引理1"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">引理1</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#二叉搜索树的旋转"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">二叉搜索树的旋转</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#红黑树的插入"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">红黑树的插入</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#插入结点时红黑性质的维护"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">插入结点时红黑性质的维护</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#删除"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">删除</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/sunshine-carroll.github.io/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#tree" title="tree">tree</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://sunshine-carroll.github.io" target="_blank">Sunshine&#39;s Blog</a></li>
+                    
+                        <li><a href="#" target="_blank">Sunshine&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunshine-carroll" target="_blank">Sunshine&#39;s Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "sunshine-carroll";
+    var disqus_identifier = "https://sunshine-carroll.github.io/2020/11/17/%E7%BA%A2%E9%BB%91%E6%A0%91/";
+    var disqus_url = "https://sunshine-carroll.github.io/2020/11/17/%E7%BA%A2%E9%BB%91%E6%A0%91/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunshine-carroll">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Gang Du">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; sunshine 2020 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/sunshine-carroll.github.io/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/sunshine-carroll.github.io/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/sunshine-carroll.github.io/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/sunshine-carroll.github.io/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunshine-carroll.github.io/sunshine-carroll.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/sunshine-carroll.github.io/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot; ,&quot;rgb(157,211,250)&quot; ,&quot;rgb(255,0,0)&quot; ,&quot;rgb(242,153,29)&quot; ,&quot;rgb(23,204,16)&quot; ,&quot;rgb(222,0,0)&quot; ,&quot;rgb(22,36,92)&quot; ,&quot;rgb(127,24,116)&quot; ,&quot;rgb(119,195,79)&quot; ,&quot;rgb(4,77,34)&quot; ,&quot;rgb(122,2,60)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>
