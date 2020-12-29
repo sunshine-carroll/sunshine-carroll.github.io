@@ -164,13 +164,6 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -178,7 +171,7 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
                         </li>
                         
                     
@@ -186,6 +179,13 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
                         </li>
                         
                     
@@ -300,9 +300,157 @@
 
     
 
+    
+
+    
+
+    
+
 
 
 <!-- Main Content -->
+
+    
+
+        <div class="post-preview">
+
+            <a href="/sunshine-carroll.github.io/2020/12/15/AbstractQueuedSynchronizer/">
+                <h2 class="post-title">
+                    AbstractQueuedSynchronizer
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    123456789101112131415161718192021222324252627282930313233343536373839404142434445package java.util.concurrent.locks;/** * 可能被一个线程独占的同步器，  这个类提供创建可能需要所有概念的锁和同步器的基础。   * AbstractOwnableSynchronizer 类......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by sunshine on
+                    2020-12-15
+                </p>
+                <div class="tags">
+                    
+                      <a href="/sunshine-carroll.github.io/tags/#synchronizer" title="synchronizer">synchronizer</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/sunshine-carroll.github.io/2020/12/05/离散概率概念总结/">
+                <h2 class="post-title">
+                    离散概率概念总结
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    Finite Probability
+experiment: an experiment is a procedure yield one of given set of possible outcomes
+sample space: the sample space of experiment is the set of possible outcomes
+event: an event ......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by sunshine on
+                    2020-12-05
+                </p>
+                <div class="tags">
+                    
+                      <a href="/sunshine-carroll.github.io/tags/#discrete probability" title="discrete probability">discrete probability</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/sunshine-carroll.github.io/2020/11/27/CAP-Paper/">
+                <h2 class="post-title">
+                    CAP Paper
+                </h2>
+                <h3 class="post-subtitle">
+                    Brewer’s Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web
+                </h3>
+                <div class="post-content-preview">
+                    纯属个人学习时翻译，英语水平有限,可能会有用词语意不准的情况，可看原文。
+Brewer’s Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services
+Abstract
+When designing distributed web services, there are th......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by sunshine on
+                    2020-11-27
+                </p>
+                <div class="tags">
+                    
+                      <a href="/sunshine-carroll.github.io/tags/#note" title="note">note</a>
+                    
+                      <a href="/sunshine-carroll.github.io/tags/#cap" title="cap">cap</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/sunshine-carroll.github.io/2020/11/27/HashMap-三/">
+                <h2 class="post-title">
+                    HashMap(三)
+                </h2>
+                <h3 class="post-subtitle">
+                    HashMap中的红黑树实现
+                </h3>
+                <div class="post-content-preview">
+                    OverviewHashMap 中使用了红黑树增强了在散列分配不是特别合理的情形下HashMap的性能。这篇博客关注于HashMap中关于红黑树的部分包括但不限于红黑树的insert,delete,search操作实现。
+红黑树首先看一下什么是红黑树，红黑树是满足下列红黑性质的二叉搜索树(null是黑色的，null也算结点)
+
+
+所有结点不是红色的就是黑色的
+根结点是黑色的
+叶子结点是黑色的......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by sunshine on
+                    2020-11-27
+                </p>
+                <div class="tags">
+                    
+                      <a href="/sunshine-carroll.github.io/tags/#collections" title="collections">collections</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
 
     
 
@@ -313,13 +461,12 @@
                     HashMap(二)
                 </h2>
                 <h3 class="post-subtitle">
-                    结构
+                    内部结构与动态集合操作
                 </h3>
                 <div class="post-content-preview">
                     水平有限，如有错误之处，欢迎评论交流
-OverviewHashMap(一) 中简单介绍了直接寻址法和散列寻址法，并介绍了链接法解决散列冲突的散列表，和HashMap中在某些条件下会使用了红黑树作为散列表的槽位。这篇博客介绍HashMap中的数据结构
-TableHashMap中使用一个Node数组维护散列表结构
-12345public class HashMap&lt;k,V&gt; exte......
+OverviewHashMap(一) 中简单介绍了直接寻址法和散列寻址法，并介绍了链接法解决散列冲突的散列表，和HashMap中在某些条件下会使用了红黑树作为散列表的槽位。这篇博客介绍HashMap中的数据结构和3个的动态集合操作，insert，delete，search
+Table关于散列表，HashMap中使用一个Node数组维护散列表结构，数组中的......
                 </div>
             </a>
             
@@ -352,7 +499,9 @@ TableHashMap中使用一个Node数组维护散列表结构
                 </h3>
                 <div class="post-content-preview">
                     – 参考自算法导论第11章散列表
-Overview在编写Java程序时，通常都会直接或者间接的用到Java提供容器类库如Collection,List,Set,Map等。HashMap是Java容器类库中的一员，其实现了Map接口。在提供Map接口定义的功能的同时，HashMap使用了散列寻址技术让程序使用HashMap时可以快速的搜索元素。过早的看源码容易迷失在源代码中，这篇博客先撇开具体......
+– HashMap系列博客不会非常全面的关注HashMap作为Map的行为(Map的所有方法),更多的关注的是结构，实现上的内容。
+– 即是博客也是学习笔记，水平有限，如有错误之处，欢迎评论交流
+Overview在编写Java程序时，通常都会直接或者间接的用到Java提供容器类库如Collection,List,Set,Map等。HashMap是Java容器......
                 </div>
             </a>
             
@@ -429,6 +578,8 @@ Overview在编写Java程序时，通常都会直接或者间接的用到Java提�
                     
                       <a href="/sunshine-carroll.github.io/tags/#tree" title="tree">tree</a>
                     
+                      <a href="/sunshine-carroll.github.io/tags/#note" title="note">note</a>
+                    
                 </div>
             
 
@@ -488,8 +639,11 @@ Overview在编写Java程序时，通常都会直接或者间接的用到Java提�
                 </h3>
                 <div class="post-content-preview">
                     OverviewMap,在数学中时映射的意思，
-为了便于理解与表述，我们通过一个简单的Map模型来分析,这个模型由一些作者和笔者看过的作品构成
-$$\begin{align}&amp;f:author→book \唐家三少&amp;｜余华 \ |Jostein Gaarder \tag {author}\斗罗大陆&amp;｜活着 \ |苏菲的世界\tag {book}\\end{align}......
+为了便于理解与表述，可以通过一个简单的Map模型来分析,这个模型由一些作者和作品构成
+$$\begin{align}
+&amp;f:author→book \唐家三少&amp;｜余华 \ |Jostein Gaarder \tag {author}\斗罗大陆&amp;｜活着 \ |苏菲的世界\tag {book}\
+\end{align}$$
+......
                 </div>
             </a>
             
@@ -500,142 +654,6 @@ $$\begin{align}&amp;f:author→book \唐家三少&amp;｜余华 \ |Jostein Gaard
                 <div class="tags">
                     
                       <a href="/sunshine-carroll.github.io/tags/#collections" title="collections">collections</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/sunshine-carroll.github.io/2020/10/13/Spring-AOP/">
-                <h2 class="post-title">
-                    Spring AOP
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    AOP概念
-Aspect: A modularization of a concern that cuts across multiple classes
-
-Join point: 程序执行期间的某个时间点(point)。如方法的执行，或者异常的处理，在Spring AOP 中一个Join point 
-通常表示方法执行
-
-Advice: 被一个Aspect在一个特定的Join point上......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by sunshine on
-                    2020-10-13
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/sunshine-carroll.github.io/2020/09/11/事务-二-事务的原子性和持久性/">
-                <h2 class="post-title">
-                    事务(一)
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    事务的原子性和持久性一个数据库的事务并不是总能成功执行的。事务未成功执行后的事务就是中止的事务,称事务已中止，为了保证原子性，这样的事务对数据库的影响必须撤销，一个中止的事务对数据库造成的影响被撤销，就说事务已回滚，成功完成的事务成为已提交.数据库的恢复机制负责管理事务的中止。典型的方法是维护一个日志，事务对数据库的修改都会记录到日志中，记录之后才会修改数据库。日志功能提供了两种方式保证原子......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by sunshine on
-                    2020-09-11
-                </p>
-                <div class="tags">
-                    
-                      <a href="/sunshine-carroll.github.io/tags/#transaction" title="transaction">transaction</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/sunshine-carroll.github.io/2020/09/10/领域驱动设计架构/">
-                <h2 class="post-title">
-                    领域驱动设计架构
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    分层架构
-
-严格分层架构和非严格分层架构加入依赖倒置六边形架构...
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by sunshine on
-                    2020-09-10
-                </p>
-                <div class="tags">
-                    
-                      <a href="/sunshine-carroll.github.io/tags/#架构" title="架构">架构</a>
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/sunshine-carroll.github.io/2020/09/10/Spring-cloud-组件概览/">
-                <h2 class="post-title">
-                    Spring cloud 概览
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    博客逐渐完善中
-overview微服务架构是一种新常态，可以构建小型的，独立的,随时可以运行的应用程序，它的可以带来强大的可伸缩性，并使代码更具适应性。
-Spring Cloud Gateway...
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by sunshine on
-                    2020-09-10
-                </p>
-                <div class="tags">
-                    
-                      <a href="/sunshine-carroll.github.io/tags/#overview" title="overview">overview</a>
                     
                 </div>
             
@@ -702,11 +720,9 @@ Spring Cloud Gateway...
     <div class="tags">
         
             
-            <a href="/sunshine-carroll.github.io/tags/#discrete mathmatics" title="discrete mathmatics" rel="2">discrete mathmatics</a>
+            <a href="/sunshine-carroll.github.io/tags/#counting" title="counting" rel="2">counting</a>
             
         
-            
-            <a href="/sunshine-carroll.github.io/tags/#counting" title="counting" rel="2">counting</a>
             
         
             
@@ -730,8 +746,6 @@ Spring Cloud Gateway...
             
         
             
-        
-            
             <a href="/sunshine-carroll.github.io/tags/#查询处理" title="查询处理" rel="3">查询处理</a>
             
         
@@ -744,13 +758,21 @@ Spring Cloud Gateway...
             
         
             
+            <a href="/sunshine-carroll.github.io/tags/#collections" title="collections" rel="4">collections</a>
+            
         
             
             <a href="/sunshine-carroll.github.io/tags/#tree" title="tree" rel="3">tree</a>
             
         
             
-            <a href="/sunshine-carroll.github.io/tags/#collections" title="collections" rel="3">collections</a>
+            <a href="/sunshine-carroll.github.io/tags/#note" title="note" rel="3">note</a>
+            
+        
+            
+        
+            
+        
             
         
     </div>
@@ -849,23 +871,23 @@ Spring Cloud Gateway...
     <ul>
       
         <li>
+          <a href="/sunshine-carroll.github.io/2020/12/15/AbstractQueuedSynchronizer/">AbstractQueuedSynchronizer</a>
+        </li>
+      
+        <li>
+          <a href="/sunshine-carroll.github.io/2020/12/05/%E7%A6%BB%E6%95%A3%E6%A6%82%E7%8E%87%E6%A6%82%E5%BF%B5%E6%80%BB%E7%BB%93/">离散概率概念总结</a>
+        </li>
+      
+        <li>
+          <a href="/sunshine-carroll.github.io/2020/11/27/CAP-Paper/">CAP Paper</a>
+        </li>
+      
+        <li>
+          <a href="/sunshine-carroll.github.io/2020/11/27/HashMap-%E4%B8%89/">HashMap(三)</a>
+        </li>
+      
+        <li>
           <a href="/sunshine-carroll.github.io/2020/11/26/HashMap-%E4%BA%8C/">HashMap(二)</a>
-        </li>
-      
-        <li>
-          <a href="/sunshine-carroll.github.io/2020/11/25/HashMap-%E4%B8%80/">HashMap(一)</a>
-        </li>
-      
-        <li>
-          <a href="/sunshine-carroll.github.io/2020/11/17/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a>
-        </li>
-      
-        <li>
-          <a href="/sunshine-carroll.github.io/2020/11/16/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">二叉搜索树</a>
-        </li>
-      
-        <li>
-          <a href="/sunshine-carroll.github.io/2020/11/16/tree/">tree</a>
         </li>
       
     </ul>
@@ -894,7 +916,7 @@ Spring Cloud Gateway...
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/11/">November 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/10/">October 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/09/">September 2020</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/08/">August 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/07/">July 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/02/">February 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/01/">January 2020</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/12/">December 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/11/">November 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/10/">October 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/09/">September 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/08/">August 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/07/">July 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/02/">February 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/sunshine-carroll.github.io/archives/2020/01/">January 2020</a><span class="archive-list-count">1</span></li></ul>
     </div>
 
         <hr>
@@ -905,43 +927,33 @@ Spring Cloud Gateway...
     <div class="widget">
       <ul>
         
-          <a href="categories/#discrete mathmatics"><li>discrete mathmatics</li></a>
+          <a href="categories/#discrete mathematics"><li>discrete mathematics</li></a>
         
           <a href="categories/#resources"><li>resources</li></a>
         
           <a href="categories/#Shiro"><li>Shiro</li></a>
         
-          <a href="categories/#sunshine"><li>sunshine</li></a>
-        
           <a href="categories/#Spring"><li>Spring</li></a>
+        
+          <a href="categories/#discrete mathmatics"><li>discrete mathmatics</li></a>
+        
+          <a href="categories/#version control"><li>version control</li></a>
         
           <a href="categories/#database"><li>database</li></a>
         
           <a href="categories/#hexo"><li>hexo</li></a>
         
-          <a href="categories/#version control"><li>version control</li></a>
-        
           <a href="categories/#Architecture"><li>Architecture</li></a>
         
-          <a href="categories/#discrete mathematics"><li>discrete mathematics</li></a>
-        
-          <a href="categories/#discrete mathmatics"><li>discrete mathmatics</li></a>
-        
-          <a href="categories/#Spring cloud"><li>Spring cloud</li></a>
-        
-          <a href="categories/#微服务"><li>微服务</li></a>
-        
-          <a href="categories/#technique"><li>technique</li></a>
-        
-          <a href="categories/#data structure"><li>data structure</li></a>
+          <a href="categories/#领域驱动设计(Domain Driven Design)"><li>领域驱动设计(Domain Driven Design)</li></a>
         
           <a href="categories/#Java"><li>Java</li></a>
         
-          <a href="categories/#proof"><li>proof</li></a>
+          <a href="categories/#data structure"><li>data structure</li></a>
         
-          <a href="categories/#counting"><li>counting</li></a>
+          <a href="categories/#concurrent"><li>concurrent</li></a>
         
-          <a href="categories/#领域驱动设计(Domain Driven Design)"><li>领域驱动设计(Domain Driven Design)</li></a>
+          <a href="categories/#distributed"><li>distributed</li></a>
         
       </ul>
     </div>

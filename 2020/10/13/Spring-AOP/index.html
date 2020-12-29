@@ -112,6 +112,8 @@
                     <div class="post-heading">
                         <div class="tags">
                             
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#note" title="note">note</a>
+                            
                         </div>
                         <h1>Spring AOP</h1>
                         <h2 class="subheading"></h2>
@@ -123,7 +125,7 @@
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">774</span> and
+                                Words <span class="post-count">837</span> and
                                 Reading Time <span class="post-count">3</span> Minutes
                             </span>
                             <div class="blank_box"></div>
@@ -185,13 +187,6 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -199,7 +194,7 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
                         </li>
                         
                     
@@ -207,6 +202,13 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
                         </li>
                         
                     
@@ -295,25 +297,30 @@
 <li><code>Around advice</code>: 环绕<code>Join point</code>(如方法调用)的<code>Advice</code>. 这是功能最强大的一种通知.<code>Around advice</code> 可以在方法调用前或调用执行自定义的行为 它还负责选择是继续到<code>Join point</code>，还是通过返回自己的返回值或抛出异常来简化被通知(advised)的方法的执行。</li>
 </ul>
 <h2 id="Pointcut-Designators"><a href="#Pointcut-Designators" class="headerlink" title="Pointcut Designators"></a>Pointcut Designators</h2><ul>
-<li><p><code>execution</code>:For matching method execution join points. This is the primary pointcut designator to use when working with Spring AOP.</p>
+<li><p><code>execution</code>:用于匹配方法执行 <code>join points</code>. 在使用Spring AOP的时候，这是主要的<code>pointcut designator</code></p>
 </li>
-<li><p><code>within</code>: Limits matching to join points within certain types (the execution of a method declared within a matching type when using Spring AOP).</p>
+<li><p><code>within</code>: 限制<code>join points</code>的匹配 含有确定的一些类型(在使用Spring AOP时，执行的方法声明特定的类型) </p>
 </li>
-<li><p><code>this</code>: Limits matching to join points (the execution of methods when using Spring AOP) where the bean reference (Spring AOP proxy) is an instance of the given type.</p>
+<li><p><code>this</code>: 限制<code>join points</code>的匹配， 其中bean 引用了给定类型的实例</p>
 </li>
-<li><p><code>targe</code>t: Limits matching to join points (the execution of methods when using Spring AOP) where the target object (application object being proxied) is an instance of the given type.</p>
+<li><p><code>target</code>:限制<code>join points</code>的匹配,其中<code>target object</code>是给定类型的实例</p>
 </li>
-<li><p><code>args</code>: Limits matching to join points (the execution of methods when using Spring AOP) where the arguments are instances of the given types.</p>
+<li><p><code>args</code>: 限制<code>join points</code>的匹配，方法参数是给定类型的实例</p>
 </li>
-<li><p><code>@target</code>: Limits matching to join points (the execution of methods when using Spring AOP)</p>
+<li><p><code>@target</code>:限制<code>join points</code>的匹配，执行对象的类中具有给定类型的注解</p>
 </li>
-<li><p><code>@args</code>: Limits matching to join points (the execution of methods when using Spring AOP) where the runtime type of the actual arguments passed have annotations of the given types.</p>
+<li><p><code>@args</code>: 限制<code>join points</code>的匹配，传递参数的实际类型具有给定类型的注解</p>
 </li>
-<li><p><code>@within</code>: Limits matching to join points within types that have the given annotation (the execution of methods declared in types with the given annotation when using Spring AOP).</p>
+<li><p><code>@within</code>: 限制<code>join points</code>的匹配 含有具有给定注解的类型</p>
 </li>
-<li><p><code>@annotation</code>: Limits matching to join points where the subject of the join point (the method being executed in Spring AOP) has the given annotation.</p>
+<li><p><code>@annotation</code>: 限制<code>join points</code>的匹配 连接点中具有给定的注解</p>
 </li>
 </ul>
+<blockquote>
+<p>🍀 关于具体的切点表达式，有很多博客，文档都有解释，这里引用一些个人觉得比较可以的，也可以查阅Spring文档，但感觉文档里写的不是很全</p>
+<p>Aspect切点表达式：<a href="https://www.eclipse.org/aspectj/doc/released/progguide/semantics-pointcuts.html" target="_blank" rel="noopener">AspectJ Pointcuts Language Semantics</a></p>
+<p>博客: <a href="https://www.cnblogs.com/zhangxufeng/p/9160869.html" target="_blank" rel="noopener">爱宝贝</a></p>
+</blockquote>
 
                 
                 <hr>
@@ -326,7 +333,7 @@
                     
                     
                     <li class="next">
-                        <a href="/sunshine-carroll.github.io/2020/09/11/事务-二-事务的原子性和持久性/" data-toggle="tooltip" data-placement="top" title="事务(一)">Next Post &rarr;</a>
+                        <a href="/sunshine-carroll.github.io/2020/09/11/事务-二-事务的原子性和持久性/" data-toggle="tooltip" data-placement="top" title="事务(二)">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -491,6 +498,8 @@ const gitment = new Gitment({
                     <h5><a href="/sunshine-carroll.github.io/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#note" title="note">note</a>
+                        
                     </div>
                 </section>
                 

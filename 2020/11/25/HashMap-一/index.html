@@ -125,8 +125,8 @@
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">1.8k</span> and
-                                Reading Time <span class="post-count">6</span> Minutes
+                                Words <span class="post-count">2.1k</span> and
+                                Reading Time <span class="post-count">7</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -187,13 +187,6 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -201,7 +194,7 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
                         </li>
                         
                     
@@ -209,6 +202,13 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
                         </li>
                         
                     
@@ -268,30 +268,35 @@
                 post-container">
 
                 <p>– 参考自算法导论第11章散列表</p>
-<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>在编写Java程序时，通常都会直接或者间接的用到Java提供容器类库如Collection,List,Set,Map等。HashMap是Java容器类库中的一员，其实现了Map接口。在提供Map接口定义的功能的同时，HashMap使用了散列寻址技术让程序使用HashMap时可以快速的搜索元素。过早的看源码容易迷失在源代码中，这篇博客先撇开具体的Java，介绍一些直接寻址，散列寻址的内容。由于水平有限，如有错误之处，欢迎评论。</p>
+<p>– HashMap系列博客不会非常全面的关注HashMap作为Map的行为(Map的所有方法),更多的关注的是结构，实现上的内容。</p>
+<p>– 即是博客也是学习笔记，水平有限，如有错误之处，欢迎评论交流</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>在编写Java程序时，通常都会直接或者间接的用到Java提供容器类库如Collection,List,Set,Map等。HashMap是Java容器类库中的一员，其实现了Map接口。在提供Map接口定义的功能的同时，HashMap使用了散列寻址技术让程序使用HashMap时可以快速的搜索元素。过早的看源码容易迷失在源代码中，这篇博客先撇开具体的Java代码，介绍一些直接寻址，散列寻址的内容。</p>
 <blockquote>
 <p>🍀 这篇博客不会解释链表，红黑树的具体结构和原理，这不是本文的主旨，也不影响阅读。只需要知道链表和红黑树都可以提供基本的插入,搜索,删除操作就👌</p>
 </blockquote>
-<h2 id="直接寻址表"><a href="#直接寻址表" class="headerlink" title="直接寻址表"></a>直接寻址表</h2><p>虽然在HashMap使用了散列寻址技术，但在介绍散列表之前，先了解下直接寻址表。对比直接寻址表和散列表，会更明白为什么在某些情况下要用散列寻址。直接寻址表是一种非常简单快速的动态集合结构</p>
-<p>直接寻址表和散列表都支持一些动态集合操作 insert,delete,search。假如说我们有这样一个动态集合S,$S ⊆ U$,其中$U={1,2,\cdots m-1}$是全域S的每个元素都取自全域中的一个关键字。直接寻址表可以表示为一个数组。$T[0..m-1]$,数组中每个位置称为槽。如果槽k要么指向全域中关键字为k的一个元素，要么指向NIL(表示空同null)。然后我们就可以写出直接寻址表的insert,delete,search</p>
+<h2 id="直接寻址表"><a href="#直接寻址表" class="headerlink" title="直接寻址表"></a>直接寻址表</h2><p>虽然在HashMap使用了散列寻址技术，但在介绍散列表之前，先了解下直接寻址表。对比直接寻址表和散列表，会更明白为什么在某些情况下要用散列寻址。直接寻址表和散列表都支持一些动态集合操作 (insert,delete,search),但从结构上说直接寻址表更简单，快速。</p>
+<p>假如说我们有这样一个动态集合S,$S ⊆ U$,其中$U={1,2,\cdots m-1}$是全域，集合$S$的每个元素都取自全域$U$中的一个关键字。直接寻址表可以表示为一个数组。$T[0..m-1]$,数组中每个位置称为槽。对于一个槽$T<a href="0%E2%89%A4k%3Cm">k</a>$，$T[k]$要么指向全域中关键字为k的一个元素，要么指向NIL(表示空,同null)。然后我们就可以写出直接寻址表的insert,delete,search</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure direct-address-search(T,k)</span><br><span class="line">	return T[k];</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure direct-address-insert(T,x)</span><br><span class="line">	T[x.key] &#x3D; x</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure direct-address-delete(T,x)</span><br><span class="line">	T[x.key] &#x3D; NIL</span><br></pre></td></tr></table></figure>
 
-<p>上面三个操作的时间复杂度都是$O(1)$。直接寻址表的一个特点就是表的大小等于动态集合的全域的大小，在$｜U｜$较小的时候，能够简洁简单的提供insert,delete,search操作。但当全域U较大时，直接寻址表的劣势就非常明显,使用直接寻址表，表的大小必须和全域一样,这计算机可能没有这么大的内存或者不应该用这么大的内存，而且动态集合中出现的元素可能远小于全域的大小，会造成空间的浪费。这个时候散列表就能应对全域比较大的动态集合。</p>
-<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>使用直接寻址方式时，具有关键字k的元素被放在T[k]中，但在散列寻址方式下，具有关键字k的元素被存放在T[h(k)]中,h时下面一个散列函数<br>$$<br>h:U → (1,2,\cdots,m-1)<br>$$<br>这个散列函数将全域U映射到散列表$T[0..m-1]$上。但是散列表也有问题，假设有两个关键字$k_1,k_2,h(k_1)=h(k_2)$这个时候带有关键字$k_1,k_2$的元素就不知到该放在哪了。解决散列冲突的方法有很多种，有链接法和开放寻址法等，关于开发寻址法，这个不是这篇博客的目的，可以参考算法导论11.4。Java之前使用链接法解决散列冲突，散列值一样的关键字代表的元素会存放在同一个链表中。Java8 之后，在满足一定条件时，散列值一样的关键字所代表的元素会存放在红黑树之中。</p>
-<h3 id="链接法解决冲突的伪代码"><a href="#链接法解决冲突的伪代码" class="headerlink" title="链接法解决冲突的伪代码"></a>链接法解决冲突的伪代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure chained-address-search(T,k)</span><br><span class="line">	return search element from list T[h(k)] with key k;</span><br></pre></td></tr></table></figure>
+<p>上面三个操作的时间复杂度都是$O(1)$。直接寻址表的一个特点就是表的大小等于动态集合的全域的大小，在$｜U｜$较小的时候，能够简洁简单的提供insert,delete,search操作。但当全域U较大时，直接寻址表的劣势就非常明显,使用直接寻址表，表的大小需要和全域一样,计算机可能没有这么大的内存或者不应该用这么大的内存，而且动态集合中出现的元素可能远小于全域的大小，会造成空间的浪费。这个时候散列表就能应对全域比较大，但自身大小相对较小的动态集合。</p>
+<blockquote>
+<p>🍀 算法导论有道习题是要求写出全域很大的情况下，利用直接寻址的方式实现一个字典，避免使用·很大的数组</p>
+</blockquote>
+<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>散列表使用散列寻址的方式确定元素存放的位置，在使用直接寻址方式时，具有关键字k的元素被放在T[k]中，但在散列寻址方式下，具有关键字k的元素被存放在T[h(k)]中,h是一个散列函数，如下所示<br>$$<br>h:U → (1,2,\cdots,m-1)<br>$$<br>这个散列函数将全域U映射到散列表$T[0..m-1]$上。相对直接寻址方式，这种散列寻址方式在避免使用大数组的同时，也带来了别的问题–散列冲突。假设有两个关键字$k_1,k_2,h(k_1)=h(k_2)$这个时候带有关键字$k_1,k_2$的元素就不知到该放在哪了，因此在使用散列表的时候还需要有解决散列冲突的方案。解决散列冲突的方法有很多种，有链接法和开放寻址法等，关于开发寻址法，这个不是HashMap选择的方式，也不在这篇博客的目的之中，可以参考算法导论11.4节。Java之前使用链接法解决散列冲突，散列值一样的关键字代表的元素会存放在同一个链表中。Java8 之后，在满足一定条件时，散列表的槽位会变换存储结构在红黑树和链表之间转换。</p>
+<h3 id="使用链接法解决冲突的伪代码"><a href="#使用链接法解决冲突的伪代码" class="headerlink" title="使用链接法解决冲突的伪代码"></a>使用链接法解决冲突的伪代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure chained-address-search(T,k)</span><br><span class="line">	return search element from list T[h(k)] with key k;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure chained-address-insert(T,x)</span><br><span class="line">	insert at head of list T[h(x.key)]</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure chained-address-delete(T,x)</span><br><span class="line">	delete x from  list T[h(x.key)]</span><br></pre></td></tr></table></figure>
 
 <p>插入时，只需要根据元素x的关键字的散列值找到相应的链表，然后插入到表头就可以了，搜索也是同样的方式找到链表然后在链表中搜索元素x。删除时算法导论建议使用双链表，这样元素x的删除只需要$O(1)$的时间复杂度，但是实现有时候并不完全按照算法所建议的来。HashMap使用了单链表作为散列表的槽。</p>
-<h3 id="散列表的负载因子-load-factor"><a href="#散列表的负载因子-load-factor" class="headerlink" title="散列表的负载因子(load factor)"></a>散列表的负载因子(load factor)</h3><p>散列表有一个衡量指标叫负载因子，假设有一个存放着n个元素，大小为m的散列表T，T的负载因子$\alpha = \frac{n}{m}$</p>
-<p>链接法解决冲突的散列表查找性能的最坏情形是所有动态集合中的元素被散列到了一个槽中这个时候就相当于在链表中查询一个元素的速度，链表查找元素的时间复杂度为$O(n)$</p>
-<p>两个有用的定理能够表示负载因子对散列表性能的影响，先解释一下这里假设散列函数是$O(1)$的，简单均匀散列是指给定任意一个元素，该元素能够等可能的散列在m个槽中的任意一个。</p>
+<h3 id="散列表的负载因子-load-factor"><a href="#散列表的负载因子-load-factor" class="headerlink" title="散列表的负载因子(load factor)"></a>散列表的负载因子(load factor)</h3><p>散列表有一个衡量指标叫负载因子，它在一定程度上反应散列表的性能。假设有一个存放着n个元素，大小为m的散列表T，T的负载因子$\alpha = \frac{n}{m}$</p>
+<p>链接法解决冲突的散列表查找性能的最坏情形是所有动态集合中的元素被散列到了一个槽中，在这个槽中生成了一个包含所有元素的链表，这个时候就散列表的查询速度相当于在链表中查询一个元素的速度，链表查找元素的时间复杂度为$O(n)$</p>
+<p>下面介绍两个有用的定理，它们能够表示负载因子$\alpha$对散列表性能的影响，这里假设散列函数是$O(1)$的，简单均匀散列是指给定任意一个元素，该元素能够等可能的散列在m个槽中的任意一个，也就是说元素出现在人一个槽中的概率都是相等的。</p>
 <blockquote>
 <p>在简单均匀散列的情况下，使用链接法解决冲突的散列表，一次成功查找所需的平均时间为$\Theta(1+\alpha)$</p>
 <p>在简单均匀散列的情况下，使用链接法解决冲突的散列表，失败成功查找所需的平均时间为$\Theta(1+\alpha)$</p>
@@ -299,13 +304,16 @@
 <blockquote>
 <p>🍀 比较直接寻址表和散列表时，有两个因素，$\frac{动态集合大小}{全域大小}和全域大小$ 当动态集合的大小接近全域的大小时，散列表的实际存储开销会比直接寻址表大(由于不同的存储结构)。散列表可以一开始选用合适的大小，然后在动态集合中元素过多时合理增加散列表的大小，然后对动态集合中的元素再散列。</p>
 </blockquote>
-<h3 id="使用红黑树"><a href="#使用红黑树" class="headerlink" title="使用红黑树"></a>使用红黑树</h3><p>就如上所说，链接法解决冲突的散列表最坏情形复杂度相当于在链表中查找,其时间复杂度为$O(n)$。最坏情形，就是所以元素散列到一个槽中，这个时候的查询性能依赖于槽的结构。为了让最坏情形下散列表也能有较好的性能，可以选择合适槽的结构。HashMap选择在满足一定条件时将槽从链表转变为红黑树。红黑树在最坏情形下，也能保证动态集合的基本操作的时间复杂度为$O(lg\ n)$, HashMap中的散列表槽可能是链表也可能是红黑树，这篇博客不描述混和的情况。下面描述完全使用红黑树解决冲突的散列表</p>
+<h3 id="使用红黑树"><a href="#使用红黑树" class="headerlink" title="使用红黑树"></a>使用红黑树</h3><p>如上所述，链接法解决冲突的散列表最坏情形复杂度相当于在链表中查找,其时间复杂度为$O(n)$。出现最坏情形时，所有元素都被散列到一个槽中，这个时候的散列表的查询性能依赖于槽的结构。为了让最坏情形下散列表也能有较好的性能，可以选择合适槽的结构。HashMap选择在满足一定条件时将槽从链表转变为红黑树。红黑树在最坏情形下，也能保证动态集合的基本操作的时间复杂度为$O(lg\ n)$, HashMap中的散列表槽可能是链表也可能是红黑树，这篇博客不描述混和的情况。下面是完全使用红黑树解决冲突的散列表的伪代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure chained-address-search(T,k)</span><br><span class="line">	return search element from red-black-tree T[h(k)] with key k;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure chained-address-insert(T,x)</span><br><span class="line">	insert at head of red-black-tree T[h(x.key)]</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure chained-address-delete(T,x)</span><br><span class="line">	delete x from  red-black-tree T[h(x.key)]</span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p>🍀 任意一种能够提供insert,delete,search 动态集合结构都可以作为散列表的槽,看散列表应用在什么场景里，适不适合，对性能有什么影响。</p>
+</blockquote>
 
                 
                 <hr>
@@ -461,7 +469,7 @@ const gitment = new Gitment({
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#直接寻址表"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">直接寻址表</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#散列表"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">散列表</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#链接法解决冲突的伪代码"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">链接法解决冲突的伪代码</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#散列表的负载因子-load-factor"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">散列表的负载因子(load factor)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用红黑树"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">使用红黑树</span></a></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#直接寻址表"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">直接寻址表</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#散列表"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">散列表</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用链接法解决冲突的伪代码"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">使用链接法解决冲突的伪代码</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#散列表的负载因子-load-factor"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">散列表的负载因子(load factor)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#使用红黑树"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">使用红黑树</span></a></li></ol></li></ol>
             
           
           </div>

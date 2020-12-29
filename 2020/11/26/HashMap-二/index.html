@@ -116,7 +116,7 @@
                             
                         </div>
                         <h1>HashMap(二)</h1>
-                        <h2 class="subheading">结构</h2>
+                        <h2 class="subheading">内部结构与动态集合操作</h2>
                         <span class="meta">
                             Posted by sunshine on
                             2020-11-26
@@ -125,8 +125,8 @@
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">784</span> and
-                                Reading Time <span class="post-count">2</span> Minutes
+                                Words <span class="post-count">3k</span> and
+                                Reading Time <span class="post-count">12</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -187,13 +187,6 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -201,7 +194,7 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
                         </li>
                         
                     
@@ -209,6 +202,13 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
                         </li>
                         
                     
@@ -268,38 +268,109 @@
                 post-container">
 
                 <p>水平有限，如有错误之处，欢迎评论交流</p>
-<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>HashMap(一) 中简单介绍了直接寻址法和散列寻址法，并介绍了链接法解决散列冲突的散列表，和HashMap中在某些条件下会使用了红黑树作为散列表的槽位。这篇博客介绍HashMap中的数据结构</p>
-<h2 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h2><p>HashMap中使用一个Node数组维护散列表结构</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>HashMap(一) 中简单介绍了直接寻址法和散列寻址法，并介绍了链接法解决散列冲突的散列表，和HashMap中在某些条件下会使用了红黑树作为散列表的槽位。这篇博客介绍HashMap中的数据结构和3个的动态集合操作，insert，delete，search</p>
+<h2 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h2><p>关于散列表，HashMap中使用一个Node数组维护散列表结构，数组中的每一个位置在HashMap中被称为bin或者bucket</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMap</span>&lt;<span class="title">k</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;, <span class="title">Cloneable</span>, <span class="title">Serializable</span></span>&#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">	<span class="keyword">transient</span> Node&lt;K,V&gt;[] table;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>数组的每一个位置在HashMap中被称为bin或者bucket</p>
-<p>##Node&lt;K,V&gt; 和TreeNode&lt;K,V&gt;</p>
+<h2 id="结点结构"><a href="#结点结构" class="headerlink" title="结点结构"></a>结点结构</h2><p>Node和TreeNode是HashMap中使用的基本存储结构，如下图</p>
 <img src="/sunshine-carroll.github.io/2020/11/26/HashMap-%E4%BA%8C/node.png" alt="node" style="zoom:50%;">
 
-<h3 id="Node-lt-K-V-gt"><a href="#Node-lt-K-V-gt" class="headerlink" title="Node&lt;K,V&gt;"></a>Node&lt;K,V&gt;</h3><p>我们知道Map接口中，有一个内部接口叫Entry,表示映射当中的条目。Node类除了实现了接口Entry之外，还是HashMap使用链接法解决散列冲突时链表的结点，他维护一个指向下一个结点的引用，是一个单链表。</p>
+<h3 id="Node-lt-K-V-gt"><a href="#Node-lt-K-V-gt" class="headerlink" title="Node&lt;K,V&gt;"></a>Node&lt;K,V&gt;</h3><p>我们知道Map接口中，有一个内部接口叫Entry,表示映射当中的条目。Node类除了实现了接口Entry之外，内部还有四个成员变量</p>
+<ul>
+<li>hash 保存着key的散列值，</li>
+<li>key</li>
+<li>value</li>
+<li>next  next变量使得Node可以成为一个单链表</li>
+</ul>
+<p>回看一下，算法导论中提到的链接法解决散列冲突的散列表的删除算法，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">procedure chained-address-delete(T,x)</span><br><span class="line">	delete x from  list T[h(x.key)]</span><br></pre></td></tr></table></figure>
 
-<p>上面是在算法导论中提到的链接法解决散列冲突的散列表的删除算法，算法导论中建议散列表的槽使用双链表实现，算法的输入是散列表和要被删除的结点，其理由是认为如果使用双链表，删除算法的时间复杂度就是$O(1)$,如需要将x前驱的后继改成x的后继，后继的前驱改成x的前驱就行了，避免单链表的搜索。但是对于HashMap的使用者来说，删除结点只是输入泛型类型K,并不直接输入结点，依旧需要在链表中搜索对应结点，个人认为这是HashMap使用单链表的原因。</p>
-<h3 id="TreeNode-lt-K-V-gt"><a href="#TreeNode-lt-K-V-gt" class="headerlink" title="TreeNode&lt;K,V&gt;"></a>TreeNode&lt;K,V&gt;</h3><p>TreeNode直接继承LinkedHashMap.Entry间接继承自HashMap.Node . 因此可以作为常规结点扩展，也可以作为链式结点扩展。</p>
-<p>TreeNode包含了红黑树结点结构中的所有元素，parent指向父结点或者null,left指向左孩子或者null,right指向右孩子或者null,red表明结点是否为红色。</p>
-<p>红黑树是满足下列红黑性质的二叉搜索树(null是黑色的，null也算结点)</p>
+<p>算法的输入是散列表和要被删除的结点。在算法导论中，作者建议使用双链表作为散列表的槽，其理由是认为如果使用双链表，删除算法的时间复杂度就是$O(1)$,只需要将x前驱的后继改成x的后继，x后继的前驱改成x的前驱就行了，从而避免单链表的搜索。但是对于HashMap的使用者来说，删除结点只是输入泛型类型K,并不直接输入结点，依旧需要在链表中搜索对应结点，个人认为这是HashMap使用单链表的原因之一。</p>
+<h3 id="TreeNode-lt-K-V-gt"><a href="#TreeNode-lt-K-V-gt" class="headerlink" title="TreeNode&lt;K,V&gt;"></a>TreeNode&lt;K,V&gt;</h3><p>TreeNode直接继承LinkedHashMap.Entry间接继承自HashMap.Node .  LinkedHashMap.Entry中有两个变量before，after因此可以作为常规结点扩展，也可以作为链式结点扩展。</p>
+<p>TreeNode包含了红黑树结点结构中的所有元素，</p>
+<ul>
+<li>parent指向父结点或者null。只有在一颗红黑树中只有根结点才回出现parent为null的情况</li>
+<li>left指向左孩子或者null</li>
+<li>right指向右孩子或者null</li>
+<li>red表明结点是否为红色。</li>
+</ul>
+<p>红黑树的高度h和结点数n满足$h≤2\ lg\ (n+1)$，正如HashMap(一)中所说红黑树的基本操作的最坏情形复杂度为$O(lg\ n)$这能够在散列表处于糟糕的散列分配的情况下，提供比链表更快的操作。</p>
+<p>红黑树任意一条从根结点到叶子结点的简单路径长度不可能大于另一条的两倍。</p>
+<h2 id="动态集合操作"><a href="#动态集合操作" class="headerlink" title="动态集合操作"></a>动态集合操作</h2><p>在对于一个map来说，get,put，remove是HashMap基本的方法，其他诸如getOrDefault，putAll 等方法(但不是所有方法)直接或间接的依赖get,put，remove方法。getNode ，putVal ，removeNode这三个方法是Hashmap内部的方法，不可被重写，具有包访问权限。</p>
+<p>查看HashMap的源代码，可以看到get,put,delete 基本上只是调用了getNode ，putVal ，removeNode三个内部方法，并不会直接操作散列表的结构。getNode ，putVal ，removeNode方法是HashMap内部散列表的动态集合操作insert,delete,search。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> putVal(hash(key), key, value, <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">   Node&lt;K,V&gt; e;</span><br><span class="line">   <span class="keyword">return</span> (e = getNode(hash(key), key)) == <span class="keyword">null</span> ? <span class="keyword">null</span> : e.value;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">remove</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    Node&lt;K,V&gt; e;</span><br><span class="line">    <span class="keyword">return</span> (e = removeNode(hash(key), key, <span class="keyword">null</span>, <span class="keyword">false</span>, <span class="keyword">true</span>)) == <span class="keyword">null</span> ?<span class="keyword">null</span> : e.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<ol>
-<li>所有结点不是红色的就是黑色的</li>
-<li>根结点是黑色的</li>
-<li>叶子结点是黑色的</li>
-<li>如果一个结点是红色的，那么他的左右孩子是黑色的</li>
-<li>任意一个红黑树的结点，从该结点出发到叶子结点的所有的简单路径上具有相同的黑色结点数</li>
-</ol>
+<p>🍀 我们可以看到上面三个方法内部都调用hash(key)，这是HashMap使用的散列函数，这个散列函数使得我们可以通过散列表的大小<code>n</code>和计算出来的散列值<code>hash</code>通过计算得到对应的散列桶的位置其计算方式如下<br>$$<br>(n-1)\ &amp;\ hash<br>$$<br>将n-1和hash进行按位与。其原理不在这篇博客的主旨中(更关键的是，也没研究过这个，可能在后续博客专门写)。顺带提一下，HashMap使用2的非负整数次幂作为散列表的大小，n-1就是一个梅森数(不一定是梅森素数)，转成2进值就是$log_2{n}个1$</p>
 </blockquote>
-<p>可以通过上面的性质证明 红黑树的结点数n与高度h满足下面关系(这里只是介绍，可以参阅算法导论)<br>$$<br>h≤2\ lg\ (n+1)<br>$$<br>红黑树任意一条从根结点到叶子结点的简单路径长度不可能大于另一条的两倍。</p>
-<h2 id="getNode-and-putVal"><a href="#getNode-and-putVal" class="headerlink" title="getNode and putVal"></a>getNode and putVal</h2><p>在对于一个map来说，get,put 是其基本的方法，其他如getOrDefault 等方法直接或间接的依赖get,put方法。</p>
-<p>getNode方法和putVal方法</p>
+<p>HashMap内部实现了红黑树的结构和相关算法，内容复杂，插入删除时需要维护红黑性质，这会在HashMap(三)单独分析。</p>
+<h3 id="getNode"><a href="#getNode" class="headerlink" title="getNode"></a>getNode</h3><p>getNode 方法能辅助HashMap中的get或者其他方法从散列表中获取一个结点。</p>
+<p>getNode 首先找到散列桶中的第一个元素first，如果存在则继续操作，不存在就直接返回null。找到first后，首先检查第一个结点是否为要找的结点，如果是的话直接返回第一个结点。如果不是，那么根据结点类型执行搜索操作。如果是链式结点，那么做单链表的搜索，如果是红黑树则做红黑树的搜索。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> Node&lt;K,V&gt; <span class="title">getNode</span><span class="params">(<span class="keyword">int</span> hash, Object key)</span> </span>&#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; <span class="keyword">int</span> n; K k;<span class="comment">//tab:散列表;first 散列桶的第一个元素;n 散列桶大小;k 键</span></span><br><span class="line">    <span class="keyword">if</span> ((tab = table) != <span class="keyword">null</span> &amp;&amp; (n = tab.length) &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">        (first = tab[(n - <span class="number">1</span>) &amp; hash]) != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (first.hash == hash &amp;&amp; <span class="comment">// always check first node</span></span><br><span class="line">            ((k = first.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">            <span class="keyword">return</span> first;</span><br><span class="line">        <span class="keyword">if</span> ((e = first.next) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (first <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">                <span class="keyword">return</span> ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                    <span class="keyword">return</span> e;</span><br><span class="line">            &#125; <span class="keyword">while</span> ((e = e.next) != <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🍀 getNode,putVal,removeNode 类似的都会检查散列桶的第一个结点。笔者的看法是，不管结点是链式结点还是红黑树结点，都是HashMap为了解决散列冲突使用的结构，然而一个好的设计不管是HashMap的内部结构还是程序员自己写的hashCode方法都应该减少冲突的发生，因此总是检查第一个结点可以避免后续的复杂操作。</p>
+</blockquote>
+<h3 id="removeNode"><a href="#removeNode" class="headerlink" title="removeNode"></a>removeNode</h3><p>getNode 方法能辅助HashMap中的get或者其他方法从散列表中删除一个结点。removeNode可以和getNode结合看，因为要删除一个结点必须先找到那个结点，removeNode的前半部分和getNode类似，后半部分根据条件的不同决定是否删除结点。</p>
+<p>如果matchvalue 为true ，则仅当结点的value和参数value相等时才会发生删除。</p>
+<p>如果movable 为false 那么在移除结点时不会移除其他结点。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> Node&lt;K,V&gt; <span class="title">removeNode</span><span class="params">(<span class="keyword">int</span> hash, Object key, Object value,</span></span></span><br><span class="line"><span class="function"><span class="params">                               <span class="keyword">boolean</span> matchValue, <span class="keyword">boolean</span> movable)</span> </span>&#123;</span><br><span class="line">        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="keyword">int</span> n, index;<span class="comment">// tab 散列表 p散列桶的第一个结点 n 散列表的大小</span></span><br><span class="line">        <span class="keyword">if</span> ((tab = table) != <span class="keyword">null</span> &amp;&amp; (n = tab.length) &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">            (p = tab[index = (n - <span class="number">1</span>) &amp; hash]) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Node&lt;K,V&gt; node = <span class="keyword">null</span>, e; K k; V v;</span><br><span class="line">            <span class="keyword">if</span> (p.hash == hash &amp;&amp;</span><br><span class="line">                ((k = p.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                node = p;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ((e = p.next) != <span class="keyword">null</span>) &#123;</span><br><span class="line">              <span class="comment">// 即使结点是红黑树结点，但是HashMap的红黑树结点依旧会维护一个链式结构，上面的判断不会空指针</span></span><br><span class="line">                <span class="keyword">if</span> (p <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">                    node = ((TreeNode&lt;K,V&gt;)p).getTreeNode(hash, key);</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">do</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">                            ((k = e.key) == key ||</span><br><span class="line">                             (key != <span class="keyword">null</span> &amp;&amp; key.equals(k)))) &#123;</span><br><span class="line">                            node = e;</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        p = e;</span><br><span class="line">                    &#125; <span class="keyword">while</span> ((e = e.next) != <span class="keyword">null</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (node != <span class="keyword">null</span> &amp;&amp; (!matchValue || (v = node.value) == value ||</span><br><span class="line">                                 (value != <span class="keyword">null</span> &amp;&amp; value.equals(v)))) &#123;</span><br><span class="line">                <span class="keyword">if</span> (node <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">                    ((TreeNode&lt;K,V&gt;)node).removeTreeNode(<span class="keyword">this</span>, tab, movable);</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (node == p)</span><br><span class="line">                    tab[index] = node.next;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    p.next = node.next;</span><br><span class="line">                ++modCount;</span><br><span class="line">                --size;</span><br><span class="line">                afterNodeRemoval(node);</span><br><span class="line">                <span class="keyword">return</span> node;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到在24行之前，removeNode类似于geiNode都在寻找要删除的结点。主要的一些不同的是</p>
+<ul>
+<li>找到结点后让node指向结点而不是return</li>
+<li>记录了散列桶的位置，因为删除结点可能会删除散列桶的第一个结点，这个时候就需要改变散列表中的指向的根结点。</li>
+</ul>
+<p>如果node的值满足移除的条件则继续移除操作，此时可以分为3种情况</p>
+<ul>
+<li><p>情况一 结点是红黑树结点</p>
+<p>​    直接调用红黑树的删除算法 ，这里也会有散列桶的位置时红黑树的根结点的情况，在算法内部解决的这个问题</p>
+</li>
+<li><p>情况二 结点是链式结点，并且是头结点</p>
+<p>​    将散列表对应的散列桶位置指向node的下一个结点</p>
+</li>
+<li><p>情况三 结点是链式结点，并且不是头结点</p>
+<p>​    使用单链表的删除</p>
+</li>
+</ul>
+<p>然后就是修改 ++modCount，把记录的散列表大小减一，调用给子类的方法 afterNodeRemoval(node) 并返回被删除的结点</p>
+<h3 id="putVal"><a href="#putVal" class="headerlink" title="putVal"></a>putVal</h3><p>putVal方法能够辅助HashMap中的put方法及其他方法向散列表中插入一个结点，其中hash是key的散列值，key，value不做解释，onlyIfAbsent 用来实现若没有则添加的语义，如果为true，那么只有在key没有映射值或者映射了null才会执行添加操作，evict是为HashMap子类的设计的。</p>
+<p>putVal 在执行插入前会检查散列表，如果表为空或者表的大小等于0，就会通过resize()方法给出一个合适大小的散列桶。</p>
+<p>接下来的操作可以基本可以分为两种情况</p>
+<ul>
+<li><p>情况一：hash对应的散列桶不存在</p>
+<p>此时只需要在散列表对应位置存放一个链式结点就行(对应的散列桶不存在就可以认为key没有映射到value,符合onlyIfAbsent语义)</p>
+</li>
+<li><p>情况二：hash对应的结点p存在</p>
+<p>找到对应key的结点，根据onlyIfAbsent 决定是否插入值。找到结点可以分三种小情况，此时定义引用e代表搜索到的结点</p>
+<ul>
+<li><p>p就是对应key的结点</p>
+</li>
+<li><p>p不是对应key的结点，但是p是红黑树结点</p>
+<p>此时在红黑树中搜索对应key的结点，找到了e赋值为对应key的结点，否则执行红黑树的插入</p>
+</li>
+<li><p>p不是对应key的结点，是链式结点</p>
+<p>此时链式搜索对应key的结点，如果找到，e赋值为对应key结点的，如果找不到就只执行插入，执行插入的时候检查是否需要将链表树化</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果没有找到旧的Node,就会走到代码的最后几行，自增modCount，如果大小超过限度值threshold，则进行resize操作，此时返回<br>null。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">boolean</span> evict)</span> </span>&#123;</span><br><span class="line">  	<span class="comment">//tab指向散列表，在后面会赋值为散列表的大小，hash对应的散列桶(bucket)的位置</span></span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="keyword">int</span> n, i; </span><br><span class="line">    <span class="keyword">if</span> ((tab = table) == <span class="keyword">null</span> || (n = tab.length) == <span class="number">0</span>)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    <span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="keyword">null</span>)</span><br><span class="line">        tab[i] = newNode(hash, key, value, <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        Node&lt;K,V&gt; e; K k;</span><br><span class="line">        <span class="keyword">if</span> (p.hash == hash &amp;&amp;</span><br><span class="line">            ((k = p.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">            e = p;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (p <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(<span class="keyword">this</span>, tab, hash, key, value);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> binCount = <span class="number">0</span>; ; ++binCount) &#123;</span><br><span class="line">                <span class="keyword">if</span> ((e = p.next) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    p.next = newNode(hash, key, value, <span class="keyword">null</span>);</span><br><span class="line">                    <span class="keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="number">1</span>) <span class="comment">// -1 for 1st</span></span><br><span class="line">                        treeifyBin(tab, hash);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                p = e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123; <span class="comment">// existing mapping for key</span></span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            <span class="keyword">if</span> (!onlyIfAbsent || oldValue == <span class="keyword">null</span>)</span><br><span class="line">                e.value = value;</span><br><span class="line">            afterNodeAccess(e);</span><br><span class="line">            <span class="keyword">return</span> oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    <span class="keyword">if</span> (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🍀 resize()能够根据当前散列表的情况给出一个合适的散列表结构，可能是由于散列表中元素过多，或者是散列表还没有初始化</p>
+<p>afterNodeAccess(e)，afterNodeInsertion(evict) 是给子类提供的方法，HashMap自身不做操作。</p>
+</blockquote>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/sunshine-carroll.github.io/2020/11/27/HashMap-三/" data-toggle="tooltip" data-placement="top" title="HashMap(三)">&larr; Previous Post</a>
+                    </li>
                     
                     
                     <li class="next">
@@ -446,7 +517,7 @@ const gitment = new Gitment({
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Table"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Table</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Node-lt-K-V-gt"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">Node&lt;K,V&gt;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#TreeNode-lt-K-V-gt"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">TreeNode&lt;K,V&gt;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#getNode-and-putVal"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">getNode and putVal</span></a></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Table"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Table</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#结点结构"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">结点结构</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Node-lt-K-V-gt"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Node&lt;K,V&gt;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#TreeNode-lt-K-V-gt"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">TreeNode&lt;K,V&gt;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#动态集合操作"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">动态集合操作</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#getNode"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">getNode</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#removeNode"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">removeNode</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#putVal"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">putVal</span></a></li></ol></li></ol>
             
           
           </div>

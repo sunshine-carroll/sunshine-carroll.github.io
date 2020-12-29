@@ -125,7 +125,7 @@
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">2.4k</span> and
+                                Words <span class="post-count">2.5k</span> and
                                 Reading Time <span class="post-count">9</span> Minutes
                             </span>
                             <div class="blank_box"></div>
@@ -187,13 +187,6 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -201,7 +194,7 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
                         </li>
                         
                     
@@ -209,6 +202,13 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
                         </li>
                         
                     
@@ -268,23 +268,25 @@
                 post-container">
 
                 <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p><code>Map</code>,在数学中时映射的意思，</p>
-<p>为了便于理解与表述，我们通过一个简单的Map模型来分析,这个模型由一些作者和笔者看过的作品构成</p>
-<p>$$<br>\begin{align}<br>&amp;f:author→book \<br>唐家三少&amp;｜余华 \ |Jostein Gaarder \tag {author}\<br>斗罗大陆&amp;｜活着 \ |苏菲的世界\tag {book}\<br>\end{align}<br>$$</p>
-<h2 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h2><p>从$f:author→book$中可以看出一个映射(Map)可以由一个个由<code>[余华-活着)]</code>这样的条目(Entry)组成。因此Map<code>有一个内部接口</code>Entry，</p>
-<p>这个接口定义了Map实现中的内部类entry的类型，内部类作用之一就是在面对概念宽泛，或者说复杂的类型建模的时候，去识别复杂类型中内部的类型(不管你对这个类型的认识程度)。</p>
+<p>为了便于理解与表述，可以通过一个简单的Map模型来分析,这个模型由一些作者和作品构成</p>
+<p>$$<br>\begin{align}</p>
+<p>&amp;f:author→book \<br>唐家三少&amp;｜余华 \ |Jostein Gaarder \tag {author}\<br>斗罗大陆&amp;｜活着 \ |苏菲的世界\tag {book}\</p>
+<p>\end{align}<br>$$</p>
+<h2 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h2><p>从$f:author→book$中可以看出一个映射(Map)可以由一个个由<code>[余华-活着)]</code>这样的条目(Entry)组成。Entry 就是Map更细致的概念，在Map接口中的表现形式就是定义一个内部接口Entry，</p>
+<p>这个接口定义了Map实现中的内部类entry的类型，内部类作用之一就是在面对概念宽泛，或者说复杂的类型建模的时候，去识别复杂类型中内部的类型。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// ···</span></span><br><span class="line">  <span class="class"><span class="keyword">interface</span> <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">  	<span class="function">K <span class="title">getKey</span><span class="params">()</span></span>;</span><br><span class="line">  	<span class="function">V get <span class="title">Value</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">V <span class="title">setValue</span><span class="params">(V value)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//··· some static methods</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ···</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Map以及Entry中的泛型参数中的K是Map中键的类型(author),V是值的类型(book)，Entry 类型的行为并不多,举个例子 对于【唐家三少-斗罗大陆】这样一个条目，我们可能会想要获取他的作者唐家三少(getKey),或者获取作品(getValue)，或者替换作品为天珠变(setValue),以及与一个Entry比较是否相等。在这里要注意的是不管是简单类型或者复杂类型，都有其等价性，我们甚至可以认为。【唐家三少-斗罗大陆】和【banana-apple】是等价的，他们同是语言的符号。hashCode() 和 equals()是相关的(当然也可以实现成无关)，一般对于任意两个对象a,b 如果a,b等价，那么他们的hashCode()返回也应该一样。</p>
-<p>等价性是建立在某种前提上的，我们可以认为人不可以踏入同一条河流两次，因为河水是流动的，也可以认为人可以踏入同一条河流中两次，因为只关心河流的地理位置，有兴趣可以看看下面这个拓展</p>
+<p>等价性是建立在某种前提上的，我们可以认为人不可以踏入同一条河流两次，因为河水是流动的，也可以认为人可以踏入同一条河流中两次，因为只关心河流的地理位置，可以看看下面这个拓展内容</p>
 <blockquote>
 <p>🍀 关于equals 和 hashCode 的详细解释以及对容器类库中容器行为的影响可以参考<a href="https://lingcoder.gitee.io/onjava8/#/book/Appendix-Understanding-equals-and-hashCode?id=%E9%99%84%E5%BD%95%E7%90%86%E8%A7%A3equals%E5%92%8Chashcode%E6%96%B9%E6%B3%95" target="_blank" rel="noopener">On java 8-理解equals和hashcode方法 </a>或者Effective Java 第<a href="https://jiapengcai.gitbooks.io/effective-java/content/di-3-zhang-dui-suo-you-dui-xiang-du-tong-yong-de-fang-fa/di-10-tiao-ff1a-fu-gai-equals-fang-fa-shi-qing-zun-shou-tong-yong-yue-ding.html" target="_blank" rel="noopener">10,11</a>条建议<br></p>
 </blockquote>
-<h2 id="Map的行为"><a href="#Map的行为" class="headerlink" title="Map的行为"></a>Map的行为</h2><p>随着Java语言的发展，类库的完善，新特性的增加Map接口的行为也越来越丰富。我们在使用一个类型的时候，通常只关心该类型对外表现的行为，并且不太会涉及到这个类型的所有行为。这些内容有时候会是十分复杂的，不管是了解一个类型还是去设计一个类型，过早的涉及这些复杂性是不太有必要的，而且可能会迷失在这些复杂性中。举个例子，一个服装设计师在小的时候可能对服装的设计一窍不通，服装是怎么制作的，该怎么设计，但是他能对服装给人提供的遮衣蔽体，修身等功能建立起认识，随着学习和进修慢慢了解到服装设计纠结是什么。Java类库中实现Map接口的类型有很多,HashMap，LinkedHashMap,TreeMap等等，他们各自的实现和行为都有不同，但是他们的共同特征都是Map，有时候将行为和实现拆分的看可以很好的去认识一个类库，框架。Map接口一共定义了25个行为(方法),这25种行为可以划分为6个类别。</p>
+<h2 id="Map的行为"><a href="#Map的行为" class="headerlink" title="Map的行为"></a>Map的行为</h2><p>随着Java语言的发展，类库的完善，新特性的增加Map接口的行为也越来越丰富。我们在使用一个类型的时候，通常只关心该类型对外表现的行为，并且不太会涉及到这个类型的所有行为。这些内容有时候会是十分复杂的，不管是了解一个类型还是去设计一个类型，过早的涉及这些复杂性是不太有必要的，而且可能会迷失在这些复杂性中。举个例子，一个服装设计师在小的时候可能对服装的设计一窍不通，服装是怎么制作的，该怎么设计，用什么材料，但是他能对服装给人提供的遮衣蔽体，修身等功能建立起认识，随着学习和进修慢慢了解到服装设计究竟是什么，并且学会设计。Java类库中实现Map接口的类型有很多,HashMap，LinkedHashMap,TreeMap等等，他们各自的实现和行为都有不同，但是他们的共同特征都是Map，有时候将行为和实现拆分的看可以很好的去认识一个类库，框架。Map接口一共定义了25个行为(方法),这25种行为可以划分为6个类别。</p>
 <blockquote>
 <p>🍀 有时候对象的特征是直观的,但是行为却有很多，这些行为说出来挺容易理解，全部记住也没必要。正如之前的模型，很容易在脑海中留下印象并复述内容。map描述的25种行为都可以应用在模型中，但是让人凭空说却挺麻烦。举个别的例子说整数，整数大家小时候就认识，但是整数能表现的行为却很多。整数可以进行模指数运算(这在RSA加密算法有关键的作用，而RSA加密算法是数据在通过Https安全传输时的一个重要环节)，可以判断整数是否为梅森素数，网络中有一个庞大的分布式系统<a href="https://www.mersenne.org/" target="_blank" rel="noopener">gimps</a> EFF关于奖金设立的规定，任何一位新梅森素数的发现者都将获得3000美元的研究发现奖。</p>
 </blockquote>
 <p>下面是Java8中 java.Util.Map 接口的部分内容，这里省略了具体的方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// Query Operations 查询对象内部的状态的操作</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// Modification Operations 改变对象内部状态的操作</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// Bulk Operations 批量操作</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// views 返回视图</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// Comparison and hashing 比较和散列</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">//Defaultable methods 默认方法</span></span><br><span class="line">  ···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// Query Operations 查询对象内部的状态的操作</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// Modification Operations 改变对象内部状态的操作</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// Bulk Operations 批量操作</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// views 返回视图</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">// Comparison and hashing 比较和散列</span></span><br><span class="line">  ···</span><br><span class="line">  <span class="comment">//Defaultable methods 默认方法（可以由之前的方法组合实现）</span></span><br><span class="line">  ···</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="Query-Operations"><a href="#Query-Operations" class="headerlink" title="Query Operations"></a>Query Operations</h3><p>查询操作，一个查询操作仅仅返回并且不会修改对象的状态。一个无状态对象是线程安全的，一个不会修改对象状态的方法也是线程安全的，不会导致对象处于不一致的状态下(理由就很简单，因为根本不改变状态)。</p>
 <blockquote>

@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          Spring cloud 概览 - sunshine
+          CAP Paper - sunshine
         
     </title>
 
-    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/09/10/Spring-cloud-组件概览/">
+    <link rel="canonical" href="https://sunshine-carroll.github.io/sunshine-carroll.github.io/2020/11/27/CAP-Paper/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -112,21 +112,23 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/sunshine-carroll.github.io/tags/#overview" title="overview">overview</a>
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#note" title="note">note</a>
+                            
+                              <a class="tag" href="/sunshine-carroll.github.io/tags/#cap" title="cap">cap</a>
                             
                         </div>
-                        <h1>Spring cloud 概览</h1>
-                        <h2 class="subheading"></h2>
+                        <h1>CAP Paper</h1>
+                        <h2 class="subheading">Brewer’s Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web</h2>
                         <span class="meta">
                             Posted by sunshine on
-                            2020-09-10
+                            2020-11-27
                         </span>
 
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">65</span> and
-                                Reading Time <span class="post-count">1</span> Minutes
+                                Words <span class="post-count">2.1k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -187,13 +189,6 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/sunshine-carroll.github.io/about/">About</a>
                         </li>
                         
@@ -201,7 +196,7 @@
 
                         
                         <li>
-                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
+                            <a href="/sunshine-carroll.github.io/archive/">Archives</a>
                         </li>
                         
                     
@@ -209,6 +204,13 @@
                         
                         <li>
                             <a href="/sunshine-carroll.github.io/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunshine-carroll.github.io/categories/">Categories</a>
                         </li>
                         
                     
@@ -267,21 +269,66 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>博客逐渐完善中</p>
-<h2 id="overview"><a href="#overview" class="headerlink" title="overview"></a>overview</h2><p>微服务架构是一种新常态，可以构建小型的，独立的,随时可以运行的应用程序，它的可以带来强大的可伸缩性，并使代码更具适应性。</p>
-<h2 id="Spring-Cloud-Gateway"><a href="#Spring-Cloud-Gateway" class="headerlink" title="Spring Cloud Gateway"></a>Spring Cloud Gateway</h2>
+                <p>纯属个人学习时翻译，英语水平有限,可能会有用词语意不准的情况，可看原文。</p>
+<p><a href="https://users.ece.cmu.edu/~adrian/731-sp04/readings/GL-cap.pdf" target="_blank" rel="noopener">Brewer’s Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services</a></p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><blockquote>
+<p>When designing distributed web services, there are three properties that are commonly desired: consistency, availability, and partition tolerance. It is impossible to achieve all three. In this note, we prove this conjecture in the asynchronous network model, and then discuss solutions to this dilemma in the partially synchronous model.</p>
+</blockquote>
+<p>当设计分布式web服务时，通常有三个特性是被渴望的:一致性，可用性以及分区容错性。同时实现这三个特性是不可能的，我们在异步网络模型中证明这个猜想，然后在部分同步模型中，讨论这种窘境的解决方案。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><blockquote>
+<p>At PODC 2000, Brewer  , in an invited talk , made the following conjecture: it is impossible for a web service to provide the following three guarantees:</p>
+<ul>
+<li><p>Consistency</p>
+</li>
+<li><p>Availability</p>
+</li>
+<li><p>Partition-tolerance</p>
+</li>
+</ul>
+<p>All three of these properties are desirable – and expected – from real-world web services. In this note, we will ﬁrst discuss what Brewer meant by the conjecture; next we will formalize these concepts and prove the conjecture;ﬁnally, we will describe and attempt to formalize some real-world solutions to this practical diﬃculty.</p>
+<p>Most web services today attempt to provide strongly consistent data. There has been signiﬁcant research designing ACID databases, and most of the new frameworks for building distributed web services depend on these databases. Interactions with web services are expected to behave in a transactional manner: operations commit or fail in their entirety (atomic), committed transactions are visible to all future transactions (consistent), uncommitted transactions are isolated from each other (isolated), and once a transaction is committed it is permanent (durable). It is clearly important, for example, that billing information and commercial transaction records be handled with this type of strong consistency.</p>
+<p>Web services are similarly expected to be highly available. Every request should succeed and receive a response. When a service goes down, it may well create signiﬁcant real-world problems; the classic example of this is the potential legal diﬃculties should the E-Trade web site go down. This problem is exacerbated by the fact that a web-site is most likely to be unavailable when it is most needed. The goal of most web services today is to be as available as the network on which they run: if any service on the network is available, then the web service should be accessible.</p>
+<p>Finally, on a highly distributed network, it is desirable to provide some amount of fault-tolerance. When some nodes crash or some communication links fail, it is important that the service still perform as expected. One desirable fault tolerance property is the ability to survive a network partitioning into multiple components. In this note we will not consider stopping failures, though in some cases a stopping failure can be modeled as a node existing in its own unique component of a partition.</p>
+</blockquote>
+<p>在 PODC 2000 ,<code>Brewer</code>在一次受邀讲演中做了如下的猜想:对于一个web服务来说提供下面三个保证是不可能的</p>
+<ul>
+<li>一致</li>
+<li>可用</li>
+<li>分区容错</li>
+</ul>
+<p>所有的这三个特性都被现实世界中的web服务所渴求并期望。在这篇论文中，我们首先讨论Brewer猜想的含义，然后形式化这些概念并且证明这个猜想，最后我们会描述并尝试对这一实际的困难给出一个现实世界中的解决方案。</p>
+<p>现在的大部分web服务都试图提供强一致的数据，在设计ACID数据库方面已经有了重要的研究，而且大部分新的构建分布式web服务的框架依赖于这些数据库。web服务之间的交互被期望以事务的形式表现:操作要么全部提交要么全部失败(原子性)，已提交的事务对将来的事务来说都是可见的(一致性)，未提交的事务和其他的每个事务都隔离(隔离性),一旦事务已提交，就不变化(持久性)。这些特性显然很重要，举个例子，数亿信息和商业交易记录都在这种强一致的情况下被处理。</p>
+<p>Web服务同样被期望高可用。任意一个请求都应该成功并接收到响应。一个服务当机可能会产生有显著影响的现实世界问题，典型例子是电子贸易网站宕机可能带来的法律问题。当一个网站在最需要web服务的时候，它很可能是不可用的，这一事实加剧了这个问题。当今大多数web服务的目标是与它们运行的网络一样可用:如果网络上有任何服务可用，那么web服务应该是可访问的。</p>
+<p>最后，在一个高度分布的网络中，提供一定程度容错是理想的。当一些结点当机或者一些通信链路失效，服务的如期运行是重要的。一个理想的容错特性是在网络划分多个组件时生存下来的能力。在这篇论文中，我们不考虑<code>stopping failures</code>,通过一些情景一个<code>stopping failure</code>可以建模为节点存在在分区中唯一的一个组件中。</p>
+<h2 id="Formal-Model"><a href="#Formal-Model" class="headerlink" title="Formal Model"></a>Formal Model</h2><blockquote>
+<p>In this section, we will formally deﬁne what is meant by the terms <em>consistent</em>, <em>available</em>, and <em>partition tolerant</em>.</p>
+</blockquote>
+<p>这一部分我们正式定义术语<code>consistent</code>,<code>available</code>和<code>partition tolerant</code>的含义</p>
+<h3 id="Atomic-Data-Objects"><a href="#Atomic-Data-Objects" class="headerlink" title="Atomic Data Objects"></a>Atomic Data Objects</h3><blockquote>
+<p>The most natural way of formalizing the idea of a consistent service is as an atomic data object. Atomic , or linearizable, consistency is the condition expected by most web services today. Under this consistency guarantee, there must exist a total order on all operations such that each operation looks as if it were completed at a single instant. This is equivalent to requiring requests of the distributed shared memory to act as if they were executing on a single node, responding to operations one at a time. One important property of an atomic read/write shared memory is that any read operation that begins after a write operation completes must return that value, or the result of a later write operation. This is the consistency guarantee that generally provides the easiest model for users to understand, and is most convenient for those attempting to design a client application that uses the distributed service. See for a more complete deﬁnition of atomic consistency.</p>
+</blockquote>
+<p>把一致服务的概念作为 <code>atomic data object</code>，是最自然的形式化方式。原子性或可串行性，一致性被大部分现今的web服务所期望。在一致性的保证下，there must exist a total order on all operations such that each operation looks as if it were completed at a single instant。这等价于要求分布式共享内存中的请求表现的就像在一个结点上执行一样,一次响应一个操纵。共享内存中一个原子的读/写的一个重要的特性是任意一个在写操作完成后的读操作都必须返回那个值或者后续的写操作的结果。这是一致性保证，通常为用户提供了最容易理解的模型，对于那些试图设计使用分布式服务的客户端应用程序的人来说，这是最方便的。</p>
+<h3 id="Available-Data-Objects"><a href="#Available-Data-Objects" class="headerlink" title="Available Data Objects"></a>Available Data Objects</h3><blockquote>
+<p>For a distributed system to be continuously available, every request received by a non-failing node in the system must result in a response. That is, any algorithm used by the service must eventually terminate. In some ways this is a weak deﬁnition of availability: it puts no bound on how long the algorithm may run before terminating, and therefore allows unbounded computation. On the other hand, when qualiﬁed by the need for partition tolerance, this can be seen as a strong deﬁnition of availability: even when severe network failures occur, every request must terminate.</p>
+</blockquote>
+<p>对于一个持续可用的分布式系统，每一个被没有故障结点接收到的请求必须有响应结果。意思就是任何服务使用的算法最终都能终止。在某些方面，这是可用性的弱定义，它没有定义算法在终止之前的运行时间的边界，因此允许无边界的计算。在其他方面，当符合分区容错要求时，这可以视为可用性的强定义，甚至当发生服务的网络失败时，每个请求必须终止。</p>
+<h3 id="Partition-Tolerance"><a href="#Partition-Tolerance" class="headerlink" title="Partition Tolerance"></a>Partition Tolerance</h3><blockquote>
+<p>The above deﬁnitions of availability and atomicity are qualiﬁed by the need to tolerate partitions. In order to model partition tolerance, the network will be allowed to lose arbitrarily many messages sent from one node to another. When a network is partitioned, all messages sent from nodes in one component of the partition to nodes in another component are lost. (And any pattern of message loss can be modeled as a temporary partition separating the communicating nodes at the exact instant the message is lost.)The atomicity requirement ( § 2.1) therefore implies that every response will be atomic, even though arbitrary messages sent as part of the algorithm might not be delivered. The availability requirement ( § 2.2) implies that every node receiving a request from a client must respond, even though arbitrary messages that are sent may be lost. Note that this is similar to wait-free termination in a pure shared-memory system: even if every other node in the network fails (i.e. the node is in its own unique component of the partition), a valid (atomic) response must be generated. No set of failures less than total network failure is allowed to cause the system to respond incorrectly.5</p>
+</blockquote>
+<p>上述定义的可用性和原子性符合分区容错的要求。为了建模分区容错，网络被允许任意的丢弃从一个节点发送到另一个节点的多个消息。当网络是分区的，一个</p>
+
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/sunshine-carroll.github.io/2020/09/10/领域驱动设计架构/" data-toggle="tooltip" data-placement="top" title="领域驱动设计架构">&larr; Previous Post</a>
+                        <a href="/sunshine-carroll.github.io/2020/12/05/离散概率概念总结/" data-toggle="tooltip" data-placement="top" title="离散概率概念总结">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/sunshine-carroll.github.io/2020/09/09/事务-一/" data-toggle="tooltip" data-placement="top" title="事务(一)">Next Post &rarr;</a>
+                        <a href="/sunshine-carroll.github.io/2020/11/27/HashMap-三/" data-toggle="tooltip" data-placement="top" title="HashMap(三)">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -362,7 +409,7 @@ const myTheme = {
 
 
 const gitment = new Gitment({
-    id: 'Thu Sep 10 2020 14:05:55 GMT+0800', // optional
+    id: 'Fri Nov 27 2020 12:07:18 GMT+0800', // optional
     owner: "sunshine-carroll",
     repo: "sunshine-carroll.github.io",
     oauth: {
@@ -424,7 +471,7 @@ const gitment = new Gitment({
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#overview"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">overview</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Spring-Cloud-Gateway"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Spring Cloud Gateway</span></a></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Abstract"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Abstract</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Introduction"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Introduction</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Formal-Model"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Formal Model</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Atomic-Data-Objects"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Atomic Data Objects</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Available-Data-Objects"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">Available Data Objects</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Partition-Tolerance"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Partition Tolerance</span></a></li></ol></li></ol>
             
           
           </div>
@@ -446,7 +493,9 @@ const gitment = new Gitment({
                     <h5><a href="/sunshine-carroll.github.io/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/sunshine-carroll.github.io/tags/#overview" title="overview">overview</a>
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#note" title="note">note</a>
+                        
+                          <a class="tag" href="/sunshine-carroll.github.io/tags/#cap" title="cap">cap</a>
                         
                     </div>
                 </section>
@@ -479,8 +528,8 @@ const gitment = new Gitment({
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "sunshine-carroll";
-    var disqus_identifier = "https://sunshine-carroll.github.io/2020/09/10/Spring-cloud-%E7%BB%84%E4%BB%B6%E6%A6%82%E8%A7%88/";
-    var disqus_url = "https://sunshine-carroll.github.io/2020/09/10/Spring-cloud-%E7%BB%84%E4%BB%B6%E6%A6%82%E8%A7%88/";
+    var disqus_identifier = "https://sunshine-carroll.github.io/2020/11/27/CAP-Paper/";
+    var disqus_url = "https://sunshine-carroll.github.io/2020/11/27/CAP-Paper/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
